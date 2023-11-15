@@ -1,0 +1,13 @@
+{
+  "name": "bringer-api",
+  "version": "3.0.0",
+  "main": "bringer-api.js",
+  "types": "bringer-api.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

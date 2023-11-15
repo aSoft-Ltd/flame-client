@@ -1,0 +1,54 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "jsApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jsRuntimeElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "tz.co.asoft:flame-api-core-entity",
+          "tz.co.asoft:identifier-legal-sdk-client-core",
+          "tz.co.asoft:captain-navigator-api",
+          "tz.co.asoft:symphony-collections",
+          "tz.co.asoft:symphony-input-dialog",
+          "tz.co.asoft:cabinet-api-core",
+          "tz.co.asoft:epsilon-api-file",
+          "tz.co.asoft:krest-core",
+          "tz.co.asoft:sanity-core",
+          "tz.co.asoft:snitch-api",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:bringer-api",
+          "org.jetbrains.kotlin:kotlin-stdlib"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

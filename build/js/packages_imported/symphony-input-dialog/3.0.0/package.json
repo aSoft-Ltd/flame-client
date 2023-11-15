@@ -1,0 +1,13 @@
+{
+  "name": "symphony-input-dialog",
+  "version": "3.0.0",
+  "main": "symphony-input-dialog.js",
+  "types": "symphony-input-dialog.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "flame-scenes-smes",
+  "version": "3.0.0",
+  "main": "flame-scenes-smes.js",
+  "types": "flame-scenes-smes.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5",
+    "@js-joda/core": "3.2.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

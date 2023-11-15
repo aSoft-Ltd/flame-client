@@ -1,0 +1,83 @@
+{
+  "version": "9",
+  "items": {
+    "4383dd0cc7a2c3297c9aaa9367f99da6": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/flame-core/entity/build/tmp/jsPublicPackageJson/package.json",
+      "target": "flame-api-core-entity/3.0.0"
+    },
+    "ccb78e280d376d0f9c885f6df7fdcebb": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/identifier-client/legal/sdk/core/build/tmp/jsPublicPackageJson/package.json",
+      "target": "identifier-legal-sdk-client-core/3.0.0"
+    },
+    "d7d09ac5147bfc583e3ad00829fb7e16": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/captain/navigator/api/build/tmp/jsPublicPackageJson/package.json",
+      "target": "captain-navigator-api/0.0.0"
+    },
+    "ebd40c6f019c0310a07f27c14b0cd952": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/symphony/collections/build/tmp/jsPublicPackageJson/package.json",
+      "target": "symphony-collections/3.0.0"
+    },
+    "ca500c5723709ca1e17f88b247767606": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/symphony/input/dialog/build/tmp/jsPublicPackageJson/package.json",
+      "target": "symphony-input-dialog/3.0.0"
+    },
+    "0270985912bd871e5528dd37b87d3ce6": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/cabinet-api/core/build/tmp/jsPublicPackageJson/package.json",
+      "target": "cabinet-api-core/0.0.0"
+    },
+    "60e579a74a0c8e71b1ee24aa92fe1c34": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/epsilon-api/file/build/tmp/jsPublicPackageJson/package.json",
+      "target": "epsilon-api-file/3.0.0"
+    },
+    "e701b090ef27f959d2e143e529150612": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/krest/core/build/tmp/jsPublicPackageJson/package.json",
+      "target": "krest-core/3.0.0"
+    },
+    "2136568037dd7ade8d8ea403176bd3a1": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/sanity/core/build/tmp/jsPublicPackageJson/package.json",
+      "target": "sanity-core/3.0.0"
+    },
+    "2e5e1d06cba21f9b47cffc9e0de10efc": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/snitch/api/build/tmp/jsPublicPackageJson/package.json",
+      "target": "snitch-api/3.0.0"
+    },
+    "ef60fdecb379b4087b382e64471b4884": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/klip/api/build/tmp/jsPublicPackageJson/package.json",
+      "target": "klip-api/3.0.0"
+    },
+    "a181d45796dc161c9cc309a732b540b8": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/bringer/api/build/tmp/jsPublicPackageJson/package.json",
+      "target": "bringer-api/3.0.0"
+    },
+    "f3f2c2382d71985d6b795d160137f399": {
+      "src": "/home/andylamax/Desktop/Devspace/tooling/gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/1.9.20/6adfe1f1e3c99a19c123d96d713fb532786fdc62/kotlin-stdlib-js-1.9.20.klib"
+    },
+    "0883176925439cd9116d6e2d49fcd6b8": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/flame-core/smes/build/tmp/jsPublicPackageJson/package.json",
+      "target": "flame-api-core-smes/3.0.0"
+    },
+    "b50857453dcb30a49d765d6aca822dfe": {
+      "src": "/home/andylamax/Desktop/Devspace/tooling/gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-dom-api-compat/1.9.20/3c0ac04445c1aeec4366d69e1791cd6ad31ddc07/kotlin-dom-api-compat-1.9.20.klib"
+    },
+    "a66860f155cb10a237acb5f7d0f6d0e3": {
+      "src": "/home/andylamax/Desktop/Devspace/tooling/gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js-runner/1.9.20/e9b1fc55af69eb09d63b271d17c217d9483241cc/kotlin-test-js-runner-1.9.20.jar",
+      "target": "kotlin-test-js-runner/0.0.1"
+    },
+    "1d1e59c32ecb3d4c7a2158efa53a697c": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/flame-core/customers/build/tmp/jsPublicPackageJson/package.json",
+      "target": "flame-api-core-customers/3.0.0"
+    },
+    "2db6d30291913eebe45f6cf4da50fa1b": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/cinematic/live/test/build/tmp/jsPublicPackageJson/package.json",
+      "target": "cinematic-live-test/3.0.0"
+    },
+    "e9ba9ad59477b1e46b4e8ef66a0de02c": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/kommander/coroutines/build/tmp/jsPublicPackageJson/package.json",
+      "target": "kommander-coroutines/3.0.0"
+    },
+    "36c853b4e72b157547f06e36aa14224a": {
+      "src": "/home/andylamax/Desktop/Devspace/picortex/home/flame-core/suppliers/build/tmp/jsPublicPackageJson/package.json",
+      "target": "flame-api-core-suppliers/3.0.0"
+    }
+  }
+}

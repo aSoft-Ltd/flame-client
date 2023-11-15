@@ -1,0 +1,14 @@
+{
+  "name": "flame-scenes-suppliers",
+  "version": "3.0.0",
+  "main": "flame-scenes-suppliers.js",
+  "types": "flame-scenes-suppliers.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5",
+    "@js-joda/core": "3.2.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

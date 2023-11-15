@@ -1,0 +1,13 @@
+{
+  "name": "cabinet-api-core",
+  "version": "0.0.0",
+  "main": "cabinet-api-core.js",
+  "types": "cabinet-api-core.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

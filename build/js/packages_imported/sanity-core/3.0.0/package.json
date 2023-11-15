@@ -1,0 +1,13 @@
+{
+  "name": "sanity-core",
+  "version": "3.0.0",
+  "main": "sanity-core.js",
+  "types": "sanity-core.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "format-util": "^1.0.5"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}
