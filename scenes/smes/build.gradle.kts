@@ -16,7 +16,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.flame.api.core.smes)
+                api(projects.flameApiSuppliers)
                 api(libs.identifier.legal.sdk.client.core)
                 api(libs.captain.navigator.api)
                 api(libs.symphony.collections)

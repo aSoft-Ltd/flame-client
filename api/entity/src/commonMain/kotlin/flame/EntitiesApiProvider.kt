@@ -1,0 +1,5 @@
+package flame
+
+import identifier.IdentifierApiProvider
+
+interface EntitiesApiProvider : IdentifierApiProvider

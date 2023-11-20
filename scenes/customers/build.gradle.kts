@@ -17,7 +17,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.flameScenesEntity)
-                api(libs.flame.api.core.suppliers)
+                api(projects.flameApiCustomers)
             }
         }
 
@@ -25,7 +25,6 @@ kotlin {
             dependencies {
                 implementation(libs.cinematic.live.test)
                 implementation(libs.kommander.coroutines)
-//                implementation(projects.flameApiTestPioneKtor)
             }
         }
     }
