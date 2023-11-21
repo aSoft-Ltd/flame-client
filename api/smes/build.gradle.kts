@@ -11,7 +11,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(libs.flame.schemes.smes)
                 api(libs.geo.coordinates)
+                api(ktor.client.core)
+                api(libs.lexi.api)
+                api(libs.keep.api)
+                api(libs.sentinel.enterprise.authentication.core)
+                api(libs.kase.response.ktor.client)
                 api(libs.krono.api)
                 api(libs.kronecker.core)
                 api(libs.cabinet.api.core)

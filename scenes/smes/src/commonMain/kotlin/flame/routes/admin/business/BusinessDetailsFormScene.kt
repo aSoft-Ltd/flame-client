@@ -3,6 +3,8 @@
 
 package flame.routes.admin.business
 
+import flame.SmeApi
+import flame.SmeSceneOption
 import flame.utils.FormScene
 import kase.Pending
 import kase.Success
@@ -12,7 +14,7 @@ import lexi.LoggerFactory
 import symphony.toForm
 
 class BusinessDetailsFormScene(
-    private val logger: LoggerFactory
+    private val options: SmeSceneOption<SmeApi>
 ) : FormScene<BusinessDetailsFields>() {
     fun initialize() {
         ui.value = Success(form())
@@ -21,7 +23,7 @@ class BusinessDetailsFormScene(
     private fun form() = BusinessDetailsFields(BusinessDetailsOutput()).toForm(
         heading = "Contact Details",
         details = "Enter your contact details here",
-        logger = logger,
+        logger = options.logger,
     ) {
         onCancel { ui.value = Pending }
         onSubmit { it.toLater() }

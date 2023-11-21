@@ -5,10 +5,9 @@ package flame
 
 import flame.routes.admin.AdminScenes
 import kotlin.js.JsExport
-import lexi.LoggerFactory
 
-class SmeScenes(private val logger: LoggerFactory) {
+class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val admin by lazy {
-        AdminScenes(logger)
+        AdminScenes(options)
     }
 }

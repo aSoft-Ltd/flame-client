@@ -3,27 +3,45 @@
 
 package flame.routes.admin.contacts
 
+import flame.SmeApi
+import flame.SmeSceneOption
+import flame.transformers.admin.toOutput
+import flame.transformers.admin.toParams
 import flame.utils.FormScene
+import kase.Loading
 import kase.Pending
-import kase.Success
+import kase.toLazyState
+import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport
-import lexi.LoggerFactory
 import symphony.toForm
 
 class ContactDetailsFormScene(
-    private val logger: LoggerFactory
+    private val options: SmeSceneOption<SmeApi>
 ) : FormScene<ContactDetailsFields>() {
     fun initialize() {
-        ui.value = Success(form())
+        ui.value = Loading("loading your information, please wait . . .")
+        options.api.load().then {
+            it.admin?.contacts.toOutput()
+        }.then {
+            form(it)
+        }.finally {
+            ui.value = it.toLazyState()
+        }
     }
 
-    private fun form() = ContactDetailsFields(ContactDetailsOutput()).toForm(
+    private fun form(output: ContactDetailsOutput) = ContactDetailsFields(output).toForm(
         heading = "Contact Details",
         details = "Enter your contact details here",
-        logger = logger,
+        logger = options.logger,
     ) {
         onCancel { ui.value = Pending }
-        onSubmit { it.toLater() }
+        onSubmit { output ->
+            output.toLater().then {
+                it.toParams()
+            }.then {
+                options.api.admin.update(it)
+            }
+        }
     }
 }
