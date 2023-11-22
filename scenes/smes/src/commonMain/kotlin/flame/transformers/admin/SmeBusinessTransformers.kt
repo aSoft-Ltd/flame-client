@@ -2,10 +2,8 @@
 
 package flame.transformers.admin
 
-import flame.SmeBusinessDto
-import flame.SmeContactsDto
+import flame.admin.SmeBusinessDto
 import flame.routes.admin.business.SmeBusinessOutput
-import flame.routes.admin.contacts.SmeContactOutput
 import geo.transformers.toOutput
 import symphony.PhoneOutput
 

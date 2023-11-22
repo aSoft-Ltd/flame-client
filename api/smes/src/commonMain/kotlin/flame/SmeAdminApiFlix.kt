@@ -1,35 +1,21 @@
 package flame
 
-import io.ktor.client.request.bearerAuth
-import io.ktor.client.request.get
-import io.ktor.client.request.setBody
-import kase.response.getOrThrow
-import keep.load
-import koncurrent.later
-import koncurrent.later.await
+import flame.admin.SmeBusinessDto
+import flame.admin.SmeContactsDto
+import flame.admin.SmeDirectorDto
+import flame.admin.SmeLegalComplianceDto
+import flame.admin.SmeShareholderDto
 import kotlinx.serialization.encodeToString
-import sentinel.UserSession
 
-class SmeAdminApiFlix(private val options: SmeApiFlixOptions) : SmeAdminApi {
+class SmeAdminApiFlix(options: SmeApiFlixOptions) : SmeFlixBaseApi(options), SmeAdminApi {
 
-    private val logger by options.logger
+    override fun update(params: SmeContactsDto) = update(SmeKey.Admin.contacts, options.codec.encodeToString(params))
 
-    private fun update(key: SmeKey, params: String) = options.scope.later {
-        val tracer = logger.trace(options.message.save(key))
-        val res = options.http.get(options.routes.save(key)) {
-            bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
-            setBody(params)
-        }
-        res.getOrThrow<SmeDto>(options.codec, tracer)
-    }
+    override fun update(params: SmeBusinessDto) = update(SmeKey.Admin.businesses, options.codec.encodeToString(params))
 
-    override fun update(params: SmeContactsDto) = update(SmeKey.contacts, options.codec.encodeToString(params))
+    override fun update(params: SmeLegalComplianceDto) = update(SmeKey.Admin.legal, options.codec.encodeToString(params))
 
-    override fun update(params: SmeBusinessDto) = update(SmeKey.businesses, options.codec.encodeToString(params))
+    override fun updateShareholders(params: List<SmeShareholderDto>) = update(SmeKey.Admin.shareholders, options.codec.encodeToString(params))
 
-    override fun update(params: SmeLegalComplianceDto) = update(SmeKey.legal, options.codec.encodeToString(params))
-
-    override fun updateShareholders(params: List<SmeShareholderDto>) = update(SmeKey.shareholders, options.codec.encodeToString(params))
-
-    override fun updateDirectors(params: List<SmeDirectorDto>) = update(SmeKey.directors, options.codec.encodeToString(params))
+    override fun updateDirectors(params: List<SmeDirectorDto>) = update(SmeKey.Admin.directors, options.codec.encodeToString(params))
 }

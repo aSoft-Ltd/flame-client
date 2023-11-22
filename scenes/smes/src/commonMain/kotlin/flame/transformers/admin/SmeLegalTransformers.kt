@@ -2,7 +2,7 @@
 
 package flame.transformers.admin
 
-import flame.SmeLegalComplianceDto
+import flame.admin.SmeLegalComplianceDto
 import flame.routes.admin.legal.SmeLegalOutput
 
 inline fun SmeLegalComplianceDto?.toOutput() = SmeLegalOutput(

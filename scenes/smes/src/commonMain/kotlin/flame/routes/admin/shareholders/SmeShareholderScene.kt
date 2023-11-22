@@ -8,7 +8,7 @@ import cinematic.mutableLiveOf
 import flame.SmeApi
 import flame.SmeDto
 import flame.SmeSceneOption
-import flame.SmeShareholderDto
+import flame.admin.SmeShareholderDto
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
 import koncurrent.toLater
@@ -67,7 +67,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
     }
 
     private fun form(dto: SmeShareholderDto?) = SmeShareholderFields(dto.toOutput()).toForm(
-        heading = "Shareholder form",
+        heading = "Shareholder's form",
         details = if (dto == null) "Add Shareholder" else "Edit ${dto.name}",
         logger = options.logger
     ) {

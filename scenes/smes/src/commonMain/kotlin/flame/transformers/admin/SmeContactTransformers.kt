@@ -2,7 +2,7 @@
 
 package flame.transformers.admin
 
-import flame.SmeContactsDto
+import flame.admin.SmeContactsDto
 import flame.routes.admin.contacts.SmeContactOutput
 import symphony.PhoneOutput
 

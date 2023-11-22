@@ -2,7 +2,7 @@
 
 package flame.transformers.admin
 
-import flame.SmeShareholderDto
+import flame.admin.SmeShareholderDto
 import flame.routes.admin.shareholders.SmeShareholderOutput
 
 inline fun SmeShareholderDto?.toOutput() = SmeShareholderOutput(

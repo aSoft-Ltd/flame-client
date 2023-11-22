@@ -6,7 +6,7 @@ package flame.routes.admin.directors
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmeApi
-import flame.SmeDirectorDto
+import flame.admin.SmeDirectorDto
 import flame.SmeDto
 import flame.SmeSceneOption
 import flame.transformers.admin.toOutput
@@ -68,7 +68,7 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
     }
 
     private fun form(dto: SmeDirectorDto?) = SmeDirectorFields(dto.toOutput()).toForm(
-        heading = "Director form",
+        heading = "Director's form",
         details = if (dto == null) "Add Director" else "Edit ${dto.name}",
         logger = options.logger
     ) {
