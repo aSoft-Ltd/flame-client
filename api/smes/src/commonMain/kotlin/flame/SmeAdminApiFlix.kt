@@ -14,7 +14,7 @@ class SmeAdminApiFlix(private val options: SmeApiFlixOptions) : SmeAdminApi {
 
     private val logger by options.logger
 
-    private fun update(key: String, params: String) = options.scope.later {
+    private fun update(key: SmeKey, params: String) = options.scope.later {
         val tracer = logger.trace(options.message.save(key))
         val res = options.http.get(options.routes.save(key)) {
             bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
@@ -23,9 +23,11 @@ class SmeAdminApiFlix(private val options: SmeApiFlixOptions) : SmeAdminApi {
         res.getOrThrow<SmeDto>(options.codec, tracer)
     }
 
-    override fun update(params: SmeContactsDto) = update("contacts", options.codec.encodeToString(params))
+    override fun update(params: SmeContactsDto) = update(SmeKey.contacts, options.codec.encodeToString(params))
 
-    override fun update(params: SmeBusinessDto) = update("business", options.codec.encodeToString(params))
+    override fun update(params: SmeBusinessDto) = update(SmeKey.businesses, options.codec.encodeToString(params))
 
-    override fun update(params: SmeLegalComplianceDto) = update("legal", options.codec.encodeToString(params))
+    override fun update(params: SmeLegalComplianceDto) = update(SmeKey.legal, options.codec.encodeToString(params))
+
+    override fun update(params: List<SmeShareholderDto>) = update(SmeKey.shareholders, options.codec.encodeToString(params))
 }

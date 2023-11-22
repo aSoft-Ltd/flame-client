@@ -7,6 +7,8 @@ import flame.SmeApi
 import flame.SmeSceneOption
 import flame.routes.admin.business.SmeBusinessFormScene
 import flame.routes.admin.contacts.SmeContactFormScene
+import flame.routes.admin.legal.SmeLegalFormScene
+import flame.routes.admin.shareholders.SmeShareholderScene
 import kotlin.js.JsExport
 
 class AdminScenes(private val options: SmeSceneOption<SmeApi>) {
@@ -14,7 +16,7 @@ class AdminScenes(private val options: SmeSceneOption<SmeApi>) {
 
     val contacts by lazy { SmeContactFormScene(options) }
 
-    val legal by lazy {
+    val legal by lazy { SmeLegalFormScene(options) }
 
-    }
+    val shareholders by lazy { SmeShareholderScene(options) }
 }
