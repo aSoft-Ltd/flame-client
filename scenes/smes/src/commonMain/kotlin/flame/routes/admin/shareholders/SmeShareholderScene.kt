@@ -54,7 +54,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
         ) {
             onCancel { confirm.value = null }
             onConfirm {
-                options.api.admin.update(shareholders - holder).then {
+                options.api.admin.updateShareholders(shareholders - holder).then {
                     it.showShareholders()
                     confirm.value = null
                 }
@@ -81,7 +81,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
                 } else {
                     shareholders
                 }
-                options.api.admin.update(holders + it)
+                options.api.admin.updateShareholders(holders + it)
             }
         }
         onSuccess { sme: SmeDto ->

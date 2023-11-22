@@ -29,5 +29,7 @@ class SmeAdminApiFlix(private val options: SmeApiFlixOptions) : SmeAdminApi {
 
     override fun update(params: SmeLegalComplianceDto) = update(SmeKey.legal, options.codec.encodeToString(params))
 
-    override fun update(params: List<SmeShareholderDto>) = update(SmeKey.shareholders, options.codec.encodeToString(params))
+    override fun updateShareholders(params: List<SmeShareholderDto>) = update(SmeKey.shareholders, options.codec.encodeToString(params))
+
+    override fun updateDirectors(params: List<SmeDirectorDto>) = update(SmeKey.directors, options.codec.encodeToString(params))
 }
