@@ -3,10 +3,10 @@
 package flame.transformers.admin
 
 import flame.SmeContactsDto
-import flame.routes.admin.contacts.ContactDetailsOutput
+import flame.routes.admin.contacts.SmeContactOutput
 import symphony.PhoneOutput
 
-inline fun SmeContactsDto?.toOutput() = ContactDetailsOutput(
+inline fun SmeContactsDto?.toOutput() = SmeContactOutput(
     firstName = this?.firstName,
     lastName = this?.lastName,
     email = this?.email,
@@ -15,7 +15,7 @@ inline fun SmeContactsDto?.toOutput() = ContactDetailsOutput(
     dob = this?.dob
 )
 
-inline fun ContactDetailsOutput.toParams() = SmeContactsDto(
+inline fun SmeContactOutput.toParams() = SmeContactsDto(
     firstName = firstName,
     lastName = lastName,
     email = email,

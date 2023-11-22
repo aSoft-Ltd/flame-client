@@ -13,12 +13,19 @@ import sentinel.UserSession
 class SmeAdminApiFlix(private val options: SmeApiFlixOptions) : SmeAdminApi {
 
     private val logger by options.logger
-    override fun update(params: SmeContactsDto) = options.scope.later {
-        val tracer = logger.trace(options.message.saveContacts())
-        val res = options.http.get(options.routes.saveContacts()) {
+
+    private fun update(key: String, params: String) = options.scope.later {
+        val tracer = logger.trace(options.message.save(key))
+        val res = options.http.get(options.routes.save(key)) {
             bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
-            setBody(options.codec.encodeToString(params))
+            setBody(params)
         }
         res.getOrThrow<SmeDto>(options.codec, tracer)
     }
+
+    override fun update(params: SmeContactsDto) = update("contacts", options.codec.encodeToString(params))
+
+    override fun update(params: SmeBusinessDto) = update("business", options.codec.encodeToString(params))
+
+    override fun update(params: SmeLegalComplianceDto) = update("legal", options.codec.encodeToString(params))
 }

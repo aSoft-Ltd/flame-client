@@ -1,7 +1,7 @@
 @file:JsExport
-@file:Suppress("NON_EXPORTABLE_TYPE", "OPT_IN_USAGE")
+@file:Suppress("OPT_IN_USAGE", "NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.contacts
+package flame.routes.admin.business
 
 import flame.SmeApi
 import flame.SmeSceneOption
@@ -16,13 +16,13 @@ import koncurrent.toLater
 import kotlin.js.JsExport
 import symphony.toForm
 
-class ContactDetailsFormScene(
+class SmeBusinessFormScene(
     private val options: SmeSceneOption<SmeApi>
-) : FormScene<ContactDetailsFields>() {
+) : FormScene<SmeBusinessFields>() {
     fun initialize() {
-        ui.value = Loading("loading your information, please wait . . .")
+        ui.value = Loading("Loading business information")
         options.api.load().then {
-            it.admin?.contacts.toOutput()
+            it.admin?.business.toOutput()
         }.then {
             form(it)
         }.finally {
@@ -30,7 +30,7 @@ class ContactDetailsFormScene(
         }
     }
 
-    private fun form(output: ContactDetailsOutput) = ContactDetailsFields(output).toForm(
+    private fun form(output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
         heading = "Contact Details",
         details = "Enter your contact details here",
         logger = options.logger,
@@ -38,8 +38,8 @@ class ContactDetailsFormScene(
         onCancel { ui.value = Pending }
         onSubmit { output ->
             output.toLater().then {
-                it.toParams()
-            }.then {
+                output.toParams()
+            }.andThen {
                 options.api.admin.update(it)
             }
         }

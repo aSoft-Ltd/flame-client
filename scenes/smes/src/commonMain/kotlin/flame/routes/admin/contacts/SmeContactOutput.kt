@@ -3,7 +3,7 @@ package flame.routes.admin.contacts
 import krono.LocalDate
 import symphony.PhoneOutput
 
-class ContactDetailsOutput(
+class SmeContactOutput(
     var firstName: String? = "",
     var lastName: String? = "",
     var email: String? = "",

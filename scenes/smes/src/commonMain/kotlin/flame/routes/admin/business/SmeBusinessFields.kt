@@ -13,7 +13,7 @@ import symphony.selectSingle
 import symphony.text
 import symphony.toOption
 
-class BusinessDetailsFields(output: BusinessDetailsOutput) : Fields<BusinessDetailsOutput>(output) {
+class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(output) {
     val name = text(
         name = output::name,
         label = "Name of Business"

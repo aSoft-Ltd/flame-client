@@ -11,7 +11,7 @@ import symphony.name
 import symphony.phone
 import symphony.text
 
-class ContactDetailsFields(output: ContactDetailsOutput) : Fields<ContactDetailsOutput>(output) {
+class SmeContactFields(output: SmeContactOutput) : Fields<SmeContactOutput>(output) {
     val firstName = name(
         name = output::firstName,
         label = "First Name"

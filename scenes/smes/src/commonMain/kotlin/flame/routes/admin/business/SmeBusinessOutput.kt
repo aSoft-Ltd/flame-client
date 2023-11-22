@@ -4,7 +4,7 @@ import geo.AddressOutput
 import identifier.Industry
 import symphony.PhoneOutput
 
-class BusinessDetailsOutput(
+class SmeBusinessOutput(
     var name: String? = null,
     var registration: String? = null,
     var phone: PhoneOutput? = null,
