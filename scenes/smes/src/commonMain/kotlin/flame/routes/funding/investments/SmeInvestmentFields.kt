@@ -1,5 +1,9 @@
+@file:JsExport
+@file:Suppress("NON_EXPORTABLE_TYPE")
+
 package flame.routes.funding.investments
 
+import kotlin.js.JsExport
 import symphony.Fields
 import symphony.Option
 import symphony.double
