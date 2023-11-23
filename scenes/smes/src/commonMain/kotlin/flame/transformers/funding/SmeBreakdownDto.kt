@@ -2,6 +2,7 @@
 
 package flame.transformers.funding
 
+import flame.SmeSectionProgress
 import flame.funding.SmeBreakdownDto
 import flame.funding.SmeInvestmentDto
 import flame.routes.funding.breakdown.SmeBreakdownOutput
@@ -20,3 +21,14 @@ inline fun SmeBreakdownOutput.toParams() = SmeBreakdownDto(
     capital = capital,
     finance = finance,
 )
+
+fun SmeBreakdownDto?.toProgress(): SmeSectionProgress {
+    val total = listOf(
+        this?.acquisition,
+        this?.capex,
+        this?.capital,
+        this?.finance
+    )
+    val completed = total.filterNotNull()
+    return SmeSectionProgress(completed.size, total.size)
+}

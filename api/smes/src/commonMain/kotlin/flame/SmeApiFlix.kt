@@ -15,6 +15,8 @@ class SmeApiFlix(private val options: SmeApiFlixOptions) : SmeApi {
 
     override val funding by lazy { SmeFundingApiFlix(options) }
 
+    override val finance by lazy { SmeFinanceApiFlix(options) }
+
     private val logger by options.logger
 
     override fun load(): Later<SmeDto> = options.scope.later {
