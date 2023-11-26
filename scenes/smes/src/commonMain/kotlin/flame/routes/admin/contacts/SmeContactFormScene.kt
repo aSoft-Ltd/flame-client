@@ -39,7 +39,7 @@ class SmeContactFormScene(
         onSubmit { output ->
             output.toLater().then {
                 it.toParams()
-            }.then {
+            }.andThen {
                 options.api.admin.update(it)
             }
         }
