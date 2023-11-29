@@ -57,6 +57,8 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
                 options.api.admin.updateShareholders(shareholders - holder).then {
                     it.showShareholders()
                     confirm.value = null
+                }.then {
+                    options.bus.dispatch(options.topic.progressMade())
                 }
             }
         }
@@ -86,6 +88,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
         }
         onSuccess { sme: SmeDto ->
             sme.showShareholders()
+            options.bus.dispatch(options.topic.progressMade())
         }
     }
 }

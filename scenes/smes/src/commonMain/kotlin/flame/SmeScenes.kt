@@ -5,6 +5,7 @@ package flame
 
 import flame.routes.SmeInfoScene
 import flame.routes.admin.SmeAdminScenes
+import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinanceScenes
 import flame.routes.funding.SmeFundingScenes
 import kotlin.js.JsExport
@@ -17,4 +18,6 @@ class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val funding by lazy { SmeFundingScenes(options) }
 
     val finance by lazy { SmeFinanceScenes(options) }
+
+    val documents by lazy { SmeDocumentsScenes(options) }
 }

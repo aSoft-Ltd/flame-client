@@ -43,5 +43,8 @@ class SmeContactFormScene(
                 options.api.admin.update(it)
             }
         }
+        onSuccess {
+            options.bus.dispatch(options.topic.progressMade())
+        }
     }
 }

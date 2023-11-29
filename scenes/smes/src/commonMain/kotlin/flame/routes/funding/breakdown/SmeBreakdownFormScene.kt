@@ -45,5 +45,8 @@ class SmeBreakdownFormScene(
                 options.api.funding.update(it)
             }
         }
+        onSuccess {
+            options.bus.dispatch(options.topic.progressMade())
+        }
     }
 }

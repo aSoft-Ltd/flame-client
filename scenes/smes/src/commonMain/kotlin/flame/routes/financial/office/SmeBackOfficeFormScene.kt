@@ -45,5 +45,8 @@ class SmeBackOfficeFormScene(
                 options.api.finance.update(it)
             }
         }
+        onSuccess {
+            options.bus.dispatch(options.topic.progressMade())
+        }
     }
 }

@@ -1,5 +1,6 @@
 package flame
 
+import epsilon.FileReader
 import io.ktor.client.HttpClient
 import keep.Cache
 import lexi.LoggerFactory
@@ -11,9 +12,10 @@ class SmeApiFlixOptions(
     val cache: Cache,
     val logger: LoggerFactory,
     val http: HttpClient,
-    val routes: SmeRoutes,
+    val routes: SmeEndpoint,
     val sessionCacheKey: String,
-    val codec: StringFormat
+    val codec: StringFormat,
+    val reader: FileReader
 ) {
     val message by lazy { SmeActionMessage() }
 }

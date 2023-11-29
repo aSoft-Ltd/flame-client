@@ -58,6 +58,8 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
                 options.api.admin.updateDirectors(directors - director).then {
                     it.showDirectors()
                     confirm.value = null
+                }.then {
+                    options.bus.dispatch(options.topic.progressMade())
                 }
             }
         }
@@ -86,6 +88,7 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
             }
         }
         onSuccess { sme: SmeDto ->
+            options.bus.dispatch(options.topic.progressMade())
             sme.showDirectors()
         }
     }

@@ -1,9 +1,14 @@
 package flame
 
+import cabinet.FileUploadParam
+import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.bearerAuth
-import io.ktor.client.request.get
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import kase.response.getOrThrow
 import keep.load
 import koncurrent.later
@@ -18,6 +23,27 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
         val res = options.http.post(options.routes.save(key)) {
             bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
             setBody(params)
+        }
+        res.getOrThrow<SmeDto>(options.codec, tracer)
+    }
+
+    protected fun upload(params: FileUploadParam) = options.scope.later {
+        val tracer = logger.trace("Uploading ${params.filename}")
+        val secret = options.cache.load<UserSession>(options.sessionCacheKey).await().secret
+        val (reading, uploading) = it.setStages("reading", "uploading")
+        val bytes = options.reader.read(params.file).await { p -> reading(p) }
+        val res = options.http.post(options.routes.documents()) {
+            bearerAuth(secret)
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("path", params.path)
+                    append("name", params.filename)
+                    append("file", bytes, Headers.build {
+                        append(HttpHeaders.ContentDisposition, "filename=\"${params.filename}\"")
+                    })
+                }
+            ))
+            onUpload { bytesSentTotal, contentLength -> uploading(bytesSentTotal, contentLength) }
         }
         res.getOrThrow<SmeDto>(options.codec, tracer)
     }

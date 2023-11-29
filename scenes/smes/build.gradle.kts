@@ -25,6 +25,7 @@ kotlin {
                 api(libs.symphony.input.dialog)
                 api(libs.cabinet.api.core)
                 api(libs.epsilon.api.file) // Because we want to upload customer documents as attachments
+                api(libs.epsilon.file.fields) // Because we want to upload customer documents as attachments
                 api(libs.krest.core) // Because we want to write background workers for uploading attachments
 			    api(libs.sanity.core)
                 api(libs.snitch.api)
