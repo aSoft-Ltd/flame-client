@@ -9,10 +9,21 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import kase.progress.ProgressPublisher
 import kase.response.getOrThrow
 import keep.load
+import koncurrent.Later
 import koncurrent.later
 import koncurrent.later.await
+import kotlin.math.exp
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.measureTimedValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import sentinel.UserSession
 
 abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
@@ -30,22 +41,29 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
     protected fun upload(params: FileUploadParam) = options.scope.later { task ->
         val tracer = logger.trace("Uploading ${params.filename}")
         val secret = options.cache.load<UserSession>(options.sessionCacheKey).await().secret
-        val (reading, uploading, releasing) = task.setStages("reading", "uploading", "releasing")
+        val (reading, uploading, estimating) = task.setStages("reading", "uploading", "finalizing")
         val bytes = options.reader.read(params.file).await { p -> task.updateProgress(reading(p)) }
-        val res = options.http.post(options.routes.documents()) {
-            bearerAuth(secret)
-            setBody(MultiPartFormDataContent(
-                formData {
-                    append("path", params.path)
-                    append("name", params.filename)
-                    append("file", bytes, Headers.build {
-                        append(HttpHeaders.ContentDisposition, "filename=\"${params.filename}\"")
-                    })
-                }
-            ))
-            onUpload { bytesSentTotal, contentLength -> task.updateProgress(uploading(bytesSentTotal, contentLength)) }
+        val res = async {
+            options.http.post(options.routes.documents()) {
+                bearerAuth(secret)
+                setBody(MultiPartFormDataContent(
+                    formData {
+                        append("path", params.path)
+                        append("name", params.filename)
+                        append("file", bytes, Headers.build {
+                            append(HttpHeaders.ContentDisposition, "filename=\"${params.filename}\"")
+                        })
+                    }
+                ))
+
+                onUpload { bytesSentTotal, contentLength -> task.updateProgress(uploading(bytesSentTotal, contentLength)) }
+            }
         }
-        releasing(50, 100)
-        res.getOrThrow<SmeDto>(options.codec, tracer).also { task.updateProgress(releasing(100, 100)) }
+
+        estimate(bytes.size) { !res.isCompleted }.await { task.updateProgress(estimating(it)) }
+        task.updateProgress(estimating(100, 100))
+        delay(500.milliseconds)
+
+        res.await().getOrThrow<SmeDto>(options.codec, tracer)
     }
 }
