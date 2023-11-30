@@ -15,6 +15,7 @@ import keep.load
 import koncurrent.Later
 import koncurrent.later
 import koncurrent.later.await
+import koncurrent.later.estimate
 import kotlin.math.exp
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -60,7 +61,7 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
             }
         }
 
-        estimate(bytes.size) { !res.isCompleted }.await { task.updateProgress(estimating(it)) }
+        estimate(bytes.size, until = { res.isCompleted }).await { task.updateProgress(estimating(it)) }
         task.updateProgress(estimating(100, 100))
         delay(500.milliseconds)
 
