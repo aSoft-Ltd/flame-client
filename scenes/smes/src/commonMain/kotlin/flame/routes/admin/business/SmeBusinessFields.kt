@@ -7,6 +7,7 @@ import geo.address
 import identifier.Industry
 import kotlin.js.JsExport
 import symphony.Fields
+import symphony.Option
 import symphony.integer
 import symphony.phone
 import symphony.selectSingle
@@ -47,17 +48,20 @@ class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(o
     val industry = selectSingle(
         name = output::industry,
         items = Industry.values().toList(),
-        mapper = { it.toOption() }
+        mapper = { Option(it.label, it.label) }
     )
 
-    val stage = text(
+    val stage = selectSingle(
         name = output::businessStage,
-        label = "Business Stage"
+        label = "Business Stage",
+        items = listOf("Startup Phase", "Growth Phase", "Maturity Phase", "Decline/Revitalization"),
+        mapper = { Option(it, it) }
     )
 
-    val bbbee = text(
+    val bbbee = selectSingle(
         name = output::bbbee,
-        label = "BBBEE Level"
+        items = (1..9).map { it.toString() },
+        mapper = { Option("Level $it") }
     )
 
     val staffCompliment = text(

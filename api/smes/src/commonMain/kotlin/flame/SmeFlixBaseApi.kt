@@ -27,11 +27,11 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
         res.getOrThrow<SmeDto>(options.codec, tracer)
     }
 
-    protected fun upload(params: FileUploadParam) = options.scope.later {
+    protected fun upload(params: FileUploadParam) = options.scope.later { task ->
         val tracer = logger.trace("Uploading ${params.filename}")
         val secret = options.cache.load<UserSession>(options.sessionCacheKey).await().secret
-        val (reading, uploading) = it.setStages("reading", "uploading")
-        val bytes = options.reader.read(params.file).await { p -> reading(p) }
+        val (reading, uploading, releasing) = task.setStages("reading", "uploading", "releasing")
+        val bytes = options.reader.read(params.file).await { p -> task.updateProgress(reading(p)) }
         val res = options.http.post(options.routes.documents()) {
             bearerAuth(secret)
             setBody(MultiPartFormDataContent(
@@ -43,8 +43,9 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
                     })
                 }
             ))
-            onUpload { bytesSentTotal, contentLength -> uploading(bytesSentTotal, contentLength) }
+            onUpload { bytesSentTotal, contentLength -> task.updateProgress(uploading(bytesSentTotal, contentLength)) }
         }
-        res.getOrThrow<SmeDto>(options.codec, tracer)
+        releasing(50, 100)
+        res.getOrThrow<SmeDto>(options.codec, tracer).also { task.updateProgress(releasing(100, 100)) }
     }
 }
