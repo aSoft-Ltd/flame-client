@@ -76,11 +76,11 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
             options = SubmitWorkOptions(
                 type = Type,
                 topic = customer.value.data?.uid,
-                name = info.name,
+                name = info.nameWithExtension,
                 params = UploadAttachmentWorkerParams(
                     entityId = customer.value.data?.uid ?: UNSET,
                     file = file,
-                    filename = info.name
+                    filename = info.nameWithExtension
                 )
             )
         )
