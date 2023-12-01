@@ -9,20 +9,12 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
-import kase.progress.ProgressPublisher
 import kase.response.getOrThrow
 import keep.load
-import koncurrent.Later
 import koncurrent.later
 import koncurrent.later.await
 import koncurrent.later.estimate
-import kotlin.math.exp
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.measureTimedValue
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import sentinel.UserSession
@@ -62,7 +54,7 @@ abstract class SmeFlixBaseApi(protected val options: SmeApiFlixOptions) {
         }
 
         estimate(bytes.size, until = { res.isCompleted }).await { task.updateProgress(estimating(it)) }
-        task.updateProgress(estimating(100, 100))
+        task.updateProgress(estimating(bytes.size, bytes.size))
         delay(500.milliseconds)
 
         res.await().getOrThrow<SmeDto>(options.codec, tracer)
