@@ -1,43 +1,44 @@
 @file:JsExport
-@file:Suppress("NON_EXPORTABLE_TYPE")
+@file:Suppress("NON_EXPORTABLE_TYPE", "NOTHING_TO_INLINE")
 
 package flame.routes.admin.directors
 
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmeApi
-import flame.admin.SmeDirectorDto
-import flame.SmeDto
 import flame.SmeSceneOption
+import flame.admin.SmeDirectorDto
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
+import flame.transformers.toPresenter
+import kase.LazyState
+import kase.Loading
+import kase.Pending
+import kase.toLazyState
+import kollections.List
+import kollections.iEmptyList
+import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport
 import symphony.ConfirmationBox
-import symphony.Form
-import symphony.lazyListOf
-import symphony.paginatorOf
+import symphony.Peekaboo
 import symphony.toForm
 
 class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
-    private val directors = mutableListOf<SmeDirectorDto>()
+    val directors = mutableLiveOf<LazyState<List<SmeDirectorDto>>>(Pending)
 
-    val form = mutableLiveOf<Form<SmeDto, SmeDirectorOutput, SmeDirectorFields>?>(null)
+    val form = mutableLiveOf<SmeDirectorForm?>(null)
 
     val confirm = mutableLiveOf<ConfirmationBox?>(null)
 
-    private val paginator = paginatorOf(directors, 10)
-
-    val list = lazyListOf(paginator)
-    fun initialize() = options.api.load().then {
-        it.showDirectors()
-    }
-
-    private fun SmeDto.showDirectors() {
-        directors.clear()
-        admin?.directors?.forEach { directors.add(it) }
-        paginator.refreshAllPages()
+    fun initialize() {
+        directors.value = Loading("Loading directors, please wait . . .")
+        options.api.load().then {
+            it.admin?.directors ?: iEmptyList()
+        }.finally {
+            directors.value = it.toLazyState()
+        }
     }
 
     fun showAddForm() {
@@ -48,6 +49,7 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
         form.value = form(director)
     }
 
+    private val existing get() = directors.value.data ?: throw IllegalStateException("editing null shareholder's is prohibited")
     fun delete(director: SmeDirectorDto) {
         confirm.value = ConfirmationBox(
             heading = "Delete ${director.name}",
@@ -55,10 +57,10 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
         ) {
             onCancel { confirm.value = null }
             onConfirm {
-                options.api.admin.updateDirectors(directors - director).then {
-                    it.showDirectors()
+                options.api.admin.updateDirectors(existing - director).then {
                     confirm.value = null
-                }.then {
+                }.finally {
+                    initialize()
                     options.bus.dispatch(options.topic.progressMade())
                 }
             }
@@ -66,30 +68,37 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
     }
 
     fun deInitialize() {
-        paginator.deInitialize(true)
+        directors.value = Pending
+        form.value = null
+        confirm.value = null
     }
+
+    private inline fun SmeDirectorDto?.toLabel() = if (this == null) "Add Director" else "Edit $name"
 
     private fun form(dto: SmeDirectorDto?) = SmeDirectorFields(dto.toOutput()).toForm(
         heading = "Director's form",
-        details = if (dto == null) "Add Director" else "Edit ${dto.name}",
+        details = dto.toLabel(),
         logger = options.logger
     ) {
         onCancel { form.value = null }
-        onSubmit { output ->
+        onSubmit(dto.toLabel()) { output ->
             output.toLater().then {
                 it.toParams()
             }.andThen {
                 val rectors = if (dto != null) {
-                    directors - dto
+                    existing - dto
                 } else {
-                    directors
+                    existing
                 }
                 options.api.admin.updateDirectors(rectors + it)
+            }.then {
+                it.toPresenter()
             }
         }
-        onSuccess { sme: SmeDto ->
+        onSuccess {
+            initialize()
             options.bus.dispatch(options.topic.progressMade())
-            sme.showDirectors()
+            form.value = null
         }
     }
 }

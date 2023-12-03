@@ -7,36 +7,39 @@ import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmeApi
 import flame.SmeDto
+import flame.SmePresenter
 import flame.SmeSceneOption
 import flame.admin.SmeShareholderDto
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
+import flame.transformers.toPresenter
+import kase.LazyState
+import kase.Loading
+import kase.Pending
+import kase.toLazyState
+import kollections.List
+import kollections.iEmptyList
+import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport
 import symphony.ConfirmationBox
 import symphony.Form
-import symphony.lazyListOf
-import symphony.paginatorOf
 import symphony.toForm
 
 class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
-    private val shareholders = mutableListOf<SmeShareholderDto>()
+    val shareholders = mutableLiveOf<LazyState<List<SmeShareholderDto>>>(Pending)
 
-    val form = mutableLiveOf<Form<SmeDto, SmeShareholderOutput, SmeShareholderFields>?>(null)
+    val form = mutableLiveOf<Form<SmePresenter, SmeShareholderOutput, SmeShareholderFields>?>(null)
     val confirm = mutableLiveOf<ConfirmationBox?>(null)
 
-    private val paginator = paginatorOf(shareholders, 10)
-
-    val list = lazyListOf(paginator)
-    fun initialize() = options.api.load().then {
-        it.showShareholders()
-    }
-
-    private fun SmeDto.showShareholders() {
-        shareholders.clear()
-        admin?.shareholders?.forEach { shareholders.add(it) }
-        paginator.refreshAllPages()
+    fun initialize() {
+        shareholders.value = Loading("Fetching shareholders, please wait . . .")
+        options.api.load().then {
+            it.admin?.shareholders ?: iEmptyList()
+        }.finally {
+            shareholders.value = it.toLazyState()
+        }
     }
 
     fun showAddForm() {
@@ -47,6 +50,8 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
         form.value = form(shareholder)
     }
 
+    private val existing get() = shareholders.value.data ?: throw IllegalStateException("editing null shareholder's is prohibited")
+
     fun delete(holder: SmeShareholderDto) {
         confirm.value = ConfirmationBox(
             heading = "Delete ${holder.name}",
@@ -54,10 +59,10 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
         ) {
             onCancel { confirm.value = null }
             onConfirm {
-                options.api.admin.updateShareholders(shareholders - holder).then {
-                    it.showShareholders()
+                options.api.admin.updateShareholders(existing - holder).then {
                     confirm.value = null
-                }.then {
+                }.complete {
+                    initialize()
                     options.bus.dispatch(options.topic.progressMade())
                 }
             }
@@ -65,7 +70,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
     }
 
     fun deInitialize() {
-        paginator.deInitialize(true)
+        shareholders.value = Pending
     }
 
     private fun form(dto: SmeShareholderDto?) = SmeShareholderFields(dto.toOutput()).toForm(
@@ -79,15 +84,18 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
                 it.toParams()
             }.andThen {
                 val holders = if (dto != null) {
-                    shareholders - dto
+                    existing - dto
                 } else {
-                    shareholders
+                    existing
                 }
                 options.api.admin.updateShareholders(holders + it)
+            }.then {
+                it.toPresenter()
             }
         }
-        onSuccess { sme: SmeDto ->
-            sme.showShareholders()
+        onSuccess {
+            initialize()
+            form.value = null
             options.bus.dispatch(options.topic.progressMade())
         }
     }

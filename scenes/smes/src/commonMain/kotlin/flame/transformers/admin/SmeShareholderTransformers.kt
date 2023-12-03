@@ -18,5 +18,5 @@ inline fun SmeShareholderOutput.toParams() = SmeShareholderDto(
     currentShareholding = currentShareholding,
     postInvestmentShareholding = postInvestmentShareholding,
     isJuristic = isJuristic,
-    beneficiary = beneficiary,
+    beneficiary = if (isJuristic == true) beneficiary else null,
 )
