@@ -4,7 +4,9 @@ package flame.transformers.admin
 
 import flame.SmeSectionProgress
 import flame.admin.SmeBusinessDto
+import flame.admin.SmeBusinessPresenter
 import flame.routes.admin.business.SmeBusinessOutput
+import geo.toPresenter
 import geo.transformers.toOutput
 import symphony.PhoneOutput
 
@@ -53,3 +55,20 @@ fun SmeBusinessDto?.toProgress(): SmeSectionProgress {
     val completed = total.filterNotNull()
     return SmeSectionProgress(completed.size, total.size)
 }
+
+inline fun SmeBusinessPresenter?.toProgress() = this?.src?.toPresenter()
+
+fun SmeBusinessDto.toPresenter() = SmeBusinessPresenter(
+    src = this,
+    name = name,
+    registration = registration,
+    phone = phone,
+    yearsInOperation = yearsInOperation,
+    address = address?.toPresenter(),
+    numberOfJobs = numberOfJobs,
+    industry = industry,
+    businessStage = businessStage,
+    bbbee = bbbee,
+    staffComplement = staffComplement,
+    description = description,
+)

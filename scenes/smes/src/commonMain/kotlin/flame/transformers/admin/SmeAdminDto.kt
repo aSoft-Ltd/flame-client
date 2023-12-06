@@ -2,6 +2,7 @@ package flame.transformers.admin
 
 import flame.SmeSectionProgress
 import flame.admin.SmeAdminDto
+import flame.admin.SmeAdminPresenter
 import flame.transformers.utils.aggregate
 import flame.transformers.utils.toProgress
 
@@ -13,3 +14,10 @@ fun SmeAdminDto?.toProgress(): SmeSectionProgress = listOf(
     this?.shareholders.toProgress(),
 ).aggregate()
 
+fun SmeAdminDto.toPresenter() = SmeAdminPresenter(
+    contacts = contacts,
+    business = business?.toPresenter(),
+    legal = legal,
+    directors = directors,
+    shareholders = shareholders,
+)

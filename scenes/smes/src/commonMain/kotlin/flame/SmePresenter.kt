@@ -3,7 +3,7 @@
 
 package flame
 
-import flame.admin.SmeAdminDto
+import flame.admin.SmeAdminPresenter
 import flame.documents.SmeDocumentsPresenter
 import flame.finance.SmeFinanceDto
 import flame.funding.SmeFundingDto
@@ -13,7 +13,7 @@ data class SmePresenter(
     val src: SmeDto,
     val uid: String,
     val company: String,
-    val admin: SmeAdminDto?,
+    val admin: SmeAdminPresenter?,
     val funding: SmeFundingDto?,
     val finance: SmeFinanceDto?,
     val documents: SmeDocumentsPresenter?

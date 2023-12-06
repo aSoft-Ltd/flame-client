@@ -3,6 +3,7 @@ package flame.transformers
 import flame.SmeDto
 import flame.SmePresenter
 import flame.SmeProgress
+import flame.transformers.admin.toPresenter
 import flame.transformers.admin.toProgress
 import flame.transformers.documents.toPresenter
 import flame.transformers.documents.toProgress
@@ -13,7 +14,7 @@ fun SmeDto.toPresenter() = SmePresenter(
     src = this,
     uid = uid,
     company = company,
-    admin = admin,
+    admin = admin?.toPresenter(),
     funding = funding,
     finance = finance,
     documents = documents.toPresenter()

@@ -37,7 +37,7 @@ class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(o
 
     val address = address(
         name = output::address,
-        label = "Physical Address"
+        label = "Physical Address",
     )
 
     val jobs = integer(
