@@ -2,9 +2,15 @@
 
 package flame.transformers.finance
 
+import flame.SmeApi
+import flame.SmeSceneOption
 import flame.SmeSectionProgress
 import flame.finance.SmeBackOfficeDto
+import flame.routes.financial.office.SmeBackOfficeFields
 import flame.routes.financial.office.SmeBackOfficeOutput
+import kase.Pending
+import koncurrent.toLater
+import symphony.toForm
 
 inline fun SmeBackOfficeDto?.toOutput() = SmeBackOfficeOutput(
     accounting = this?.accounting,
@@ -19,6 +25,23 @@ inline fun SmeBackOfficeDto?.toOutput() = SmeBackOfficeOutput(
     assetsAssurance = this?.assetsAssurance,
     criticalSystems = this?.criticalSystems,
 )
+
+inline fun SmeBackOfficeDto?.toForm(options: SmeSceneOption<SmeApi>) = SmeBackOfficeFields(toOutput()).toForm(
+    heading = "Business Details",
+    details = "Enter your business details here",
+    logger = options.logger,
+) {
+    onSubmit { output ->
+        output.toLater().then {
+            output.toParams()
+        }.andThen {
+            options.api.finance.update(it)
+        }
+    }
+    onSuccess {
+        options.bus.dispatch(options.topic.progressMade())
+    }
+}
 
 inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
     accounting = accounting,

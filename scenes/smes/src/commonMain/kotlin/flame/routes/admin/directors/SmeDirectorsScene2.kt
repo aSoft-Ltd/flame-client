@@ -29,7 +29,7 @@ class SmeDirectorsScene2(private val options: SmeSceneOption<SmeApi>) : BaseScen
     val directors = mutableLiveOf<LazyState<List<SmeDirectorDto>>>(Pending)
 
     val form = Peekaboo { sme: SmeDirectorDto? ->
-        val label = if (sme == null) "Add Director" else "Edit $sme"
+        val label = if (sme == null) "Add Director" else "Edit ${sme.name}"
 
         SmeDirectorFields(sme.toOutput()).toForm(
             heading = "Director's form",

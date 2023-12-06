@@ -3,8 +3,10 @@
 
 package flame.utils
 
+import cinematic.LazyScene
 import flame.SmeApi
 import flame.SmeDto
+import flame.SmePresenter
 import flame.SmeSceneOption
 import kase.Loading
 import kase.toLazyState
@@ -14,8 +16,9 @@ import symphony.Fields
 import symphony.Form
 
 class SmeFormScene<out F : Fields<*>>(
-    private val options: SmeSceneOption<SmeApi>, private val initializer: (SmeDto) -> Form<*, *, F>
-) : FormScene<F>() {
+    private val options: SmeSceneOption<SmeApi>,
+    private val initializer: (SmeDto) -> Form<SmePresenter, *, F>
+) : LazyScene<Form<SmePresenter, *, F>>() {
     fun initialize() {
         ui.value = Loading("Loading form please wait")
         options.api.load().then {
@@ -26,4 +29,6 @@ class SmeFormScene<out F : Fields<*>>(
     }
 }
 
-fun <F : Fields<*>> SmeSceneOption<SmeApi>.toSmeScene(initializer: (SmeDto) -> Form<*, *, F>) = SmeFormScene(this, initializer)
+fun <F : Fields<*>> SmeSceneOption<SmeApi>.toSmeScene(
+    initializer: (SmeDto) -> Form<SmePresenter, *, F>
+) = SmeFormScene(this, initializer)
