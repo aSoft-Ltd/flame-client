@@ -5,6 +5,7 @@ package flame.transformers.funding
 import flame.SmeSectionProgress
 import flame.funding.SmeInvestmentDto
 import flame.routes.funding.investments.SmeInvestmentOutput
+import flame.transformers.utils.toProgress
 
 inline fun SmeInvestmentDto?.toOutput() = SmeInvestmentOutput(
     amount = this?.amount,
@@ -22,14 +23,10 @@ inline fun SmeInvestmentOutput.toParams() = SmeInvestmentDto(
     description = description,
 )
 
-fun SmeInvestmentDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(
-        this?.amount,
-        this?.type,
-        this?.debtTenure,
-        this?.equity,
-        this?.description,
-    )
-    val completed = total.filterNotNull()
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeInvestmentDto?.toProgress() = listOf(
+    this?.amount,
+    this?.type,
+    this?.debtTenure,
+    this?.equity,
+    this?.description,
+).toProgress()

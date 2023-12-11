@@ -14,4 +14,6 @@ class SmeFinanceScenes(private val options: SmeSceneOption<SmeApi>) {
     val office by lazy { SmeBackOfficeFormScene(options) }
 
     val status by lazy { options.toSmeScene { it.finance?.status.toForm(options) } }
+
+    val acquisition by lazy { options.toSmeScene { it.finance?.acquisition.toForm(options) } }
 }

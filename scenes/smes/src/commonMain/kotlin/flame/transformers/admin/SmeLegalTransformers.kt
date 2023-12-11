@@ -2,9 +2,9 @@
 
 package flame.transformers.admin
 
-import flame.SmeSectionProgress
 import flame.admin.SmeLegalComplianceDto
 import flame.routes.admin.legal.SmeLegalOutput
+import flame.transformers.utils.toProgress
 
 inline fun SmeLegalComplianceDto?.toOutput() = SmeLegalOutput(
     cipcAnnualReturns = this?.cipcAnnualReturns,
@@ -28,19 +28,13 @@ inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
     workmanCompensationNumber = workmanCompensationNumber,
 )
 
-fun SmeLegalComplianceDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(
-        this?.cipcAnnualReturns,
-        this?.registration,
-        this?.vatRegistration,
-        this?.vatNumber,
-        this?.taxComplianceStatus,
-        this?.incomeTaxNumber,
-        this?.workmanCompensationOption,
-        this?.workmanCompensationNumber,
-    )
-
-    val completed = total.filterNotNull()
-
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeLegalComplianceDto?.toProgress() = listOf(
+    this?.cipcAnnualReturns,
+    this?.registration,
+    this?.vatRegistration,
+    this?.vatNumber,
+    this?.taxComplianceStatus,
+    this?.incomeTaxNumber,
+    this?.workmanCompensationOption,
+    this?.workmanCompensationNumber,
+).toProgress()

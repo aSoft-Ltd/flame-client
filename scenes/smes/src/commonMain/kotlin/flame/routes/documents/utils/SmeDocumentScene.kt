@@ -15,7 +15,7 @@ import kase.Executing
 import kase.Failure
 import kase.Pending
 import kase.Success
-import kollections.JsExport
+import kotlinx.JsExport
 import krest.params.SubmitWorkOptions
 
 class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {

@@ -6,6 +6,7 @@ import flame.SmeSectionProgress
 import flame.admin.SmeBusinessDto
 import flame.admin.SmeBusinessPresenter
 import flame.routes.admin.business.SmeBusinessOutput
+import flame.transformers.utils.toProgress
 import geo.toPresenter
 import geo.transformers.toOutput
 import symphony.PhoneOutput
@@ -38,23 +39,19 @@ inline fun SmeBusinessOutput.toParams() = SmeBusinessDto(
     description = description,
 )
 
-fun SmeBusinessDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(
-        this?.name,
-        this?.registration,
-        this?.phone,
-        this?.yearsInOperation,
-        this?.address,
-        this?.numberOfJobs,
-        this?.industry,
-        this?.businessStage,
-        this?.bbbee,
-        this?.staffComplement,
-        this?.description
-    )
-    val completed = total.filterNotNull()
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeBusinessDto?.toProgress() = listOf(
+    this?.name,
+    this?.registration,
+    this?.phone,
+    this?.yearsInOperation,
+    this?.address,
+    this?.numberOfJobs,
+    this?.industry,
+    this?.businessStage,
+    this?.bbbee,
+    this?.staffComplement,
+    this?.description
+).toProgress()
 
 inline fun SmeBusinessPresenter?.toProgress() = this?.src?.toPresenter()
 

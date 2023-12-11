@@ -2,7 +2,7 @@
 
 package flame
 
-import kollections.JsExport
+import kotlinx.JsExport
 
 class EntityDestination(val base: String) {
     val add = "add"

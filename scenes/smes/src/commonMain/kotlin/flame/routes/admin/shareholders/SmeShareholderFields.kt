@@ -4,6 +4,7 @@
 package flame.routes.admin.shareholders
 
 import kotlin.js.JsExport
+import neat.required
 import symphony.Fields
 import symphony.boolean
 import symphony.double
@@ -15,7 +16,8 @@ class SmeShareholderFields(output: SmeShareholderOutput) : Fields<SmeShareholder
         name = output::name,
         label = "Full Name of Shareholder",
         hint = "Enter Full Name of Shareholder"
-    )
+    ) { required() }
+
     val currentShareholding = double(
         name = output::currentShareholding,
         label = "Current Shareholding",

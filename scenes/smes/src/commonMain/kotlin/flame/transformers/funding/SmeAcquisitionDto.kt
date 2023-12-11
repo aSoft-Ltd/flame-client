@@ -9,6 +9,7 @@ import flame.funding.SmeInvestmentDto
 import flame.routes.funding.acquisition.SmeAcquisitionOutput
 import flame.routes.funding.breakdown.SmeBreakdownOutput
 import flame.routes.funding.investments.SmeInvestmentOutput
+import flame.transformers.utils.toProgress
 
 inline fun SmeAcquisitionDto?.toOutput() = SmeAcquisitionOutput(
     price = this?.price,
@@ -22,8 +23,4 @@ inline fun SmeAcquisitionOutput.toParams() = SmeAcquisitionDto(
     valuation = valuation,
 )
 
-fun SmeAcquisitionDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(this?.price, this?.dd, this?.valuation)
-    val completed = total.filterNotNull()
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeAcquisitionDto?.toProgress() = listOf(this?.price, this?.dd, this?.valuation).toProgress()

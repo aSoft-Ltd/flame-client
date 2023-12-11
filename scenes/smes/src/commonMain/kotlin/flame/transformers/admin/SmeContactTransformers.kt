@@ -5,6 +5,7 @@ package flame.transformers.admin
 import flame.SmeSectionProgress
 import flame.admin.SmeContactsDto
 import flame.routes.admin.contacts.SmeContactOutput
+import flame.transformers.utils.toProgress
 import symphony.PhoneOutput
 
 inline fun SmeContactsDto?.toOutput() = SmeContactOutput(
@@ -25,16 +26,11 @@ inline fun SmeContactOutput.toParams() = SmeContactsDto(
     dob = dob
 )
 
-fun SmeContactsDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(
-        this?.firstName,
-        this?.lastName,
-        this?.email,
-        this?.phone,
-        this?.role,
-        this?.dob,
-    )
-
-    val completed = total.filterNotNull()
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeContactsDto?.toProgress() = listOf(
+    this?.firstName,
+    this?.lastName,
+    this?.email,
+    this?.phone,
+    this?.role,
+    this?.dob,
+).toProgress()

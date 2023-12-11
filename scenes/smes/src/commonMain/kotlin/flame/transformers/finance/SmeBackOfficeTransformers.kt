@@ -8,6 +8,7 @@ import flame.SmeSectionProgress
 import flame.finance.SmeBackOfficeDto
 import flame.routes.financial.office.SmeBackOfficeFields
 import flame.routes.financial.office.SmeBackOfficeOutput
+import flame.transformers.utils.toProgress
 import kase.Pending
 import koncurrent.toLater
 import symphony.toForm
@@ -57,20 +58,16 @@ inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
     criticalSystems = criticalSystems,
 )
 
-fun SmeBackOfficeDto?.toProgress(): SmeSectionProgress {
-    val total = listOf(
-        this?.accounting,
-        this?.payroll,
-        this?.accountingConsultation,
-        this?.noOfEmployeesInTheFinanceDepartment,
-        this?.financialHead,
-        this?.totalStaffCompliment,
-        this?.hrConsultation,
-        this?.policyExistence,
-        this?.policyReviewFrequency,
-        this?.assetsAssurance,
-        this?.criticalSystems,
-    )
-    val completed = total.filterNotNull()
-    return SmeSectionProgress(completed.size, total.size)
-}
+fun SmeBackOfficeDto?.toProgress() = listOf(
+    this?.accounting,
+    this?.payroll,
+    this?.accountingConsultation,
+    this?.noOfEmployeesInTheFinanceDepartment,
+    this?.financialHead,
+    this?.totalStaffCompliment,
+    this?.hrConsultation,
+    this?.policyExistence,
+    this?.policyReviewFrequency,
+    this?.assetsAssurance,
+    this?.criticalSystems,
+).toProgress()

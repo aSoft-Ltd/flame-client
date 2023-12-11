@@ -8,8 +8,11 @@ import kotlin.js.JsExport
 data class SmeProgress(
     val sme: SmePresenter,
     val admin: SmeSectionProgress,
-    val funding: SmeSectionProgress,
     val documents: SmeSectionProgress,
+    val finance: SmeSectionProgress,
+    val funding: SmeSectionProgress,
+    val governance: SmeSectionProgress,
+    val swot: SmeSectionProgress
 ) {
-    val overall by lazy { admin + funding + documents }
+    val overall by lazy { admin + documents + finance + funding + governance }
 }

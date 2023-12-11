@@ -2,10 +2,12 @@ package flame.transformers.finance
 
 import flame.SmeApi
 import flame.SmeSceneOption
+import flame.SmeSectionProgress
 import flame.finance.SmeFinancialStatusDto
 import flame.routes.financial.status.SmeFinancialStatusFields
 import flame.routes.financial.status.SmeFinancialStatusOutput
 import flame.transformers.toPresenter
+import flame.transformers.utils.toProgress
 import koncurrent.toLater
 import symphony.toForm
 
@@ -54,3 +56,17 @@ fun SmeFinancialStatusDto?.toForm(options: SmeSceneOption<SmeApi>) = SmeFinancia
 
     onSuccess { options.bus.dispatch(options.topic.progressMade()) }
 }
+
+fun SmeFinancialStatusDto?.toProgress() = listOf(
+    this?.latestFinancialStatements,
+    this?.managementAccounts,
+    this?.financialsAuditedOrReviewed,
+    this?.budgetForReview,
+    this?.debtorsAging,
+    this?.creditAging,
+    this?.longTermContracts,
+    this?.offBalanceSheetFunding,
+    this?.assetRegister,
+    this?.permissionsFromLender,
+    this?.guarantees,
+).toProgress()

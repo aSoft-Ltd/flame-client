@@ -8,6 +8,9 @@ import flame.routes.admin.SmeAdminScenes
 import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinanceScenes
 import flame.routes.funding.SmeFundingScenes
+import flame.routes.swot.SmeSwotTheater
+import flame.transformers.governance.toForm
+import flame.utils.toSmeScene
 import kotlin.js.JsExport
 
 class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
@@ -20,4 +23,8 @@ class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val finance by lazy { SmeFinanceScenes(options) }
 
     val documents by lazy { SmeDocumentsScenes(options) }
+
+    val governance by lazy { options.toSmeScene { it.governance.toForm(options) } }
+
+    val swot by lazy { SmeSwotTheater(options) }
 }

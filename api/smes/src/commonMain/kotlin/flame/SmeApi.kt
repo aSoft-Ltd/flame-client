@@ -7,6 +7,7 @@ interface SmeApi : SmeScheme {
     override val funding: SmeFundingApi
     val finance: SmeFinanceApi
     val documents: SmeDocumentsApi
-
+    val governance: SmeGovernanceApi
+    val swot: SmeSwotApi
     fun load(): Later<SmeDto>
 }

@@ -7,6 +7,7 @@ import flame.admin.SmeAdminPresenter
 import flame.documents.SmeDocumentsPresenter
 import flame.finance.SmeFinanceDto
 import flame.funding.SmeFundingDto
+import flame.swot.SmeSwotDto
 import kotlin.js.JsExport
 
 data class SmePresenter(
@@ -16,5 +17,6 @@ data class SmePresenter(
     val admin: SmeAdminPresenter?,
     val funding: SmeFundingDto?,
     val finance: SmeFinanceDto?,
-    val documents: SmeDocumentsPresenter?
+    val documents: SmeDocumentsPresenter?,
+    val swot: SmeSwotDto?
 )

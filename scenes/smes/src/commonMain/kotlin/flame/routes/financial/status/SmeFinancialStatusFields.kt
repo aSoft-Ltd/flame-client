@@ -60,8 +60,9 @@ class SmeFinancialStatusFields(output: SmeFinancialStatusOutput) : Fields<SmeFin
             Is the latest asset register available (please ensure that the following info as a minimum is captured on 
             the register name of asset, date of purchase, date of first use, write off period, method of write off,
             book value, cost of the asset, remaining useful life)?
-        """.trimIndent()
+        """.trimIndent().replace("\n"," ")
     )
+
     val permissionsFromLender = selectYesOrNo(
         name = output::permissionsFromLender,
         label = "Please confirm if any permissions are required from any lender prior to raising additional finance and registration/taking security."

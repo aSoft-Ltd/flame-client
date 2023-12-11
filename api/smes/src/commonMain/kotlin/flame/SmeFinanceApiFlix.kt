@@ -1,6 +1,7 @@
 package flame
 
 import flame.finance.SmeBackOfficeDto
+import flame.finance.SmeFinancialAcquisitionDto
 import flame.finance.SmeFinancialStatusDto
 import flame.funding.SmeAcquisitionDto
 import flame.funding.SmeBreakdownDto
@@ -13,4 +14,6 @@ class SmeFinanceApiFlix(options: SmeApiFlixOptions) : SmeFlixBaseApi(options), S
     override fun update(params: SmeBackOfficeDto) = update(SmeKey.Finance.office, options.codec.encodeToString(params))
 
     override fun update(params: SmeFinancialStatusDto) = update(SmeKey.Finance.status, options.codec.encodeToString(params))
+
+    override fun update(params: SmeFinancialAcquisitionDto) = update(SmeKey.Finance.acquisition, options.codec.encodeToString(params))
 }

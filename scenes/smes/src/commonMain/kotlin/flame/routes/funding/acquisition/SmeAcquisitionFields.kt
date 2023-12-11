@@ -14,6 +14,7 @@ class SmeAcquisitionFields(output: SmeAcquisitionOutput) : Fields<SmeAcquisition
         label = "What is the asking price of target company?",
         hint = "Enter Price",
     )
+
     val dd = double(
         name = output::dd,
         label = "What value has your DD produced?",

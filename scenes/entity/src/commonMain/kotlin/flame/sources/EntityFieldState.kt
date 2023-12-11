@@ -3,7 +3,7 @@
 package flame.sources
 
 import identifier.LegalEntityPresenter
-import kollections.JsExport
+import kotlinx.JsExport
 import symphony.Feedbacks
 import symphony.FieldState
 import symphony.Visibility
