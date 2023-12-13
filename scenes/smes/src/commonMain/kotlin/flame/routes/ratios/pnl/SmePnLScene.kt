@@ -8,52 +8,32 @@ import flame.SmeApi
 import flame.SmeSceneOption
 import flame.routes.ratios.pnl.utils.defaultTemplate
 import flame.routes.ratios.utils.SmeEntryField
+import flame.routes.ratios.utils.SmeStatements
 import kase.LazyState
 import kase.Pending
-import kase.Success
+import kase.toSuccess
 import kollections.List
 import kollections.iEmptyList
-import kollections.iListOf
-import kollections.toIList
 import kotlin.math.floor
 import kotlinx.JsExport
-import krono.currentInstant
 
 class SmePnLScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
     val template = mutableLiveOf<List<SmeEntryField>>(iEmptyList())
-    val statements = mutableLiveOf<LazyState<List<SmeAnnualPnLScene>>>(Pending)
-
-    private companion object {
-        val MAX_HISTORY = 3
-        val MAX_FUTURES = 5
-    }
+    val statements = mutableLiveOf<LazyState<SmeStatements<SmeAnnualPnLScene>>>(Pending)
 
     fun initialize() {
-        val current = options.clock.currentInstant().atSystemZone().year
-        val century = 1000 * floor(current.toDouble() / 1000).toInt()
-        val history = buildList {
-            repeat(MAX_HISTORY) {
-                add(current - (MAX_HISTORY - it))
-            }
-        }
-
-        val futures = buildList {
-            repeat(MAX_FUTURES) {
-                add(current + it + 1)
-            }
-        }
-
-        val scenes = (history + current + futures).map { year ->
-            val label = "${year}/${(year + 1) - century}"
-            SmeAnnualPnLScene(options, label).apply { initialize() }
-        }.toIList()
-
         template.value = defaultTemplate()
-        statements.value = Success(scenes)
+        statements.value = SmeStatements.get(options.clock).map { year ->
+            val millennium = 1000 * floor(year.toDouble() / 1000).toInt()
+            val label = "${year}/${(year + 1) - millennium}"
+            SmeAnnualPnLScene(options, label).apply { initialize() }
+        }.toSuccess()
     }
 
     fun deInitialize() {
+        statements.value.data?.all?.forEach { it.deInitialize() }
         statements.value = Pending
+        template.value = iEmptyList()
     }
 }
