@@ -8,6 +8,7 @@ import flame.routes.admin.SmeAdminScenes
 import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinanceScenes
 import flame.routes.funding.SmeFundingScenes
+import flame.routes.ratios.SmeFinancialRatios
 import flame.routes.swot.SmeSwotTheater
 import flame.transformers.governance.toForm
 import flame.utils.toSmeScene
@@ -27,4 +28,6 @@ class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val governance by lazy { options.toSmeScene { it.governance.toForm(options) } }
 
     val swot by lazy { SmeSwotTheater(options) }
+
+    val ratios by lazy { SmeFinancialRatios(options) }
 }
