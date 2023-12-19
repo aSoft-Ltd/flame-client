@@ -7,7 +7,5 @@ import flame.routes.ratios.pnl.SmePnLScene
 import kotlinx.JsExport
 
 class SmeFinancialRatios(private val option: SmeSceneOption<SmeApi>) {
-    val pnl by lazy {
-        SmePnLScene(option)
-    }
+    val pnl by lazy { SmePnLScene(option) }
 }

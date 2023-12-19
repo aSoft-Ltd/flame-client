@@ -20,6 +20,7 @@ import kotlinx.JsExport
 class SmePnLScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
     val template = mutableLiveOf<List<SmeEntryField>>(iEmptyList())
+
     val statements = mutableLiveOf<LazyState<SmeStatements<SmeAnnualPnLScene>>>(Pending)
 
     fun initialize() {
