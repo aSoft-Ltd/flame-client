@@ -11,7 +11,7 @@ import neat.required
 import symphony.email
 import symphony.name
 import symphony.text
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SendEmailFields(
     recipient: LegalEntityPresenter,

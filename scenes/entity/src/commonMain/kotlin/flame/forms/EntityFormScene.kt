@@ -29,7 +29,7 @@ import kase.toLazyState
 import koncurrent.Later
 import koncurrent.later.finally
 import symphony.FormField
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class EntityFormScene(
     private val config: EntityScenesConfig<EntitiesApiProvider>

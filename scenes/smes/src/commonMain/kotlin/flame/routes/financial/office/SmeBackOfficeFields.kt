@@ -5,7 +5,7 @@ package flame.routes.financial.office
 
 import flame.utils.selectSourcing
 import flame.utils.selectYesOrNo
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.Option
 import kollections.listOf

@@ -5,6 +5,6 @@ package flame.sources
 
 import flame.CustomerScenesConfig
 import flame.CustomersApi
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomerPickingMode(config: CustomerScenesConfig<CustomersApi>) : EntityPickingMode(config)

@@ -10,7 +10,7 @@ import neat.notBlank
 import neat.required
 import symphony.phone
 import symphony.text
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import flame.fields.SendSmsOutput as Output
 
 class SendSmsFields(

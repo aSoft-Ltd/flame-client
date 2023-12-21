@@ -5,6 +5,6 @@ package flame.sources
 
 import flame.SupplierScenesConfig
 import flame.SuppliersApi
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SupplierPickingMode(config: SupplierScenesConfig<SuppliersApi>) : EntityPickingMode(config)

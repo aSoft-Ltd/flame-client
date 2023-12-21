@@ -3,7 +3,7 @@
 
 package flame.routes.swot
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.text
 

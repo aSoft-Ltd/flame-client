@@ -15,7 +15,7 @@ import kase.Pending
 import kase.toLazyState
 import koncurrent.later.finally
 import koncurrent.toLater
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.toForm
 
 class SmeAcquisitionFormScene(

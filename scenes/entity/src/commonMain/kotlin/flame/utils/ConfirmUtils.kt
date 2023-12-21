@@ -2,6 +2,7 @@ package flame.utils
 
 import identifier.LegalEntityPresenter
 import kollections.List
+import kollections.size
 import symphony.ConfirmActionsBuilder
 import symphony.ConfirmationBox
 

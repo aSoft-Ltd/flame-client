@@ -6,7 +6,7 @@ package flame.routes.uid
 import flame.CustomerScenesConfig
 import flame.CustomersApi
 import flame.workers.CustomerUploadAttachmentWorker
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomerAttachmentsScene(config: CustomerScenesConfig<CustomersApi>) : EntityAttachmentsScene(config) {
     override val Type = CustomerUploadAttachmentWorker.TYPE

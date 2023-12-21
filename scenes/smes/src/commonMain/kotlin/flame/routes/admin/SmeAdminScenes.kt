@@ -10,7 +10,7 @@ import flame.routes.admin.contacts.SmeContactFormScene
 import flame.routes.admin.directors.SmeDirectorsScene
 import flame.routes.admin.legal.SmeLegalFormScene
 import flame.routes.admin.shareholders.SmeShareholderScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeAdminScenes(private val options: SmeSceneOption<SmeApi>) {
     val business by lazy { SmeBusinessFormScene(options) }

@@ -5,7 +5,7 @@ package flame.routes.uid
 
 import flame.CustomerScenesConfig
 import flame.CustomersApi
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomerGenerateStatementScene(
     config: CustomerScenesConfig<CustomersApi>

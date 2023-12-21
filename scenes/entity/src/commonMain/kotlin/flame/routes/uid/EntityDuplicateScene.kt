@@ -17,7 +17,7 @@ import identifier.transformers.toPresenter
 import koncurrent.toLater
 import symphony.toForm
 import symphony.toSubmitConfig
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class EntityDuplicateScene(
     private val config: EntityScenesConfig<EntitiesApiProvider>

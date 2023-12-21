@@ -5,7 +5,7 @@ package flame.routes.documents
 
 import flame.SmeApi
 import flame.SmeSceneOption
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeDocumentsScenes(private val options: SmeSceneOption<SmeApi>) {
     val list by lazy { SmeDocumentListScene(options) }

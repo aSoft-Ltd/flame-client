@@ -9,7 +9,7 @@ import identifier.LegalEntityPresenter
 import neat.ValidationFactory
 import symphony.Changer
 import symphony.Visibility
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import kotlin.reflect.KMutableProperty0
 
 class CustomerField(

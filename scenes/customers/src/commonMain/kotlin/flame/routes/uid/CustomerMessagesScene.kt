@@ -6,7 +6,7 @@ package flame.routes.uid
 import flame.CustomerScenesConfig
 import flame.TextMessagePresenter
 import flame.routes.MessagesScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.linearPaginatorOf
 import symphony.paged
 

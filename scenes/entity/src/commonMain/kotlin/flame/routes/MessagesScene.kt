@@ -11,14 +11,16 @@ import flame.TextMessagePresenter
 import flame.TextMessageSent
 import flame.TextMessageStatus
 import flame.TextMessageStatuses
-import kollections.toIList
 import krono.Instant
 import krono.PresenterPattern
 import krono.TimeZones
 import krono.toDateTimePresenter
 import symphony.CollectionScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import kotlin.random.Random
+import kollections.buildList
+import kollections.add
+import kollections.toList
 
 abstract class MessagesScene(config: EntityScenesConfig<*>) : CollectionScene<TextMessagePresenter>(config) {
     override val columns = columnsOf {
@@ -54,7 +56,7 @@ abstract class MessagesScene(config: EntityScenesConfig<*>) : CollectionScene<Te
                     }
                 }
             }
-            return TextMessageStatuses(history.toIList())
+            return TextMessageStatuses(history)
         }
 
         private val messages = listOf(
@@ -74,6 +76,6 @@ abstract class MessagesScene(config: EntityScenesConfig<*>) : CollectionScene<Te
                 content = s,
                 status = fakeMessageStatuses()
             )
-        }
+        }.toList()
     }
 }

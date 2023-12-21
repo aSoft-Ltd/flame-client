@@ -7,7 +7,7 @@ import flame.SupplierScenesConfig
 import flame.TextMessagePresenter
 import flame.routes.MessagesScene
 import symphony.paged
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.PaginationManager
 import symphony.linearPaginatorOf
 

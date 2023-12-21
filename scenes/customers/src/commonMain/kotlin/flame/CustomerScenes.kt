@@ -13,7 +13,7 @@ import flame.routes.uid.CustomerGenerateStatementScene
 import flame.routes.uid.CustomerMessagesScene
 import flame.routes.uid.CustomerScene
 import flame.routes.uid.CustomerSendMessageScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 interface CustomerScenes {
     val customers: CustomersScene

@@ -2,7 +2,7 @@
 
 package flame
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeSectionProgress(
     val completed: Int,

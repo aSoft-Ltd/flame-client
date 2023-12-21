@@ -4,8 +4,8 @@
 package flame.routes
 
 import captain.NavigateFunction
-import flame.EntityScenesConfig
 import flame.EntityDestination
+import flame.EntityScenesConfig
 import flame.utils.confirmDelete
 import flame.utils.customerActions
 import flame.utils.dispatchInvalidateCache
@@ -17,15 +17,15 @@ import identifier.transformers.toPresenter
 import identifier.transformers.toPresenters
 import identifier.utils.columnsOfLegalEntity
 import kollections.List
+import kollections.map
 import koncurrent.Later
 import kronecker.LoadOptions
 import symphony.CollectionScene
 import symphony.Confirmable
 import symphony.actionsOf
-import kotlin.js.JsExport
-import kotlin.js.JsName
-import symphony.PaginationManager
 import symphony.linearPaginatorOf
+import kotlinx.JsExport
+import kotlin.js.JsName
 
 abstract class EntitiesScene(
     config: EntityScenesConfig<LegalEntityApi>

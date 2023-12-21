@@ -13,7 +13,7 @@ import symphony.integer
 import symphony.phone
 import symphony.selectSingle
 import symphony.text
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(output) {
     val name = text(

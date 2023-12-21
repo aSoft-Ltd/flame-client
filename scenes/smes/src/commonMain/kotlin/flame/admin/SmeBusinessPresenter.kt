@@ -5,7 +5,7 @@ package flame.admin
 
 import geo.AddressPresenter
 import identifier.Industry
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeBusinessPresenter(
     val src: SmeBusinessDto,

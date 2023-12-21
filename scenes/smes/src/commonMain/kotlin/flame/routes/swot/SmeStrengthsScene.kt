@@ -8,7 +8,7 @@ import flame.SmeDto
 import flame.SmeSceneOption
 import kollections.List
 import kollections.emptyList
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeStrengthsScene(options: SmeSceneOption<SmeApi>) : SmeSwotComponentScene(options) {
     override val component by lazy { "strength" }

@@ -23,7 +23,7 @@ import koncurrent.later.finally
 import symphony.Confirmable
 import symphony.actionsOf
 import symphony.removeSelectedItem
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class EntityScene(
     val config: EntityScenesConfig<LegalEntityApi>

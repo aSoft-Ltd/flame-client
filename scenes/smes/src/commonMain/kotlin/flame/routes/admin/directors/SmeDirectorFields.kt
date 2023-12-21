@@ -3,7 +3,7 @@
 
 package flame.routes.admin.directors
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import neat.required
 import symphony.Fields
 import symphony.email

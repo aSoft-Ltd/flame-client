@@ -12,7 +12,7 @@ import kase.Loading
 import kase.Success
 import kase.toLazyState
 import koncurrent.later.finally
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import sanity.Subscriber
 
 class SmeInfoScene(private val options: SmeSceneOption<SmeApi>) : LazyScene<SmeProgress>() {

@@ -14,7 +14,7 @@ import identifier.LegalEntityApi
 import identifier.params.CorporateParams
 import identifier.params.IndividualParams
 import koncurrent.Later
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import kotlin.js.JsName
 
 interface EntitiesApi : LegalEntityApi, Directory {

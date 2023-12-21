@@ -12,7 +12,7 @@ import flame.routes.ratios.SmeFinancialRatios
 import flame.routes.swot.SmeSwotTheater
 import flame.transformers.governance.toForm
 import flame.utils.toSmeScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val info by lazy { SmeInfoScene(options) }

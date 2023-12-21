@@ -4,7 +4,7 @@
 package flame.routes.governance
 
 import flame.utils.selectYesOrNo
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.integer
 

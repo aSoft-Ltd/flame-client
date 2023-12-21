@@ -21,7 +21,7 @@ import koncurrent.later.finally
 import symphony.FormField
 import symphony.toForm
 import symphony.toSubmitConfig
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class GenerateStatementScene(
     val config: EntityScenesConfig<EntitiesApi>

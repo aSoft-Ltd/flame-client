@@ -19,7 +19,7 @@ import kollections.minus
 import kollections.remove
 import koncurrent.later.finally
 import koncurrent.toLater
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import neat.required
 import symphony.Confirm
 import symphony.Peekaboo

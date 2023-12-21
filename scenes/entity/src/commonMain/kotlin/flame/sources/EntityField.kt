@@ -5,7 +5,8 @@ package flame.sources
 
 import cinematic.mutableLiveOf
 import identifier.LegalEntityPresenter
-import kollections.iEmptyList
+import kollections.emptyList
+import kollections.isNotEmpty
 import neat.ValidationFactory
 import neat.Validity
 import neat.custom
@@ -17,7 +18,7 @@ import symphony.internal.AbstractHideable
 import symphony.properties.Settable
 import symphony.toErrors
 import symphony.toWarnings
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import kotlin.reflect.KMutableProperty0
 
 abstract class EntityField(
@@ -75,7 +76,7 @@ abstract class EntityField(
     private val initial by lazy {
         EntityFieldState(
             output = property.get(),
-            feedbacks = Feedbacks(iEmptyList()),
+            feedbacks = Feedbacks(emptyList()),
             required = false,
             visibility = visibility,
             mode = picking()

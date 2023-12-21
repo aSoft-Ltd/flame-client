@@ -11,7 +11,7 @@ import flame.routes.documents.utils.SmeDocumentScene
 import flame.routes.documents.utils.SmeDocumentSceneOptions
 import flame.transformers.documents.toAttachment
 import kollections.List
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class SmeAbstractDocumentScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 

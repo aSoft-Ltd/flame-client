@@ -5,7 +5,7 @@ package flame.sources
 
 import flame.CustomerScenesConfig
 import flame.CustomersApiProvider
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomerMakingMode(
     config: CustomerScenesConfig<CustomersApiProvider>

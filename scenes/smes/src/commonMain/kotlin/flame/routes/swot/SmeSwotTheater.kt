@@ -5,7 +5,7 @@ package flame.routes.swot
 
 import flame.SmeApi
 import flame.SmeSceneOption
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeSwotTheater(options: SmeSceneOption<SmeApi>) {
     val strengths by lazy { SmeStrengthsScene(options) }

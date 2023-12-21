@@ -3,7 +3,7 @@
 
 package flame.routes.admin.shareholders
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import neat.required
 import symphony.Fields
 import symphony.boolean

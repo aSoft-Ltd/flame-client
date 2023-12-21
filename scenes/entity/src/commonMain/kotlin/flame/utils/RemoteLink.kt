@@ -6,7 +6,7 @@ package flame.utils
 import bringer.DownloadOptions
 import bringer.Downloader
 import klip.Clipboard
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class RemoteLink(
     val url: String,

@@ -5,7 +5,7 @@ package flame.admin
 
 import kollections.List
 import kollections.emptyList
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeAdminPresenter(
     val contacts: SmeContactsDto? = null,

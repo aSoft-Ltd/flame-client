@@ -4,7 +4,7 @@
 package flame.routes.admin.legal
 
 import flame.utils.selectCompliance
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import kollections.listOf
 import symphony.Option

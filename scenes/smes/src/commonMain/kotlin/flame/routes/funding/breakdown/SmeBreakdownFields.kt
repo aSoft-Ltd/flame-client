@@ -3,7 +3,7 @@
 
 package flame.routes.funding.breakdown
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.double
 

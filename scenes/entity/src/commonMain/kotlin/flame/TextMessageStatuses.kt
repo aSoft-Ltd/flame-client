@@ -5,7 +5,8 @@ package flame
 
 import kase.catching
 import kollections.List
-import kotlin.js.JsExport
+import kollections.last
+import kotlinx.JsExport
 
 data class TextMessageStatuses(
     val history: List<TextMessageStatus>

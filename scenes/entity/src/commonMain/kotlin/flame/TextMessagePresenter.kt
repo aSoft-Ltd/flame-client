@@ -3,7 +3,7 @@
 
 package flame
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class TextMessagePresenter(
     val uid: String,

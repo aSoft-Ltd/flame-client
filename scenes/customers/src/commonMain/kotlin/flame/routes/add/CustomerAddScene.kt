@@ -5,7 +5,7 @@ package flame.routes.add
 
 import flame.CustomerScenesConfig
 import flame.CustomersApiProvider
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomerAddScene(
     config: CustomerScenesConfig<CustomersApiProvider>

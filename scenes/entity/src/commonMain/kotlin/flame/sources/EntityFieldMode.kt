@@ -3,7 +3,7 @@
 
 package flame.sources
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 sealed interface EntityFieldMode {
     val asPicking get() = this as? EntityPickingMode

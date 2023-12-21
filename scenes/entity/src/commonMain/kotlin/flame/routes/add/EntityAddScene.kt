@@ -20,7 +20,7 @@ import koncurrent.later.finally
 import koncurrent.toLater
 import symphony.toForm
 import symphony.toSubmitConfig
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 abstract class EntityAddScene(
     private val config: EntityScenesConfig<EntitiesApiProvider>

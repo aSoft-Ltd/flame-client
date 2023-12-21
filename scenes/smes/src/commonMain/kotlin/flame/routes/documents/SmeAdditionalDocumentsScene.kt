@@ -7,7 +7,7 @@ import flame.SmeApi
 import flame.SmeSceneOption
 import flame.documents.SmeDocument
 import kollections.toList
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeAdditionalDocumentsScene(options: SmeSceneOption<SmeApi>) : SmeAbstractDocumentScene(options) {
 

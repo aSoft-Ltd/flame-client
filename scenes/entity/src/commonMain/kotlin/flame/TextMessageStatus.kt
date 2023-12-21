@@ -4,7 +4,7 @@
 package flame
 
 import krono.DateTimePresenter
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 sealed class TextMessageStatus(open val on: DateTimePresenter) {
 

@@ -4,7 +4,7 @@
 package flame.documents
 
 import cabinet.Attachment
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeMiscellaneousDocumentsPresenter(
     val letterOfIntent: Attachment? = null,

@@ -26,7 +26,8 @@ import krest.params.SubmitWorkOptions
 import symphony.CollectionScene
 import symphony.ConfirmationBox
 import symphony.paged
-import kotlin.js.JsExport
+import kotlinx.JsExport
+import kotlinx.JsExportIgnore
 import kotlin.js.JsName
 import symphony.PaginationManager
 import symphony.linearPaginatorOf
@@ -35,8 +36,6 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
     val customer = mutableLiveOf<LazyState<LegalEntityDto>>(Pending)
 
     abstract val Type: String
-
-    override val serializer = Attachment.serializer()
 
     private val workManager: WorkManager = config.workManager
 
@@ -89,7 +88,7 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
     private fun uploadAttachments(files: Iterable<RawFile>) = files.forEach { uploadAttachment(it) }
     fun uploadAttachments(files: Array<RawFile>) = uploadAttachments(files.asIterable())
 
-    @JsExport.Ignore
+    @JsExportIgnore
     fun uploadAttachments(files: List<RawFile>) = uploadAttachments(files.asIterable())
 
     private fun confirm(attachment: Attachment) = ConfirmationBox(

@@ -5,7 +5,7 @@ package flame.routes.uid
 
 import flame.SupplierScenesConfig
 import flame.SuppliersApi
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SupplierGenerateStatementScene(
     config: SupplierScenesConfig<SuppliersApi>

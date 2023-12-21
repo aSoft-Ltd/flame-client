@@ -4,6 +4,6 @@ package flame.routes.dashboard
 
 import identifier.LegalEntityDto
 import kollections.List
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class DashboardData(val customers: List<LegalEntityDto>)

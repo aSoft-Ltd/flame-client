@@ -3,7 +3,7 @@
 
 package flame.routes.admin.contacts
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import krono.date
 import symphony.Fields
 import symphony.email

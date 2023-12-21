@@ -8,7 +8,7 @@ import flame.SmeSceneOption
 import flame.routes.funding.acquisition.SmeAcquisitionFormScene
 import flame.routes.funding.breakdown.SmeBreakdownFormScene
 import flame.routes.funding.investments.SmeInvestmentFormScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SmeFundingScenes(private val options: SmeSceneOption<SmeApi>) {
 

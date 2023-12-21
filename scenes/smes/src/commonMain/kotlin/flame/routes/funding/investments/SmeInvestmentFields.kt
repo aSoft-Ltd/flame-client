@@ -3,7 +3,7 @@
 
 package flame.routes.funding.investments
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.Option
 import symphony.double

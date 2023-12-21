@@ -5,7 +5,7 @@ package flame.routes.documents.utils
 
 import cabinet.Attachment
 import flame.SmeSectionProgress
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 sealed interface SmeDocumentState {
     val asUninitialized get() = this as? SmeDocumentUninitialized

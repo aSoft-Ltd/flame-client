@@ -13,7 +13,7 @@ import koncurrent.Later
 import kronecker.LoadOptions
 import symphony.CollectionScene
 import symphony.actionsOf
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.PaginationManager
 import symphony.linearPaginatorOf
 

@@ -5,7 +5,7 @@ package flame.utils
 
 import cinematic.LazyScene
 import kase.Pending
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Fields
 import symphony.Form
 

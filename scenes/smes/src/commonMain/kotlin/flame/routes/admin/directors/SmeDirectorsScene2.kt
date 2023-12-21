@@ -21,7 +21,7 @@ import kollections.emptyList
 import kollections.plus
 import koncurrent.later.finally
 import koncurrent.toLater
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm

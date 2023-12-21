@@ -3,7 +3,7 @@
 
 package flame
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeProgress(
     val sme: SmePresenter,

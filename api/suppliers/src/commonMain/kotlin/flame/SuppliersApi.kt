@@ -3,6 +3,6 @@
 
 package flame
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 typealias SuppliersApi = EntitiesApi

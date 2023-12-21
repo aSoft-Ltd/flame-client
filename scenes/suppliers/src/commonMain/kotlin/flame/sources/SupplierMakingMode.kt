@@ -5,7 +5,7 @@ package flame.sources
 
 import flame.SupplierScenesConfig
 import flame.SuppliersApiProvider
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class SupplierMakingMode(
     config: SupplierScenesConfig<SuppliersApiProvider>

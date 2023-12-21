@@ -7,7 +7,7 @@ import identifier.LegalEntityPresenter
 import neat.required
 import symphony.Fields
 import krono.range
-import kotlin.js.JsExport
+import kotlinx.JsExport
 import flame.fields.GenerateStatementOutput as Output
 
 class GenerateStatementFields(val subject: LegalEntityPresenter) : Fields<Output>(Output(null)) {

@@ -11,7 +11,7 @@ import kase.Loading
 import kase.Pending
 import kase.Success
 import koncurrent.Later
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 class CustomersDashboardScene(
     val config: IdentifierScenesConfig<CustomersApi>

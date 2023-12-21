@@ -4,7 +4,7 @@
 package flame.documents
 
 import cabinet.Attachment
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeFinancialRecordsPresenter(
     val balanceSheet: Attachment? = null,

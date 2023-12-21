@@ -8,7 +8,7 @@ import flame.documents.SmeDocumentsPresenter
 import flame.finance.SmeFinanceDto
 import flame.funding.SmeFundingDto
 import flame.swot.SmeSwotDto
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmePresenter(
     val src: SmeDto,

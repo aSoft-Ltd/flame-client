@@ -12,7 +12,7 @@ import flame.routes.uid.SupplierGenerateStatementScene
 import flame.routes.uid.SupplierMessagesScene
 import flame.routes.uid.SupplierScene
 import flame.routes.uid.SupplierSendMessageScene
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 interface SupplierScenes {
     val suppliers: SuppliersScene

@@ -3,7 +3,7 @@
 
 package flame.documents
 
-import kotlin.js.JsExport
+import kotlinx.JsExport
 
 data class SmeDocumentsPresenter(
     val list: SmeDocumentListPresenter? = null,
