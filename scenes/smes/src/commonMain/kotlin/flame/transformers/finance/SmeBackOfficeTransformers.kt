@@ -4,12 +4,11 @@ package flame.transformers.finance
 
 import flame.SmeApi
 import flame.SmeSceneOption
-import flame.SmeSectionProgress
 import flame.finance.SmeBackOfficeDto
 import flame.routes.financial.office.SmeBackOfficeFields
 import flame.routes.financial.office.SmeBackOfficeOutput
 import flame.transformers.utils.toProgress
-import kase.Pending
+import kollections.listOf
 import koncurrent.toLater
 import symphony.toForm
 

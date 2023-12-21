@@ -2,12 +2,12 @@ package flame.transformers.finance
 
 import flame.SmeApi
 import flame.SmeSceneOption
-import flame.SmeSectionProgress
 import flame.finance.SmeFinancialStatusDto
 import flame.routes.financial.status.SmeFinancialStatusFields
 import flame.routes.financial.status.SmeFinancialStatusOutput
 import flame.transformers.toPresenter
 import flame.transformers.utils.toProgress
+import kollections.listOf
 import koncurrent.toLater
 import symphony.toForm
 

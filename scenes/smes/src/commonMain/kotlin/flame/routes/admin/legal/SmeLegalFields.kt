@@ -6,6 +6,7 @@ package flame.routes.admin.legal
 import flame.utils.selectCompliance
 import kotlin.js.JsExport
 import symphony.Fields
+import kollections.listOf
 import symphony.Option
 import symphony.integer
 import symphony.selectSingle

@@ -5,14 +5,15 @@ package flame.routes.admin.business
 
 import geo.address
 import identifier.Industry
-import kotlin.js.JsExport
+import kollections.listOf
+import kollections.toList
 import symphony.Fields
 import symphony.Option
 import symphony.integer
 import symphony.phone
 import symphony.selectSingle
 import symphony.text
-import symphony.toOption
+import kotlin.js.JsExport
 
 class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(output) {
     val name = text(
@@ -60,7 +61,7 @@ class SmeBusinessFields(output: SmeBusinessOutput) : Fields<SmeBusinessOutput>(o
 
     val bbbee = selectSingle(
         name = output::bbbee,
-        items = (1..9).map { it.toString() },
+        items = (1..9).map { it.toString() }.toList(),
         mapper = { Option("Level $it") }
     )
 

@@ -13,13 +13,14 @@ import kase.LazyState
 import kase.Pending
 import kase.toSuccess
 import kollections.List
-import kollections.iEmptyList
+import kollections.forEach
+import kollections.emptyList
 import kotlin.math.floor
 import kotlinx.JsExport
 
 class SmePnLScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
-    val template = mutableLiveOf<List<SmeEntryField>>(iEmptyList())
+    val template = mutableLiveOf<List<SmeEntryField>>(emptyList())
 
     val statements = mutableLiveOf<LazyState<SmeStatements<SmeAnnualPnLScene>>>(Pending)
 
@@ -35,6 +36,6 @@ class SmePnLScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
     fun deInitialize() {
         statements.value.data?.all?.forEach { it.deInitialize() }
         statements.value = Pending
-        template.value = iEmptyList()
+        template.value = emptyList()
     }
 }

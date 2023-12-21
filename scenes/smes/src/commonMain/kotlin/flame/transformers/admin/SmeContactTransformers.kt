@@ -2,11 +2,11 @@
 
 package flame.transformers.admin
 
-import flame.SmeSectionProgress
 import flame.admin.SmeContactsDto
 import flame.routes.admin.contacts.SmeContactOutput
 import flame.transformers.utils.toProgress
 import symphony.PhoneOutput
+import kollections.listOf
 
 inline fun SmeContactsDto?.toOutput() = SmeContactOutput(
     firstName = this?.firstName,

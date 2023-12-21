@@ -16,7 +16,9 @@ import kase.Loading
 import kase.Pending
 import kase.toLazyState
 import kollections.List
-import kollections.iEmptyList
+import kollections.emptyList
+import kollections.minus
+import kollections.plus
 import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport
@@ -35,7 +37,7 @@ class SmeDirectorsScene(private val options: SmeSceneOption<SmeApi>) : BaseScene
     fun initialize() {
         directors.value = Loading("Loading directors, please wait . . .")
         options.api.load().then {
-            it.admin?.directors ?: iEmptyList()
+            it.admin?.directors ?: emptyList()
         }.finally {
             directors.value = it.toLazyState()
         }

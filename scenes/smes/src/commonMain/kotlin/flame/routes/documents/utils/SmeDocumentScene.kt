@@ -15,6 +15,7 @@ import kase.Executing
 import kase.Failure
 import kase.Pending
 import kase.Success
+import kollections.get
 import kotlinx.JsExport
 import krest.params.SubmitWorkOptions
 

@@ -7,10 +7,16 @@ import cinematic.LazyScene
 import flame.SmeApi
 import flame.SmeDto
 import flame.SmeSceneOption
+import kollections.plus
+import kollections.toMutableList
 import flame.SmeSwotComponentApi
 import kase.Loading
 import kase.toLazyState
 import kollections.List
+import kollections.add
+import kollections.indexOf
+import kollections.minus
+import kollections.remove
 import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport

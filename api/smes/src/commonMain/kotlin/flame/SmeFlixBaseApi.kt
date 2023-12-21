@@ -11,6 +11,9 @@ import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import kase.response.getOrThrow
 import keep.load
+import kollections.component1
+import kollections.component2
+import kollections.component3
 import koncurrent.later
 import koncurrent.later.await
 import koncurrent.later.estimate

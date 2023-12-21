@@ -3,14 +3,16 @@
 package flame.routes.ratios.utils
 
 import kollections.List
-import kollections.iEmptyList
+import kollections.emptyList
+import kollections.isEmpty
+import kollections.map
 import kotlinx.JsExport
 import kotlinx.JsExportIgnore
 
 data class SmeEntryField(
     val name: String,
     val isAggregate: Boolean = false,
-    val children: List<SmeEntryField> = iEmptyList()
+    val children: List<SmeEntryField> = emptyList()
 ) {
 
     @JsExportIgnore

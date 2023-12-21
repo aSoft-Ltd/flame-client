@@ -3,7 +3,10 @@
 package flame.routes.ratios.utils
 
 import kollections.List
-import kollections.toIList
+import kollections.add
+import kollections.buildList
+import kollections.map
+import kollections.plus
 import kotlinx.JsExport
 import krono.Clock
 import krono.currentInstant
@@ -14,7 +17,7 @@ data class SmeStatements<out T>(
     val future: List<T>
 ) {
 
-    val all by lazy { (previous + current + future).toIList() }
+    val all by lazy { (previous + current + future) }
 
     internal fun <R> map(transform: (T) -> R) = SmeStatements(
         previous = previous.map(transform),
@@ -32,9 +35,9 @@ data class SmeStatements<out T>(
         ): SmeStatements<Int> {
             val current = clock.currentInstant().atSystemZone().year
             return SmeStatements(
-                previous = buildList { repeat(histories) { add(current - (histories - it)) } }.toIList(),
+                previous = buildList { repeat(histories) { add(current - (histories - it)) } },
                 current = current,
-                future = buildList { repeat(futures) { add(current + it + 1) } }.toIList()
+                future = buildList { repeat(futures) { add(current + it + 1) } }
             )
         }
     }

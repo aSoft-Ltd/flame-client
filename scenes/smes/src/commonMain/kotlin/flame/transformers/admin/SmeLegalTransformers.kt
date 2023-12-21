@@ -5,6 +5,7 @@ package flame.transformers.admin
 import flame.admin.SmeLegalComplianceDto
 import flame.routes.admin.legal.SmeLegalOutput
 import flame.transformers.utils.toProgress
+import kollections.listOf
 
 inline fun SmeLegalComplianceDto?.toOutput() = SmeLegalOutput(
     cipcAnnualReturns = this?.cipcAnnualReturns,

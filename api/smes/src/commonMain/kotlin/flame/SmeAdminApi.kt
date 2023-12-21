@@ -6,6 +6,7 @@ import flame.admin.SmeDirectorDto
 import flame.admin.SmeLegalComplianceDto
 import flame.admin.SmeShareholderDto
 import koncurrent.Later
+import kollections.List
 
 interface SmeAdminApi : SmeAdminScheme {
     fun update(params: SmeContactsDto): Later<SmeDto>

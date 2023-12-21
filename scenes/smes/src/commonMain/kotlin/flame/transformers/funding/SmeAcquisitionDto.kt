@@ -2,14 +2,10 @@
 
 package flame.transformers.funding
 
-import flame.SmeSectionProgress
 import flame.funding.SmeAcquisitionDto
-import flame.funding.SmeBreakdownDto
-import flame.funding.SmeInvestmentDto
 import flame.routes.funding.acquisition.SmeAcquisitionOutput
-import flame.routes.funding.breakdown.SmeBreakdownOutput
-import flame.routes.funding.investments.SmeInvestmentOutput
 import flame.transformers.utils.toProgress
+import kollections.listOf
 
 inline fun SmeAcquisitionDto?.toOutput() = SmeAcquisitionOutput(
     price = this?.price,

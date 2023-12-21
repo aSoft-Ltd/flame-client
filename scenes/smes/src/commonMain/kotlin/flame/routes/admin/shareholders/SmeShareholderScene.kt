@@ -18,7 +18,9 @@ import kase.Loading
 import kase.Pending
 import kase.toLazyState
 import kollections.List
-import kollections.iEmptyList
+import kollections.emptyList
+import kollections.minus
+import kollections.plus
 import koncurrent.later.finally
 import koncurrent.toLater
 import kotlin.js.JsExport
@@ -36,7 +38,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
     fun initialize() {
         shareholders.value = Loading("Fetching shareholders, please wait . . .")
         options.api.load().then {
-            it.admin?.shareholders ?: iEmptyList()
+            it.admin?.shareholders ?: emptyList()
         }.finally {
             shareholders.value = it.toLazyState()
         }

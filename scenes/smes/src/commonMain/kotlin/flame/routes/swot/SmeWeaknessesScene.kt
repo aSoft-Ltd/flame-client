@@ -7,12 +7,11 @@ import flame.SmeApi
 import flame.SmeDto
 import flame.SmeSceneOption
 import kollections.List
-import kollections.iEmptyList
-import kollections.toIList
+import kollections.emptyList
 import kotlin.js.JsExport
 
 class SmeWeaknessesScene(options: SmeSceneOption<SmeApi>) : SmeSwotComponentScene(options) {
     override val component by lazy { "weakness" }
     override val api by lazy { options.api.swot.weaknesses }
-    override fun SmeDto.toList(): List<String> = swot?.weaknesses?.toIList() ?: iEmptyList()
+    override fun SmeDto.toList(): List<String> = swot?.weaknesses ?: emptyList()
 }

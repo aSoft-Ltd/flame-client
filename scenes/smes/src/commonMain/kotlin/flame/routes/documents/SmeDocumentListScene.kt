@@ -6,11 +6,11 @@ package flame.routes.documents
 import flame.SmeApi
 import flame.SmeSceneOption
 import flame.documents.SmeDocument
-import kollections.toIList
+import kollections.toList
 import kotlin.js.JsExport
 
 class SmeDocumentListScene(options: SmeSceneOption<SmeApi>) : SmeAbstractDocumentScene(options) {
     override val documents by lazy {
-        SmeDocument.List.values().map { it.toScene() }.toIList()
+        SmeDocument.List.entries.map { it.toScene() }.toList()
     }
 }
