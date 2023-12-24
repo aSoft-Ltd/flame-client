@@ -12,6 +12,7 @@ import kase.Loading
 import kase.Success
 import kase.toLazyState
 import koncurrent.later.finally
+import koncurrent.later.then
 import kotlinx.JsExport
 import sanity.Subscriber
 

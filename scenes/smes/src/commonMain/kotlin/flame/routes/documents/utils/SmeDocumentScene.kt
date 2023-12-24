@@ -15,6 +15,7 @@ import kase.Executing
 import kase.Failure
 import kase.Pending
 import kase.Success
+import kase.progress.ProgressState
 import kollections.get
 import kotlinx.JsExport
 import krest.params.SubmitWorkOptions
@@ -66,26 +67,8 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
     private fun startWorkerWatcher() {
         if (!options.wm.hasWorkScheduled(options.type, options.topic)) return
         watcher = options.wm.liveWorkProgress(options.type, options.topic).watchEagerly {
-            when (val s = it[options.document.label]) {
-                is Pending -> {
-                    state.value = SmeDocumentUploadingProgress(SmeSectionProgress(0, 100))
-                }
-
-                is Executing -> {
-                    state.value = SmeDocumentUploadingProgress(SmeSectionProgress(s.progress.donePercentage.toInt(), 100))
-                }
-
-                is Failure -> {
-                    state.value = SmeDocumentUploadFailed(s.cause)
-                }
-
-                is Success -> {
-                    stopWorkerWatcher()
-                    onSuccess()
-                }
-
-                null -> stopWorkerWatcher()
-            }
+            val p = it[options.document.label] ?: ProgressState.initial()
+            state.value = SmeDocumentUploadingProgress(SmeSectionProgress(p.donePercentage.toInt(), 100))
         }
     }
 

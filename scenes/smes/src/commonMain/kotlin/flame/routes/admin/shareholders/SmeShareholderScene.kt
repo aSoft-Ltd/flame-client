@@ -6,7 +6,6 @@ package flame.routes.admin.shareholders
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmeApi
-import flame.SmeDto
 import flame.SmePresenter
 import flame.SmeSceneOption
 import flame.admin.SmeShareholderDto
@@ -21,7 +20,9 @@ import kollections.List
 import kollections.emptyList
 import kollections.minus
 import kollections.plus
+import koncurrent.later.andThen
 import koncurrent.later.finally
+import koncurrent.later.then
 import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.ConfirmationBox
@@ -63,7 +64,7 @@ class SmeShareholderScene(private val options: SmeSceneOption<SmeApi>) : BaseSce
             onConfirm {
                 options.api.admin.updateShareholders(existing - holder).then {
                     confirm.value = null
-                }.complete {
+                }.finally {
                     initialize()
                     options.bus.dispatch(options.topic.progressMade())
                 }

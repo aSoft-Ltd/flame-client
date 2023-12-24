@@ -11,7 +11,10 @@ import flame.routes.documents.utils.SmeDocumentScene
 import flame.routes.documents.utils.SmeDocumentSceneOptions
 import flame.transformers.documents.toAttachment
 import kollections.List
+import kollections.forEach
+import koncurrent.later.then
 import kotlinx.JsExport
+import kotlinx.JsExportIgnore
 
 abstract class SmeAbstractDocumentScene(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
 
@@ -34,6 +37,6 @@ abstract class SmeAbstractDocumentScene(private val options: SmeSceneOption<SmeA
 
     fun deInitialize() = documents.forEach { it.deInitialize() }
 
-    @JsExport.Ignore
+    @JsExportIgnore
     protected fun SmeDocument.toScene() = SmeDocumentScene(SmeDocumentSceneOptions(this, options.wm))
 }

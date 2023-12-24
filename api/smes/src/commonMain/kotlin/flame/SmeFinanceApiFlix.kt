@@ -7,6 +7,11 @@ import flame.funding.SmeAcquisitionDto
 import flame.funding.SmeBreakdownDto
 import flame.funding.SmeInvestmentDto
 import koncurrent.Later
+import koncurrent.later.then
+import koncurrent.later.andThen
+import koncurrent.later.andZip
+import koncurrent.later.zip
+import koncurrent.later.catch
 import kotlinx.serialization.encodeToString
 
 class SmeFinanceApiFlix(options: SmeApiFlixOptions) : SmeFlixBaseApi(options), SmeFinanceApi {
