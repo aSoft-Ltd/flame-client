@@ -25,5 +25,6 @@ listOf(
 
 rootProject.name = "flame-client"
 
-includeSubs("flame-scenes", "scenes", "customers", "entity", "suppliers", "smes")
+includeSubs("flame-scenes-core", "scenes/core", "customers", "entity", "suppliers", "smes")
+includeSubs("flame-scenes-tests", "scenes/test", "smes")
 includeSubs("flame-api", "api", "customers", "entity", "suppliers", "smes")

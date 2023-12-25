@@ -16,16 +16,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.flameScenesEntity)
-                api(projects.flameApiSuppliers)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.cinematic.live.test)
-                implementation(libs.kommander.coroutines)
-//                implementation(projects.flameApiTestPioneKtor)
+                api(projects.flameScenesCoreSmes)
+                api(libs.cinematic.live.test)
+                api(libs.kommander.coroutines)
             }
         }
     }
