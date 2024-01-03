@@ -8,10 +8,10 @@ kotlin {
     jvm { library() }
     if (Targeting.JS) js(IR) { library() }
 //    if (Targeting.WASM) wasm { library() }
-    if (Targeting.OSX) osxTargets() else listOf()
+//    if (Targeting.OSX) osxTargets() else listOf()
 //    if (Targeting.NDK) ndkTargets() else listOf()
-    if (Targeting.LINUX) linuxTargets() else listOf()
-    if (Targeting.MINGW) mingwTargets() else listOf()
+//    if (Targeting.LINUX) linuxTargets() else listOf()
+//    if (Targeting.MINGW) mingwTargets() else listOf()
 
     sourceSets {
         val commonMain by getting {
@@ -23,13 +23,14 @@ kotlin {
                 api(libs.captain.navigator.api)
                 api(libs.symphony.collections)
                 api(libs.symphony.input.dialog)
+                api(libs.symphony.input.sheet)
                 api(libs.cabinet.api.core)
-                api(libs.epsilon.api.file) // Because we want to upload customer documents as attachments
-                api(libs.epsilon.file.fields) // Because we want to upload customer documents as attachments
-                api(libs.krest.core) // Because we want to write background workers for uploading attachments
+                api(libs.epsilon.api.file)?.because("We want to upload customer documents as attachments")
+                api(libs.epsilon.file.fields)?.because("We want to upload customer documents as attachments")
+                api(libs.krest.core)?.because("We want to write background workers for uploading attachments")
 			    api(libs.sanity.core)
                 api(libs.snitch.api)
-                api(libs.klip.api) // Because we need to copy urls to the clipboard
+                api(libs.klip.api)?.because("We need to copy urls to the clipboard")
                 api(libs.bringer.api)
             }
         }
