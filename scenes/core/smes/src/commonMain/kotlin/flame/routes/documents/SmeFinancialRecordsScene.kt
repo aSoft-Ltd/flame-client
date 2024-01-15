@@ -12,6 +12,6 @@ import kotlinx.JsExport
 class SmeFinancialRecordsScene(options: SmeSceneOption<SmeApi>) : SmeAbstractDocumentScene(options) {
 
     override val documents by lazy {
-        SmeDocument.FinancialRecord.entries.map { it.toScene() }.toList()
+        SmeDocument.FinancialRecord.values().map { it.toScene() }.toList()
     }
 }

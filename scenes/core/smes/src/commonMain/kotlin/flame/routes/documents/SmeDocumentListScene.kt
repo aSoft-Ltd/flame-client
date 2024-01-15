@@ -11,6 +11,6 @@ import kotlinx.JsExport
 
 class SmeDocumentListScene(options: SmeSceneOption<SmeApi>) : SmeAbstractDocumentScene(options) {
     override val documents by lazy {
-        SmeDocument.List.entries.map { it.toScene() }.toList()
+        SmeDocument.List.values().map { it.toScene() }.toList()
     }
 }
