@@ -16,7 +16,7 @@ kotlin {
                 api(ktor.client.core)
                 api(libs.lexi.api)
                 api(libs.keep.api)
-                api(libs.sentinel.enterprise.authentication.core)
+                api(libs.sentinel.schemes.enterprise.authentication.core)?.because("We need access to UserSession")
                 api(libs.kase.response.ktor.client)
                 api(libs.krono.api)
                 api(libs.kronecker.core)
