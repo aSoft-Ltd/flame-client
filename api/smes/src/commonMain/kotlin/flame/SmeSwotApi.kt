@@ -1,8 +1,8 @@
 package flame
 
-interface SmeSwotApi {
-    val strengths: SmeSwotComponentApi
-    val weaknesses: SmeSwotComponentApi
-    val opportunities: SmeSwotComponentApi
-    val threats: SmeSwotComponentApi
+interface SmeSwotApi : SmeSwotScheme {
+    override val strengths: SmeSwotComponentApi
+    override val weaknesses: SmeSwotComponentApi
+    override val opportunities: SmeSwotComponentApi
+    override val threats: SmeSwotComponentApi
 }
