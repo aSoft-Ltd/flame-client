@@ -2,27 +2,49 @@
 
 package flame.routes.collection
 
-import cinematic.LazyScene
+import flame.SmeMonitorApi
 import flame.SmePresenter
 import flame.SmeSceneOption
-import flame.SmeMonitorApi
 import flame.transformers.toPresenter
-import kase.Loading
-import kase.toLazyState
-import kollections.List
+import kollections.all
 import kollections.map
 import koncurrent.Later
-import koncurrent.later.finally
 import koncurrent.later.then
 import kotlinx.JsExport
+import kronecker.LoadOptions
+import symphony.CollectionScene
+import symphony.LinearPage
+import symphony.actionsOf
+import symphony.linearPaginatorOf
 
-class SmesScene(private val options: SmeSceneOption<SmeMonitorApi>) : LazyScene<List<SmePresenter>>() {
-    fun initialize(): Later<List<SmePresenter>> {
-        ui.value = Loading("Fetching a list of all businesses. Please wait. . .")
-        return options.api.list().then { smes ->
-            smes.map { it.toPresenter() }
-        }.finally {
-            ui.value = it.toLazyState()
+class SmesScene(private val options: SmeSceneOption<SmeMonitorApi>) : CollectionScene<SmePresenter>(options) {
+
+    private val logger by options.logger
+
+    override val paginator by lazy { linearPaginatorOf<SmePresenter>() }
+
+    fun initialize(): Later<LinearPage<SmePresenter>> = paginator.initialize { no, capacity ->
+        options.api.list(LoadOptions(page = no, limit = capacity)).then { smes -> smes.map { it.toPresenter() } }
+    }
+
+    fun deInitialize() {
+        paginator.deInitialize(true)
+    }
+
+    override val actions = actionsOf(selector) {
+        primary {
+            onAdd { logger.error("Not Implemented yet") }
+        }
+        single {
+            if (it.src.origin != "picapital") {
+                onEdit { logger.error("Not implemented yet") }
+                onDelete { logger.error("Not implemented yet") }
+            }
+        }
+        multi { smes ->
+            if (smes.all { it.src.origin == "picapital" }) {
+                onDeleteAll { logger.error("Not implemented yet") }
+            }
         }
     }
 }

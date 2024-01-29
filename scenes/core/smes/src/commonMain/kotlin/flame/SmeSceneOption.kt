@@ -1,5 +1,7 @@
 package flame
 
+import keep.Cache
+import keep.Cacheable
 import krest.WorkManager
 import krono.Clock
 import lexi.LoggerFactory
@@ -11,7 +13,8 @@ class SmeSceneOption<out A>(
     val wm: WorkManager,
     val topic: SmeEventTopic,
     val bus: EventBus,
-    val clock: Clock
-) {
-    fun <R> map(transform: (A) -> R) = SmeSceneOption(transform(api), logger, wm, topic, bus, clock)
+    val clock: Clock,
+    override val cache: Cache
+) : Cacheable {
+    fun <R> map(transform: (A) -> R) = SmeSceneOption(transform(api), logger, wm, topic, bus, clock, cache)
 }
