@@ -19,7 +19,7 @@ listOf(
     "cinematic", "keep", "lexi", "captain", "neat", "kase",
     "kash-api", "kash-client", "geo-api", "geo-client",
     "kronecker", "symphony", "epsilon-api", "krono-core", "krono-client", "hormone", "identifier-api", "identifier-client",
-    "kommerce", "kollections", "koncurrent", "kommander", "cabinet-api", "pione",
+    "kommerce", "kollections", "koncurrent", "kommander", "cabinet-api",
     "bringer", "klip", "snitch", "krest", "sanity", "epsilon-client", "flame-core", "flame-client", "sentinel-core"
 ).forEach { includeBuild("../$it") }
 
