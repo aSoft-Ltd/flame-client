@@ -29,8 +29,8 @@ class SmeInfoScene(private val options: SmeSceneOption<SmeApi>) : LazyScene<SmeP
 
     fun refresh() = options.api.load().then {
         it.toProgress()
-    }.then {
-        ui.value = Success(it)
+    }.finally {
+        ui.value = it.toLazyState()
     }
 
     override fun deInitialize() {
