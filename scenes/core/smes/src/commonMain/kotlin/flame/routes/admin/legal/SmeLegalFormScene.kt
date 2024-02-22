@@ -5,9 +5,9 @@ package flame.routes.admin.legal
 
 import flame.SmeApi
 import flame.SmeSceneOption
+import flame.forms.FormScene
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
-import flame.utils.FormScene
 import kase.Loading
 import kase.Pending
 import kase.toLazyState

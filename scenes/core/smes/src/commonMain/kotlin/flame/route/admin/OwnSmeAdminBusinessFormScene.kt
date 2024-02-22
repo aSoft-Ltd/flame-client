@@ -1,30 +1,30 @@
 @file:JsExport
-@file:Suppress("OPT_IN_USAGE", "NON_EXPORTABLE_TYPE")
 
-package flame.routes.financial.office
+package flame.route.admin
 
 import flame.SmeApi
 import flame.SmeSceneOption
-import flame.forms.FormScene
-import flame.transformers.finance.toOutput
-import flame.transformers.finance.toParams
+import flame.forms.admin.business.SmeBusinessFields
+import flame.forms.admin.business.SmeBusinessOutput
+import flame.transformers.admin.toOutput
+import flame.transformers.admin.toParams
 import kase.Loading
 import kase.Pending
 import kase.toLazyState
-import koncurrent.later.finally
-import koncurrent.toLater
-import koncurrent.later.then
 import koncurrent.later.andThen
+import koncurrent.later.finally
+import koncurrent.later.then
+import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-class SmeBackOfficeFormScene(
+class OwnSmeAdminBusinessFormScene(
     private val options: SmeSceneOption<SmeApi>
-) : FormScene<SmeBackOfficeFields>() {
+) : SmeAdminBusinessScene() {
     fun initialize() {
         ui.value = Loading("Loading business information")
         options.api.load().then {
-            it.finance?.office.toOutput()
+            it.admin?.business.toOutput()
         }.then {
             form(it)
         }.finally {
@@ -32,7 +32,7 @@ class SmeBackOfficeFormScene(
         }
     }
 
-    private fun form(output: SmeBackOfficeOutput) = SmeBackOfficeFields(output).toForm(
+    private fun form(output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
         heading = "Business Details",
         details = "Enter your business details here",
         logger = options.logger,
@@ -42,7 +42,7 @@ class SmeBackOfficeFormScene(
             output.toLater().then {
                 output.toParams()
             }.andThen {
-                options.api.finance.update(it)
+                options.api.admin.update(it)
             }
         }
         onSuccess {

@@ -1,11 +1,9 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes
+package flame.route.info
 
-import cinematic.LazyScene
 import flame.SmeApi
-import flame.SmeProgress
 import flame.SmeSceneOption
 import flame.transformers.toProgress
 import kase.Loading
@@ -16,7 +14,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 import sanity.Subscriber
 
-class SmeInfoScene(private val options: SmeSceneOption<SmeApi>) : LazyScene<SmeProgress>() {
+class OwnSmeInfoScene(private val options: SmeSceneOption<SmeApi>) : SmeInfoScene() {
 
     private var subscriber: Subscriber? = null
     fun initialize() {

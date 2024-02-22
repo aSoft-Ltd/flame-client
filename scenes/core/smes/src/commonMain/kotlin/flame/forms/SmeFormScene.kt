@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.utils
+package flame.forms
 
 import cinematic.LazyScene
 import flame.SmeApi

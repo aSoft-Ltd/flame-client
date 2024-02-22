@@ -1,4 +1,4 @@
-package flame.utils
+package flame.forms
 
 import kotlin.reflect.KMutableProperty0
 import symphony.Fields
@@ -6,14 +6,15 @@ import symphony.Option
 import symphony.selectSingle
 import kollections.listOf
 
-internal fun Fields<*>.selectCompliance(
+internal fun Fields<*>.selectSourcing(
     name: KMutableProperty0<String?>,
     label: String,
-    hint: String,
 ) = selectSingle(
     name = name,
     label = label,
-    hint = hint,
-    items = listOf("Compliant", "Non-Compliant"),
+    items = listOf(
+        "In house",
+        "Outsourced"
+    ),
     mapper = { Option(it, it) }
 )

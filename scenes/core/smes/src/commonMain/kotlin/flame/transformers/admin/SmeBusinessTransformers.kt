@@ -2,10 +2,11 @@
 
 package flame.transformers.admin
 
-import flame.SmeSectionProgress
+import flame.SmeDto
+import flame.admin.SmeAdminDto
 import flame.admin.SmeBusinessDto
 import flame.admin.SmeBusinessPresenter
-import flame.routes.admin.business.SmeBusinessOutput
+import flame.forms.admin.business.SmeBusinessOutput
 import flame.transformers.utils.toProgress
 import geo.toPresenter
 import geo.transformers.toOutput
@@ -69,4 +70,8 @@ fun SmeBusinessDto.toPresenter() = SmeBusinessPresenter(
     bbbee = bbbee,
     staffComplement = staffComplement,
     description = description,
+)
+
+inline fun SmeDto.copy(business: SmeBusinessDto) = copy(
+    admin = (admin ?: SmeAdminDto()).copy(business = business)
 )

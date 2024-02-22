@@ -6,6 +6,7 @@ import kase.response.getOrThrow
 import kollections.List
 import kollections.ListSerializer
 import koncurrent.Later
+import koncurrent.TODOLater
 import koncurrent.later
 import koncurrent.later.await
 import kronecker.LoadOptions
@@ -29,4 +30,6 @@ class SmeMonitorApiFlix(private val config: SmeApiFlixOptions) : SmeMonitorApi {
             bearerAuth(secret)
         }.getOrThrow(SmeDto.serializer(), config.codec, trace)
     }
+
+    override fun update(sme: SmeDto): Later<SmeDto> = TODOLater()
 }

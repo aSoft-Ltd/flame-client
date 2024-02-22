@@ -3,6 +3,7 @@
 
 package flame
 
+import flame.forms.toSmeScene
 import flame.routes.SmeInfoScene
 import flame.routes.admin.SmeAdminScenes
 import flame.routes.documents.SmeDocumentsScenes
@@ -11,7 +12,6 @@ import flame.routes.funding.SmeFundingScenes
 import flame.routes.ratios.SmeFinancialRatios
 import flame.routes.swot.SmeSwotTheater
 import flame.transformers.governance.toForm
-import flame.utils.toSmeScene
 import kotlinx.JsExport
 
 class SmeScenes(private val options: SmeSceneOption<SmeApi>) {

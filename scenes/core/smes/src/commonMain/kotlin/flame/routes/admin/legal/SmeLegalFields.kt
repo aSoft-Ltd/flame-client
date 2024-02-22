@@ -3,7 +3,7 @@
 
 package flame.routes.admin.legal
 
-import flame.utils.selectCompliance
+import flame.forms.selectCompliance
 import kotlinx.JsExport
 import symphony.Fields
 import kollections.listOf

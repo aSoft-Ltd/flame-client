@@ -1,4 +1,4 @@
-package flame.utils
+package flame.forms
 
 import kotlin.reflect.KMutableProperty0
 import symphony.Fields
@@ -6,12 +6,14 @@ import symphony.Option
 import symphony.selectSingle
 import kollections.listOf
 
-fun Fields<*>.selectYesOrNo(
+internal fun Fields<*>.selectCompliance(
     name: KMutableProperty0<String?>,
-    label: String
+    label: String,
+    hint: String,
 ) = selectSingle(
     name = name,
     label = label,
-    items = listOf("Yes", "No"),
+    hint = hint,
+    items = listOf("Compliant", "Non-Compliant"),
     mapper = { Option(it, it) }
 )

@@ -5,9 +5,9 @@ package flame.routes.financial
 
 import flame.SmeApi
 import flame.SmeSceneOption
+import flame.forms.toSmeScene
 import flame.routes.financial.office.SmeBackOfficeFormScene
 import flame.transformers.finance.toForm
-import flame.utils.toSmeScene
 import kotlinx.JsExport
 
 class SmeFinanceScenes(private val options: SmeSceneOption<SmeApi>) {

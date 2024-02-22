@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.business
+package flame.forms.admin.business
 
 import geo.address
 import identifier.Industry

@@ -3,7 +3,7 @@
 
 package flame.routes.governance
 
-import flame.utils.selectYesOrNo
+import flame.forms.selectYesOrNo
 import kotlinx.JsExport
 import symphony.Fields
 import symphony.integer

@@ -1,4 +1,4 @@
-package flame.routes.admin.business
+package flame.forms.admin.business
 
 import geo.AddressOutput
 import identifier.Industry

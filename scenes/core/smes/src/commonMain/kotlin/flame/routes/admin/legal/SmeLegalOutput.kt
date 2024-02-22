@@ -1,6 +1,6 @@
 package flame.routes.admin.legal
 
-import flame.routes.admin.business.SmeBusinessOutput
+import flame.forms.admin.business.SmeBusinessOutput
 
 class SmeLegalOutput(
     var cipcAnnualReturns: String? = null,
