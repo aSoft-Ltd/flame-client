@@ -4,6 +4,8 @@ package flame.utils
 
 import kase.bagOf
 import sanity.EventBus
+import sanity.Subscriber
+import sanity.Event
 
 internal inline val EventBus.subscriberBag get() = bagOf<Subscriber>()
 
