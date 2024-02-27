@@ -1,13 +1,11 @@
 @file:JsExport
 
-package flame.route.admin
+package flame.route.admin.business
 
-import flame.SmeDto
-import flame.SmeMonitorApi
+import flame.SmeApi
 import flame.SmeSceneOption
 import flame.forms.admin.business.SmeBusinessFields
 import flame.forms.admin.business.SmeBusinessOutput
-import flame.transformers.admin.copy
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
 import kase.Loading
@@ -21,23 +19,23 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-class MonSmeAdminBusinessFormScene(
-    private val options: SmeSceneOption<SmeMonitorApi>
-) : SmeAdminBusinessScene() {
-    fun initialize(uid: String): Later<Any> {
-        ui.value = Loading("Loading information for business with uid = $uid")
-        return options.api.load(uid).then {
-            it to it.admin?.business.toOutput()
-        }.then { (sme, output) ->
-            form(sme, output)
+class OwnSmeBusinessFormScene(
+    private val options: SmeSceneOption<SmeApi>
+) : SmeBusinessFormScene() {
+    fun initialize(): Later<Any> {
+        ui.value = Loading("Loading business information")
+        return options.api.load().then {
+            it.admin?.business.toOutput()
+        }.then {
+            form(it)
         }.finally {
             ui.value = it.toLazyState()
         }
     }
 
-    private fun form(sme: SmeDto, output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
+    private fun form(output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
         heading = "Business Details",
-        details = "Enter ${sme.admin?.business?.name ?: "SME"} business details here",
+        details = "Enter your business details here",
         logger = options.logger,
     ) {
         onCancel { ui.value = Pending }
@@ -45,7 +43,7 @@ class MonSmeAdminBusinessFormScene(
             output.toLater().then {
                 output.toParams()
             }.andThen {
-                options.api.update(sme.copy(it))
+                options.api.admin.update(it)
             }
         }
         onSuccess {

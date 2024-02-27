@@ -3,9 +3,7 @@
 package flame.utils
 
 import kase.bagOf
-import sanity.Event
 import sanity.EventBus
-import sanity.Subscriber
 
 internal inline val EventBus.subscriberBag get() = bagOf<Subscriber>()
 

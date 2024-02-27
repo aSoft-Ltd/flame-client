@@ -1,11 +1,9 @@
 @file:JsExport
 
-package flame.route.admin
+package flame.route.admin.business
 
 import flame.forms.FormScene
 import flame.forms.admin.business.SmeBusinessFields
 import kotlinx.JsExport
 
-abstract class SmeAdminBusinessScene : FormScene<SmeBusinessFields>() {
-
-}
+abstract class SmeBusinessFormScene : FormScene<SmeBusinessFields>()
