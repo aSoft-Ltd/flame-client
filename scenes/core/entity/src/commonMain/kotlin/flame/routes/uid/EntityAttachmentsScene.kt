@@ -53,7 +53,7 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
         }.finally {
             customer.value = it.toLazyState()
         }
-        paginator.initialize { no, capacity ->
+        paginator.initialize {
             config.api.rootDir(uid).list().andThen { it.paged(no, capacity) }
         }
         return res

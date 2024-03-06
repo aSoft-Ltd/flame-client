@@ -44,7 +44,7 @@ abstract class EntitiesScene(
     override val paginator by lazy { linearPaginatorOf<LegalEntityPresenter>() }
     fun initialize(navigate: NavigateFunction) {
         switchToLatestSelectedView()
-        paginator.initialize { no, capacity ->
+        paginator.initialize {
             Later(LoadOptions(no, capacity, searchBox.output)).andThen {
                 api.load(it)
             }.then { it.toPresenters() }

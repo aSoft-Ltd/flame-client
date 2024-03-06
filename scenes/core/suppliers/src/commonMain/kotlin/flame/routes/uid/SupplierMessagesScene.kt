@@ -17,7 +17,7 @@ class SupplierMessagesScene(private val config: SupplierScenesConfig<*>) : Messa
         linearPaginatorOf<TextMessagePresenter>()
     }
     fun initialize(uid: String) {
-        paginator.initialize { no, capacity ->
+        paginator.initialize {
             fakeMessages().paged(no,capacity)
         }
     }

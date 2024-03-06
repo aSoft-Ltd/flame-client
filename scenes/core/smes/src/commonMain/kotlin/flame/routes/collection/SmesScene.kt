@@ -23,8 +23,8 @@ class SmesScene(private val options: SmeSceneOption<SmeMonitorApi>) : Collection
 
     override val paginator by lazy { linearPaginatorOf<SmePresenter>() }
 
-    fun initialize(): Later<LinearPage<SmePresenter>> = paginator.initialize { no, capacity ->
-        options.api.list(LoadOptions(page = no, limit = capacity)).then { smes -> smes.map { it.toPresenter() } }
+    fun initialize(): Later<LinearPage<SmePresenter>> = paginator.initialize { params ->
+        options.api.list(LoadOptions(params.page, params.limit)).then { smes -> smes.map { it.toPresenter() } }
     }
 
     fun deInitialize() {
