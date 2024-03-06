@@ -33,7 +33,7 @@ import kotlinx.JsExport
 import kotlin.js.JsName
 
 abstract class EntitiesScene(
-    config: EntityScenesConfig<LegalEntityApi>
+    config: EntityScenesConfig<LegalEntityApi>,
 ) : CollectionScene<LegalEntityPresenter>(config), Confirmable by Confirmable() {
 
     private val bus = config.localBus
@@ -44,8 +44,8 @@ abstract class EntitiesScene(
     override val paginator by lazy { linearPaginatorOf<LegalEntityPresenter>() }
     fun initialize(navigate: NavigateFunction) {
         switchToLatestSelectedView()
-        paginator.initialize {
-            Later(LoadOptions(no, capacity, searchBox.output)).andThen {
+        paginator.initialize { params ->
+            Later(LoadOptions(params.page, params.limit, searchBox.output)).andThen {
                 api.load(it)
             }.then { it.toPresenters() }
         }

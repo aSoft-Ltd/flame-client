@@ -15,9 +15,10 @@ class CustomerMessagesScene(config: CustomerScenesConfig<*>) : MessagesScene(con
     override val paginator by lazy {
         linearPaginatorOf<TextMessagePresenter>()
     }
+
     fun initialize(uid: String) {
-        paginator.initialize {
-            fakeMessages().paged(no,capacity)
+        paginator.initialize { params ->
+            fakeMessages().paged(params)
         }
     }
 
