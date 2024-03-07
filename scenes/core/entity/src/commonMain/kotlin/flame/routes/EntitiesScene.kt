@@ -30,11 +30,12 @@ import symphony.Confirmable
 import symphony.actionsOf
 import symphony.linearPaginatorOf
 import kotlinx.JsExport
+import symphony.LinearCollectionScene
 import kotlin.js.JsName
 
 abstract class EntitiesScene(
     config: EntityScenesConfig<LegalEntityApi>,
-) : CollectionScene<LegalEntityPresenter>(config), Confirmable by Confirmable() {
+) : LinearCollectionScene<LegalEntityPresenter>(config), Confirmable by Confirmable() {
 
     private val bus = config.localBus
     private val busSubscriber = bus.subscriberBag
@@ -45,7 +46,7 @@ abstract class EntitiesScene(
     fun initialize(navigate: NavigateFunction) {
         switchToLatestSelectedView()
         paginator.initialize { params ->
-            Later(LoadOptions(params.page, params.limit, searchBox.output)).andThen {
+            Later(LoadOptions(params.page, params.limit, params.key)).andThen {
                 api.load(it)
             }.then { it.toPresenters() }
         }

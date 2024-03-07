@@ -32,7 +32,7 @@ abstract class EntityPickingMode(val config: EntityScenesConfig<EntitiesApi>) : 
     fun initialize(callback: ((LegalEntityPresenter) -> Unit)?) {
         handler.value = callback
         paginator.initialize { params ->
-            Later(LoadOptions(params.page, params.limit, searchBox.output)).andThen {
+            Later(LoadOptions(params.page, params.limit, params.key)).andThen {
                 api.load(it)
             }.then {
                 it.toPresenters()
