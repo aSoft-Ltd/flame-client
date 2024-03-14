@@ -23,7 +23,7 @@ import symphony.toForm
 
 class MonSmeBusinessFormScene(
     private val options: SmeSceneOption<SmeMonitorApi>
-) : SmeBusinessFormScene() {
+) : SmeBusinessFormScene2() {
     fun initialize(uid: String): Later<Any> {
         ui.value = Loading("Loading information for business with uid = $uid")
         return options.api.load(uid).then {

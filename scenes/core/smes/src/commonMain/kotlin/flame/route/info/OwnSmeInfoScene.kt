@@ -14,7 +14,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 import sanity.Subscriber
 
-class OwnSmeInfoScene(private val options: SmeSceneOption<SmeApi>) : SmeInfoScene() {
+class OwnSmeInfoScene(private val options: SmeSceneOption<SmeApi>) : SmeInfoScene2() {
 
     private var subscriber: Subscriber? = null
     fun initialize() {

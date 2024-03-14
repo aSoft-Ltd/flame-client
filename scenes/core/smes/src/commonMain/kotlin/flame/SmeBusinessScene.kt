@@ -2,11 +2,11 @@
 
 package flame
 
-import flame.route.admin.SmeAdminScenes
-import flame.route.info.SmeInfoScene
+import flame.route.admin.SmeAdminScenes2
+import flame.route.info.SmeInfoScene2
 import kotlinx.JsExport
 
 interface SmeBusinessScene {
-    val admin: SmeAdminScenes
-    val info: SmeInfoScene
+    val admin: SmeAdminScenes2
+    val info: SmeInfoScene2
 }

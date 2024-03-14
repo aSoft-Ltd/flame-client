@@ -21,7 +21,7 @@ import symphony.toForm
 
 class OwnSmeBusinessFormScene(
     private val options: SmeSceneOption<SmeApi>
-) : SmeBusinessFormScene() {
+) : SmeBusinessFormScene2() {
     fun initialize(): Later<Any> {
         ui.value = Loading("Loading business information")
         return options.api.load().then {

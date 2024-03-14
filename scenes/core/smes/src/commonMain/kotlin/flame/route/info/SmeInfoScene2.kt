@@ -6,4 +6,4 @@ import cinematic.LazyScene
 import flame.SmeProgress
 import kotlinx.JsExport
 
-abstract class SmeInfoScene : LazyScene<SmeProgress>()
+abstract class SmeInfoScene2 : LazyScene<SmeProgress>()
