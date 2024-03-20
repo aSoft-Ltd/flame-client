@@ -2,14 +2,10 @@ package flame
 
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import kase.response.getOrThrow
 import keep.load
 import koncurrent.Later
-import koncurrent.later.then
-import koncurrent.later.andThen
-import koncurrent.later.andZip
-import koncurrent.later.zip
-import koncurrent.later.catch
 import koncurrent.later
 import koncurrent.later.await
 import sentinel.UserSession
@@ -33,6 +29,7 @@ class SmeApiFlix(private val options: SmeApiFlixOptions) : SmeApi {
     override fun load(): Later<SmeDto> = options.scope.later {
         val tracer = logger.trace(options.message.load())
         val res = options.http.get(options.routes.load()) {
+            header(options.resolver,options.domain)
             bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
         }
         res.getOrThrow<SmeDto>(options.codec,tracer)

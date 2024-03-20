@@ -11,6 +11,8 @@ class SmeApiFlixOptions(
     val scope: CoroutineScope,
     val cache: Cache,
     val logger: LoggerFactory,
+    val resolver: String,
+    val domain: String,
     val http: HttpClient,
     val routes: SmeEndpoint,
     val sessionCacheKey: String,
