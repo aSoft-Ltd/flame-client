@@ -3,7 +3,6 @@
 package flame.route.ratios.pnl
 
 import cinematic.BaseScene
-import flame.SmeApi
 import flame.SmeSceneOption
 import flame.XSmeScheme
 import flame.route.ratios.utils.SmeStatements

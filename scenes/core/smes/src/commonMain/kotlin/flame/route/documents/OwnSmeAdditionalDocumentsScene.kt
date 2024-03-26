@@ -4,7 +4,6 @@
 package flame.route.documents
 
 import flame.OwnSmeScheme
-import flame.SmeApi
 import flame.SmeSceneOption
 import flame.documents.SmeDocument
 import kollections.toList

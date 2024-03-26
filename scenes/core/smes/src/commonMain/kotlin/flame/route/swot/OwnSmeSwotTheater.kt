@@ -4,10 +4,8 @@
 package flame.route.swot
 
 import flame.OwnSmeScheme
-import flame.SmeApi
 import flame.SmeSceneOption
 import flame.forms.swot.SwotComponent
-import kollections.emptyList
 import kotlinx.JsExport
 
 class OwnSmeSwotTheater(options: SmeSceneOption<OwnSmeScheme>) : SmeSwotTheater{
