@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.financial.aquisition
+package flame.forms.financial.aquisition
 
 import flame.forms.selectYesOrNo
 import kotlinx.JsExport

@@ -1,10 +1,15 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package flame.transformers.finance
 
 import flame.SmeApi
+import flame.SmeDto
 import flame.SmeSceneOption
+import flame.XSmeScheme
+import flame.finance.SmeFinanceDto
 import flame.finance.SmeFinancialStatusDto
-import flame.routes.financial.status.SmeFinancialStatusFields
-import flame.routes.financial.status.SmeFinancialStatusOutput
+import flame.forms.financial.status.SmeFinancialStatusFields
+import flame.forms.financial.status.SmeFinancialStatusOutput
 import flame.transformers.toPresenter
 import flame.transformers.utils.toProgress
 import kollections.listOf
@@ -13,7 +18,9 @@ import koncurrent.later.then
 import koncurrent.later.andThen
 import symphony.toForm
 
-internal fun SmeFinancialStatusDto?.toOutput() = SmeFinancialStatusOutput(
+internal inline fun SmeDto.toFinancialStatusOutput() = finance?.status.toOutput(this)
+internal inline fun SmeFinancialStatusDto?.toOutput(src: SmeDto) = SmeFinancialStatusOutput(
+    src = src,
     latestFinancialStatements = this?.latestFinancialStatements,
     managementAccounts = this?.managementAccounts,
     financialsAuditedOrReviewed = this?.financialsAuditedOrReviewed,
@@ -27,7 +34,7 @@ internal fun SmeFinancialStatusDto?.toOutput() = SmeFinancialStatusOutput(
     guarantees = this?.guarantees,
 )
 
-internal fun SmeFinancialStatusOutput.toParams() = SmeFinancialStatusDto(
+internal inline fun SmeFinancialStatusOutput.toParams() = SmeFinancialStatusDto(
     latestFinancialStatements = latestFinancialStatements,
     managementAccounts = managementAccounts,
     financialsAuditedOrReviewed = financialsAuditedOrReviewed,
@@ -39,18 +46,23 @@ internal fun SmeFinancialStatusOutput.toParams() = SmeFinancialStatusDto(
     assetRegister = assetRegister,
     permissionsFromLender = permissionsFromLender,
     guarantees = guarantees,
-)
+).let {
+    src.copy(finance = (src.finance ?: SmeFinanceDto()).copy(status = it))
+}
 
-fun SmeFinancialStatusDto?.toForm(options: SmeSceneOption<SmeApi>) = SmeFinancialStatusFields(toOutput()).toForm(
+fun SmeDto.toFinancialStatusForm(
+    options: SmeSceneOption<XSmeScheme>,
+    details: String
+) = SmeFinancialStatusFields(toFinancialStatusOutput()).toForm(
     heading = "Financial Status",
-    details = "Enter the current status of your financial predicaments",
+    details = details,
     logger = options.logger
 ) {
     onSubmit { output ->
         output.toLater().then {
             output.toParams()
         }.andThen {
-            options.api.finance.update(it)
+            options.api.update(it)
         }.then {
             it.toPresenter()
         }

@@ -1,6 +1,9 @@
-package flame.routes.financial.office
+package flame.forms.financial.office
+
+import flame.SmeDto
 
 class SmeBackOfficeOutput(
+    val src: SmeDto,
     var accounting: String? = null,
     var payroll: String? = null,
     var accountingConsultation: String? = null,

@@ -1,6 +1,9 @@
-package flame.routes.financial.status
+package flame.forms.financial.status
+
+import flame.SmeDto
 
 class SmeFinancialStatusOutput(
+    val src: SmeDto,
     var latestFinancialStatements: String?,
     var managementAccounts: String?,
     var financialsAuditedOrReviewed: String?,

@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.financial.office
+package flame.forms.financial.office
 
 import flame.forms.selectSourcing
 import flame.forms.selectYesOrNo

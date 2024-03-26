@@ -3,10 +3,12 @@
 package flame.transformers.finance
 
 import flame.SmeApi
+import flame.SmeDto
 import flame.SmeSceneOption
 import flame.finance.SmeBackOfficeDto
-import flame.routes.financial.office.SmeBackOfficeFields
-import flame.routes.financial.office.SmeBackOfficeOutput
+import flame.finance.SmeFinanceDto
+import flame.forms.financial.office.SmeBackOfficeFields
+import flame.forms.financial.office.SmeBackOfficeOutput
 import flame.transformers.utils.toProgress
 import kollections.listOf
 import koncurrent.toLater
@@ -14,7 +16,9 @@ import koncurrent.later.then
 import koncurrent.later.andThen
 import symphony.toForm
 
-inline fun SmeBackOfficeDto?.toOutput() = SmeBackOfficeOutput(
+internal inline fun SmeDto.toFinanceOfficeOutput() = finance?.office.toOutput(this)
+internal inline fun SmeBackOfficeDto?.toOutput(src: SmeDto) = SmeBackOfficeOutput(
+    src = src,
     accounting = this?.accounting,
     payroll = this?.payroll,
     accountingConsultation = this?.accountingConsultation,
@@ -28,24 +32,7 @@ inline fun SmeBackOfficeDto?.toOutput() = SmeBackOfficeOutput(
     criticalSystems = this?.criticalSystems,
 )
 
-inline fun SmeBackOfficeDto?.toForm(options: SmeSceneOption<SmeApi>) = SmeBackOfficeFields(toOutput()).toForm(
-    heading = "Business Details",
-    details = "Enter your business details here",
-    logger = options.logger,
-) {
-    onSubmit { output ->
-        output.toLater().then {
-            output.toParams()
-        }.andThen {
-            options.api.finance.update(it)
-        }
-    }
-    onSuccess {
-        options.bus.dispatch(options.topic.progressMade())
-    }
-}
-
-inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
+internal inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
     accounting = accounting,
     payroll = payroll,
     accountingConsultation = accountingConsultation,
@@ -57,9 +44,11 @@ inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
     policyReviewFrequency = policyReviewFrequency,
     assetsAssurance = assetsAssurance,
     criticalSystems = criticalSystems,
-)
+).let {
+    src.copy(finance = (src.finance ?: SmeFinanceDto()).copy(office = it))
+}
 
-fun SmeBackOfficeDto?.toProgress() = listOf(
+internal fun SmeBackOfficeDto?.toProgress() = listOf(
     this?.accounting,
     this?.payroll,
     this?.accountingConsultation,

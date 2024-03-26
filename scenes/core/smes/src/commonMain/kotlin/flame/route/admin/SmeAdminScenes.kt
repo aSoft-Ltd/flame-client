@@ -9,7 +9,7 @@ import flame.route.admin.legal.SmeLegalFormScene
 import flame.route.admin.shareholders.SmeShareholderScene
 import kotlinx.JsExport
 
-interface SmeAdminScenes {
+sealed interface SmeAdminScenes {
     val business: SmeBusinessFormScene
     val contacts: SmeContactFormScene
     val directors: SmeDirectorsScene
