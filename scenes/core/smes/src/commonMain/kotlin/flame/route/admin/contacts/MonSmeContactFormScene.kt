@@ -1,32 +1,33 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE", "OPT_IN_USAGE")
 
-package flame.routes.admin.contacts
+package flame.route.admin.contacts
 
-import flame.SmeApi
+import flame.MonSmeScheme
 import flame.SmeSceneOption
-import flame.forms.FormScene
-import flame.transformers.admin.toOutput
+import flame.forms.admin.contacts.SmeContactFields
+import flame.forms.admin.contacts.SmeContactOutput
+import flame.transformers.admin.toContactsOutput
 import flame.transformers.admin.toParams
 import kase.Loading
 import kase.Pending
 import kase.toLazyState
-import koncurrent.later.finally
-import koncurrent.toLater
-import koncurrent.later.then
+import koncurrent.Later
 import koncurrent.later.andThen
+import koncurrent.later.finally
+import koncurrent.later.then
+import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-class SmeContactFormScene(
-    private val options: SmeSceneOption<SmeApi>
-) : FormScene<SmeContactFields>() {
-    fun initialize() {
-        ui.value = Loading("loading your information, please wait . . .")
-        options.api.load().then {
-            it.admin?.contacts.toOutput()
-        }.then {
-            form(it)
+class MonSmeContactFormScene(
+    private val options: SmeSceneOption<MonSmeScheme>,
+) : SmeContactFormScene() {
+
+    fun initialize(uid: String): Later<Any> {
+        ui.value = Loading("Loading admin contact information for business with uid = $uid")
+        return options.api.load(uid).then {
+            form(it.toContactsOutput())
         }.finally {
             ui.value = it.toLazyState()
         }
@@ -34,7 +35,7 @@ class SmeContactFormScene(
 
     private fun form(output: SmeContactOutput) = SmeContactFields(output).toForm(
         heading = "Contact Details",
-        details = "Enter your contact details here",
+        details = "Enter ${output.src.admin?.business?.name ?: "SME"} contact details here",
         logger = options.logger,
     ) {
         onCancel { ui.value = Pending }
@@ -42,7 +43,7 @@ class SmeContactFormScene(
             output.toLater().then {
                 it.toParams()
             }.andThen {
-                options.api.admin.update(it)
+                options.api.update(it)
             }
         }
         onSuccess {

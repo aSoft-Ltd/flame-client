@@ -5,7 +5,7 @@ package flame
 
 import flame.forms.toSmeScene
 import flame.routes.SmeInfoScene
-import flame.routes.admin.SmeAdminScenes
+import flame.routes.admin.SmeAdminScenesOld
 import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinanceScenes
 import flame.routes.funding.SmeFundingScenes
@@ -17,7 +17,7 @@ import kotlinx.JsExport
 class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
     val info by lazy { SmeInfoScene(options) }
 
-    val admin by lazy { SmeAdminScenes(options) }
+    val admin by lazy { SmeAdminScenesOld(options) }
 
     val funding by lazy { SmeFundingScenes(options) }
 

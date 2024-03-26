@@ -6,4 +6,4 @@ import flame.forms.FormScene
 import flame.forms.admin.business.SmeBusinessFields
 import kotlinx.JsExport
 
-abstract class SmeBusinessFormScene2 : FormScene<SmeBusinessFields>()
+abstract class SmeBusinessFormScene : FormScene<SmeBusinessFields>()

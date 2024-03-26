@@ -2,13 +2,11 @@
 
 package flame.route.admin.business
 
-import flame.SmeDto
-import flame.SmeMonitorApi
+import flame.MonSmeScheme
 import flame.SmeSceneOption
 import flame.forms.admin.business.SmeBusinessFields
 import flame.forms.admin.business.SmeBusinessOutput
-import flame.transformers.admin.copy
-import flame.transformers.admin.toOutput
+import flame.transformers.admin.toBusinessOutput
 import flame.transformers.admin.toParams
 import kase.Loading
 import kase.Pending
@@ -22,22 +20,20 @@ import kotlinx.JsExport
 import symphony.toForm
 
 class MonSmeBusinessFormScene(
-    private val options: SmeSceneOption<SmeMonitorApi>
-) : SmeBusinessFormScene2() {
+    private val options: SmeSceneOption<MonSmeScheme>
+) : SmeBusinessFormScene() {
     fun initialize(uid: String): Later<Any> {
-        ui.value = Loading("Loading information for business with uid = $uid")
+        ui.value = Loading("Loading admin business information for business with uid = $uid")
         return options.api.load(uid).then {
-            it to it.admin?.business.toOutput()
-        }.then { (sme, output) ->
-            form(sme, output)
+            form(it.toBusinessOutput())
         }.finally {
             ui.value = it.toLazyState()
         }
     }
 
-    private fun form(sme: SmeDto, output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
+    private fun form(output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
         heading = "Business Details",
-        details = "Enter ${sme.admin?.business?.name ?: "SME"} business details here",
+        details = "Enter ${output.src.admin?.business?.name ?: "SME"} business details here",
         logger = options.logger,
     ) {
         onCancel { ui.value = Pending }
@@ -45,7 +41,7 @@ class MonSmeBusinessFormScene(
             output.toLater().then {
                 output.toParams()
             }.andThen {
-                options.api.update(sme.copy(it))
+                options.api.update(it)
             }
         }
         onSuccess {

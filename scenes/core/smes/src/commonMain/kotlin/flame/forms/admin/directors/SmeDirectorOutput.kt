@@ -1,4 +1,4 @@
-package flame.routes.admin.directors
+package flame.forms.admin.directors
 
 import symphony.PhoneOutput
 

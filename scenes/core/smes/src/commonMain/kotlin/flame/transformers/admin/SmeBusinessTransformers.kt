@@ -13,7 +13,10 @@ import geo.transformers.toOutput
 import symphony.PhoneOutput
 import kollections.listOf
 
-inline fun SmeBusinessDto?.toOutput() = SmeBusinessOutput(
+internal inline fun SmeDto.toBusinessOutput() = admin?.business.toOutput(this)
+
+internal inline fun SmeBusinessDto?.toOutput(src: SmeDto) = SmeBusinessOutput(
+    src = src,
     name = this?.name,
     registration = this?.registration,
     phone = PhoneOutput(this?.phone),
@@ -39,7 +42,9 @@ inline fun SmeBusinessOutput.toParams() = SmeBusinessDto(
     bbbee = bbbee,
     staffComplement = staffComplement,
     description = description,
-)
+).let {
+    src.copy(it)
+}
 
 fun SmeBusinessDto?.toProgress() = listOf(
     this?.name,

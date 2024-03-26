@@ -1,41 +1,43 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE", "NOTHING_TO_INLINE")
 
-package flame.routes.admin.directors
+package flame.route.admin.directors
 
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
-import flame.SmeApi
+import flame.SmePresenter
 import flame.SmeSceneOption
+import flame.XSmeScheme
 import flame.admin.SmeDirectorDto
+import flame.forms.admin.directors.SmeDirectorFields
+import flame.transformers.admin.copy
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
 import flame.transformers.toPresenter
 import kase.LazyState
-import kase.Loading
 import kase.Pending
-import kase.toLazyState
 import kollections.List
 import kollections.minus
-import kollections.emptyList
-import kollections.plus
-import koncurrent.later.finally
-import koncurrent.toLater
-import koncurrent.later.then
+import koncurrent.FailedLater
 import koncurrent.later.andThen
+import koncurrent.later.finally
+import koncurrent.later.then
+import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-class SmeDirectorsScene2(private val options: SmeSceneOption<SmeApi>) : BaseScene() {
+abstract class SmeDirectorsScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+
+    internal var presenter: SmePresenter? = null
 
     val directors = mutableLiveOf<LazyState<List<SmeDirectorDto>>>(Pending)
 
-    val form = Peekaboo { sme: SmeDirectorDto? ->
-        val label = if (sme == null) "Add Director" else "Edit ${sme.name}"
+    val form = Peekaboo { director: SmeDirectorDto? ->
+        val label = if (director == null) "Add Director" else "Edit ${director.name}"
 
-        SmeDirectorFields(sme.toOutput()).toForm(
+        SmeDirectorFields(director.toOutput()).toForm(
             heading = "Director's form",
             details = label,
             logger = options.logger
@@ -44,18 +46,19 @@ class SmeDirectorsScene2(private val options: SmeSceneOption<SmeApi>) : BaseScen
                 output.toLater().then {
                     it.toParams()
                 }.andThen {
-                    val rectors = if (sme != null) {
-                        existing - sme
+                    val rectors = if (director != null) {
+                        existing - director
                     } else {
                         existing
                     }
-                    options.api.admin.updateDirectors(rectors + it)
+                    val sme = presenter ?: return@andThen MissingPresenterLater()
+                    options.api.update(sme.src.copy(directors = rectors))
                 }.then {
                     it.toPresenter()
                 }
             }
             onSuccess {
-                initialize()
+                refresh()
                 options.bus.dispatch(options.topic.progressMade())
                 hide()
             }
@@ -67,21 +70,15 @@ class SmeDirectorsScene2(private val options: SmeSceneOption<SmeApi>) : BaseScen
         details = "Are you sure you want to delete ${director.name}"
         message = "Deleting ${director.name}, please wait . . ."
         onConfirm("Delete") {
-            options.api.admin.updateDirectors(existing - director).finally {
-                initialize()
+            val sme = presenter ?: return@onConfirm MissingPresenterLater()
+            options.api.update(sme.src.copy(directors = existing - director)).finally {
+                refresh()
                 options.bus.dispatch(options.topic.progressMade())
             }
         }
     }
 
-    fun initialize() {
-        directors.value = Loading("Loading directors, please wait . . .")
-        options.api.load().then {
-            it.admin?.directors ?: emptyList()
-        }.finally {
-            directors.value = it.toLazyState()
-        }
-    }
+    abstract fun refresh()
 
     fun showAddForm() = form.show(null)
 
@@ -94,5 +91,12 @@ class SmeDirectorsScene2(private val options: SmeSceneOption<SmeApi>) : BaseScen
         directors.value = Pending
         form.hide()
         confirm.hide()
+    }
+
+
+    internal companion object {
+
+        fun MissingPresenterException() = IllegalStateException("This screen is unaware of the sme presenter, please initialize it properly")
+        fun MissingPresenterLater() = FailedLater(MissingPresenterException())
     }
 }

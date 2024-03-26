@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("OPT_IN_USAGE", "NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.contacts
+package flame.forms.admin.contacts
 
 import kotlinx.JsExport
 import krono.date

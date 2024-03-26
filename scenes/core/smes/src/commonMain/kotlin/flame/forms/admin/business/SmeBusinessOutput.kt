@@ -1,10 +1,12 @@
 package flame.forms.admin.business
 
+import flame.SmeDto
 import geo.AddressOutput
 import identifier.Industry
 import symphony.PhoneOutput
 
 class SmeBusinessOutput(
+    val src: SmeDto,
     var name: String? = null,
     var registration: String? = null,
     var phone: PhoneOutput? = null,

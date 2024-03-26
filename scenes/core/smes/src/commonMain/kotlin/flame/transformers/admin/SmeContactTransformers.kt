@@ -2,13 +2,17 @@
 
 package flame.transformers.admin
 
+import flame.SmeDto
+import flame.admin.SmeAdminDto
 import flame.admin.SmeContactsDto
-import flame.routes.admin.contacts.SmeContactOutput
+import flame.forms.admin.contacts.SmeContactOutput
 import flame.transformers.utils.toProgress
 import symphony.PhoneOutput
 import kollections.listOf
 
-inline fun SmeContactsDto?.toOutput() = SmeContactOutput(
+internal inline fun SmeDto.toContactsOutput() = admin?.contacts.toOutput(this)
+internal inline fun SmeContactsDto?.toOutput(src: SmeDto) = SmeContactOutput(
+    src = src,
     firstName = this?.firstName,
     lastName = this?.lastName,
     email = this?.email,
@@ -24,7 +28,9 @@ inline fun SmeContactOutput.toParams() = SmeContactsDto(
     phone = phone?.toString(),
     role = role,
     dob = dob
-)
+).let {
+    src.copy(admin = (src.admin ?: SmeAdminDto()).copy(contacts = it))
+}
 
 fun SmeContactsDto?.toProgress() = listOf(
     this?.firstName,

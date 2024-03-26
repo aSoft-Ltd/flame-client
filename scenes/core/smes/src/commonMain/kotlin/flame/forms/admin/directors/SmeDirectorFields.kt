@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.directors
+package flame.forms.admin.directors
 
 import kotlinx.JsExport
 import neat.required

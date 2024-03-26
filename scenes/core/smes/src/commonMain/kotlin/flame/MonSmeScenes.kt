@@ -6,7 +6,7 @@ import flame.route.admin.MonSmeAdminScenes
 import flame.route.info.MonSmeInfoScene
 import kotlinx.JsExport
 
-class MonBusinessesScenes(options: SmeSceneOption<SmeMonitorApi>) : SmeBusinessScene {
+class MonSmeScenes(options: SmeSceneOption<MonSmeScheme>) : XSmeScenes {
     override val info by lazy { MonSmeInfoScene(options) }
     override val admin by lazy { MonSmeAdminScenes(options) }
 }
