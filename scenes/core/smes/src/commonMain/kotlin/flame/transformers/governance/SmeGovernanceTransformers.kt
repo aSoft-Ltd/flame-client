@@ -1,10 +1,14 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package flame.transformers.governance
 
 import flame.SmeApi
+import flame.SmeDto
 import flame.SmeSceneOption
 import flame.governance.SmeGovernanceDto
-import flame.routes.governance.SmeGovernanceFields
-import flame.routes.governance.SmeGovernanceOutput
+import flame.forms.governance.SmeGovernanceFields
+import flame.forms.governance.SmeGovernanceOutput
+import flame.transformers.admin.copy
 import flame.transformers.toPresenter
 import flame.transformers.utils.toProgress
 import koncurrent.toLater
@@ -13,7 +17,10 @@ import koncurrent.later.andThen
 import symphony.toForm
 import kollections.listOf
 
-internal fun SmeGovernanceDto?.toOutput() = SmeGovernanceOutput(
+
+internal inline fun SmeDto.toGovernanceOutput() = governance.toOutput(this)
+internal inline fun SmeGovernanceDto?.toOutput(src: SmeDto) = SmeGovernanceOutput(
+    src = src,
     insuranceScheme = this?.insuranceScheme,
     noOfJobs = this?.noOfJobs,
     skillShortfall = this?.skillShortfall,
@@ -25,7 +32,7 @@ internal fun SmeGovernanceDto?.toOutput() = SmeGovernanceOutput(
     specialist = this?.specialist,
 )
 
-internal fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
+internal inline fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
     insuranceScheme = insuranceScheme,
     noOfJobs = noOfJobs,
     skillShortfall = skillShortfall,
@@ -35,24 +42,8 @@ internal fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
     organogram = organogram,
     disputes = disputes,
     specialist = specialist,
-)
-
-internal fun SmeGovernanceDto?.toForm(options: SmeSceneOption<SmeApi>) = SmeGovernanceFields(toOutput()).toForm(
-    heading = "Manpower",
-    details = "Enter company manpower information",
-    logger = options.logger
-) {
-    onSubmit { output ->
-        output.toLater().then {
-            it.toParams()
-        }.andThen {
-            options.api.governance.update(it)
-        }.then {
-            it.toPresenter()
-        }
-    }
-
-    onSuccess { options.bus.dispatch(options.topic.progressMade()) }
+).let {
+    src.copy(governance = it)
 }
 
 internal fun SmeGovernanceDto?.toProgress() = listOf(

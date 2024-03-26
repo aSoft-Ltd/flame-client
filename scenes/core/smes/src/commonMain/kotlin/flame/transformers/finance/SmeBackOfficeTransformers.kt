@@ -2,19 +2,12 @@
 
 package flame.transformers.finance
 
-import flame.SmeApi
 import flame.SmeDto
-import flame.SmeSceneOption
 import flame.finance.SmeBackOfficeDto
 import flame.finance.SmeFinanceDto
-import flame.forms.financial.office.SmeBackOfficeFields
 import flame.forms.financial.office.SmeBackOfficeOutput
 import flame.transformers.utils.toProgress
 import kollections.listOf
-import koncurrent.toLater
-import koncurrent.later.then
-import koncurrent.later.andThen
-import symphony.toForm
 
 internal inline fun SmeDto.toFinanceOfficeOutput() = finance?.office.toOutput(this)
 internal inline fun SmeBackOfficeDto?.toOutput(src: SmeDto) = SmeBackOfficeOutput(

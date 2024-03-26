@@ -14,7 +14,7 @@ import koncurrent.later.finally
 import koncurrent.later.then
 import kotlinx.JsExport
 
-class MonSmeInfoScene(private val options: SmeSceneOption<MonSmeScheme>) : SmeInfoScene2() {
+class MonSmeInfoScene(private val options: SmeSceneOption<MonSmeScheme>) : SmeInfoScene() {
     fun initialize(uid: String): Later<SmeProgress> {
         ui.value = Loading("loading information for business with uid = $uid, please wait...")
         return options.api.load(uid).then {
