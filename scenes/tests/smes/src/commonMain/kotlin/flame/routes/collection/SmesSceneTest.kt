@@ -1,5 +1,6 @@
 package flame.routes.collection
 
+import flame.route.collection.SmesScene
 import kommander.expect
 import koncurrent.later.await
 

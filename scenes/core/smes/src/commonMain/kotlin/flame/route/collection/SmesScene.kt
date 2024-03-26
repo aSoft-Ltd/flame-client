@@ -1,8 +1,8 @@
 @file:JsExport
 
-package flame.routes.collection
+package flame.route.collection
 
-import flame.SmeMonitorApi
+import flame.MonSmeScheme
 import flame.SmePresenter
 import flame.SmeSceneOption
 import flame.transformers.toPresenter
@@ -12,12 +12,12 @@ import koncurrent.Later
 import koncurrent.later.then
 import kotlinx.JsExport
 import kronecker.LoadOptions
-import symphony.CollectionScene
+import symphony.LinearCollectionScene
 import symphony.LinearPage
 import symphony.actionsOf
 import symphony.linearPaginatorOf
 
-class SmesScene(private val options: SmeSceneOption<SmeMonitorApi>) : CollectionScene<SmePresenter>(options) {
+class SmesScene(private val options: SmeSceneOption<MonSmeScheme>) : LinearCollectionScene<SmePresenter>(options) {
 
     private val logger by options.logger
 
