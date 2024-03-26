@@ -20,32 +20,14 @@ import kotlinx.JsExport
 import symphony.toForm
 
 class MonSmeBusinessFormScene(
-    private val options: SmeSceneOption<MonSmeScheme>
-) : SmeBusinessFormScene() {
+    private val options: SmeSceneOption<MonSmeScheme>,
+) : SmeBusinessFormScene(options) {
     fun initialize(uid: String): Later<Any> {
         ui.value = Loading("Loading admin business information for business with uid = $uid")
         return options.api.load(uid).then {
-            form(it.toBusinessOutput())
+            form(it.toBusinessOutput(), "Enter ${it.admin?.business?.name ?: "SME"} business details here")
         }.finally {
             ui.value = it.toLazyState()
-        }
-    }
-
-    private fun form(output: SmeBusinessOutput) = SmeBusinessFields(output).toForm(
-        heading = "Business Details",
-        details = "Enter ${output.src.admin?.business?.name ?: "SME"} business details here",
-        logger = options.logger,
-    ) {
-        onCancel { ui.value = Pending }
-        onSubmit { output ->
-            output.toLater().then {
-                output.toParams()
-            }.andThen {
-                options.api.update(it)
-            }
-        }
-        onSuccess {
-            options.bus.dispatch(options.topic.progressMade())
         }
     }
 }

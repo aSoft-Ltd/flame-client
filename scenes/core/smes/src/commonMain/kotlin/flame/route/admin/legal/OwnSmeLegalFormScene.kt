@@ -1,11 +1,15 @@
 @file:JsExport
 @file:Suppress("OPT_IN_USAGE", "NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.legal
+package flame.route.admin.legal
 
+import flame.OwnSmeScheme
 import flame.SmeApi
 import flame.SmeSceneOption
 import flame.forms.FormScene
+import flame.forms.admin.legal.SmeLegalFields
+import flame.forms.admin.legal.SmeLegalOutput
+import flame.route.admin.directors.OwnSmeDirectorsScene
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
 import kase.Loading
@@ -18,35 +22,17 @@ import koncurrent.later.andThen
 import kotlinx.JsExport
 import symphony.toForm
 
-class SmeLegalFormScene(
-    private val options: SmeSceneOption<SmeApi>
-) : FormScene<SmeLegalFields>() {
+class OwnSmeLegalFormScene(
+    private val options: SmeSceneOption<OwnSmeScheme>,
+) : SmeLegalFormScene(options) {
     fun initialize() {
         ui.value = Loading("Loading business information")
         options.api.load().then {
             it.admin?.legal.toOutput()
         }.then {
-            form(it)
+            form(it, "Enter your legal information here")
         }.finally {
             ui.value = it.toLazyState()
-        }
-    }
-
-    private fun form(output: SmeLegalOutput) = SmeLegalFields(output).toForm(
-        heading = "Legal Compliance Form",
-        details = "Enter your legal information here",
-        logger = options.logger,
-    ) {
-        onCancel { ui.value = Pending }
-        onSubmit {output->
-            output.toLater().then {
-                it.toParams()
-            }.andThen {
-                options.api.admin.update(it)
-            }
-        }
-        onSuccess {
-            options.bus.dispatch(options.topic.progressMade())
         }
     }
 }

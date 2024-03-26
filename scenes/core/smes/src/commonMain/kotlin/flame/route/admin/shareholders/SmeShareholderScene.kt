@@ -1,15 +1,15 @@
 @file:JsExport
-@file:Suppress("NON_EXPORTABLE_TYPE", "NOTHING_TO_INLINE")
+@file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.route.admin.directors
+package flame.route.admin.shareholders
 
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
 import flame.SmeSceneOption
 import flame.XSmeScheme
-import flame.admin.SmeDirectorDto
-import flame.forms.admin.directors.SmeDirectorFields
+import flame.admin.SmeShareholderDto
+import flame.forms.admin.shareholders.SmeShareholderFields
 import flame.transformers.admin.copy
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
@@ -18,6 +18,7 @@ import kase.LazyState
 import kase.Pending
 import kollections.List
 import kollections.minus
+import kollections.plus
 import koncurrent.FailedLater
 import koncurrent.later.andThen
 import koncurrent.later.finally
@@ -28,17 +29,16 @@ import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-abstract class SmeDirectorsScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+abstract class SmeShareholderScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+
+    val shareholders = mutableLiveOf<LazyState<List<SmeShareholderDto>>>(Pending)
 
     internal var presenter: SmePresenter? = null
 
-    val directors = mutableLiveOf<LazyState<List<SmeDirectorDto>>>(Pending)
-
-    val form = Peekaboo { director: SmeDirectorDto? ->
-        val label = if (director == null) "Add Director" else "Edit ${director.name}"
-
-        SmeDirectorFields(director.toOutput()).toForm(
-            heading = "Director's form",
+    val form = Peekaboo { dto: SmeShareholderDto? ->
+        val label = if (dto == null) "Add Shareholder" else "Edit ${dto.name}"
+        SmeShareholderFields(dto.toOutput()).toForm(
+            heading = "Shareholder's form",
             details = label,
             logger = options.logger
         ) {
@@ -46,32 +46,32 @@ abstract class SmeDirectorsScene(private val options: SmeSceneOption<XSmeScheme>
                 output.toLater().then {
                     it.toParams()
                 }.andThen {
-                    val rectors = if (director != null) {
-                        existing - director
+                    val holders = if (dto != null) {
+                        existing - dto
                     } else {
                         existing
                     }
                     val sme = presenter ?: return@andThen MissingPresenterLater()
-                    options.api.update(sme.src.copy(directors = rectors))
+                    options.api.update(sme.src.copy(holders + it))
                 }.then {
                     it.toPresenter()
                 }
             }
             onSuccess {
                 refresh()
-                options.bus.dispatch(options.topic.progressMade())
                 hide()
+                options.bus.dispatch(options.topic.progressMade())
             }
         }
     }
 
-    val confirm = Confirm { director: SmeDirectorDto ->
-        heading = "Delete ${director.name}"
-        details = "Are you sure you want to delete ${director.name}"
-        message = "Deleting ${director.name}, please wait . . ."
-        onConfirm("Delete") {
+    val confirm = Confirm { holder: SmeShareholderDto ->
+        heading = "Delete ${holder.name}"
+        details = "Are you sure you want to delete ${holder.name}"
+
+        onConfirm {
             val sme = presenter ?: return@onConfirm MissingPresenterLater()
-            options.api.update(sme.src.copy(directors = existing - director)).finally {
+            options.api.update(sme.src.copy(existing - holder)).finally {
                 refresh()
                 options.bus.dispatch(options.topic.progressMade())
             }
@@ -82,17 +82,15 @@ abstract class SmeDirectorsScene(private val options: SmeSceneOption<XSmeScheme>
 
     fun showAddForm() = form.show(null)
 
-    fun edit(director: SmeDirectorDto) = form.show(director)
+    fun edit(shareholder: SmeShareholderDto) = form.show(shareholder)
 
-    private val existing get() = directors.value.data ?: throw IllegalStateException("editing null shareholder's is prohibited")
-    fun delete(director: SmeDirectorDto) = confirm.show(director)
+    private val existing get() = shareholders.value.data ?: throw IllegalStateException("editing null shareholder's is prohibited")
 
     fun deInitialize() {
-        directors.value = Pending
+        shareholders.value = Pending
         form.hide()
         confirm.hide()
     }
-
 
     internal companion object {
 

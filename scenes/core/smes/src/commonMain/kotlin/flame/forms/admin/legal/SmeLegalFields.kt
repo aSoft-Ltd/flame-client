@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.admin.legal
+package flame.forms.admin.legal
 
 import flame.forms.selectCompliance
 import kotlinx.JsExport

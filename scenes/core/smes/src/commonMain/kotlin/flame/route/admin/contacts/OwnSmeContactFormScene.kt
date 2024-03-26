@@ -21,32 +21,14 @@ import kotlinx.JsExport
 import symphony.toForm
 
 class OwnSmeContactFormScene(
-    private val options: SmeSceneOption<OwnSmeScheme>
-) : SmeContactFormScene() {
-    fun initialize() : Later<Any> {
+    private val options: SmeSceneOption<OwnSmeScheme>,
+) : SmeContactFormScene(options) {
+    fun initialize(): Later<Any> {
         ui.value = Loading("loading your information, please wait . . .")
         return options.api.load().then {
-            form(it.toContactsOutput())
+            form(it.toContactsOutput(), "Enter your contact details here")
         }.finally {
             ui.value = it.toLazyState()
-        }
-    }
-
-    private fun form(output: SmeContactOutput) = SmeContactFields(output).toForm(
-        heading = "Contact Details",
-        details = "Enter your contact details here",
-        logger = options.logger,
-    ) {
-        onCancel { ui.value = Pending }
-        onSubmit { output ->
-            output.toLater().then {
-                it.toParams()
-            }.andThen {
-                options.api.update(it)
-            }
-        }
-        onSuccess {
-            options.bus.dispatch(options.topic.progressMade())
         }
     }
 }

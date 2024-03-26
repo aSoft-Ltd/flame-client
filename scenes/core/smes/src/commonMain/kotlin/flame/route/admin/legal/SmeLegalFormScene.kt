@@ -1,13 +1,13 @@
 @file:JsExport
-@file:Suppress("NON_EXPORTABLE_TYPE", "OPT_IN_USAGE")
+@file:Suppress("OPT_IN_USAGE", "NON_EXPORTABLE_TYPE")
 
-package flame.route.admin.contacts
+package flame.route.admin.legal
 
 import flame.SmeSceneOption
 import flame.XSmeScheme
 import flame.forms.FormScene
-import flame.forms.admin.contacts.SmeContactFields
-import flame.forms.admin.contacts.SmeContactOutput
+import flame.forms.admin.legal.SmeLegalFields
+import flame.forms.admin.legal.SmeLegalOutput
 import flame.transformers.admin.toParams
 import kase.Pending
 import koncurrent.later.andThen
@@ -16,11 +16,9 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeContactFormScene(
-    private val options: SmeSceneOption<XSmeScheme>
-) : FormScene<SmeContactFields>() {
-    protected fun form(output: SmeContactOutput,details: String) = SmeContactFields(output).toForm(
-        heading = "Contact Details",
+abstract class SmeLegalFormScene(private val options: SmeSceneOption<XSmeScheme>) : FormScene<SmeLegalFields>() {
+    protected fun form(output: SmeLegalOutput, details: String) = SmeLegalFields(output).toForm(
+        heading = "Legal Compliance Form",
         details = details,
         logger = options.logger,
     ) {

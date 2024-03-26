@@ -1,8 +1,10 @@
-package flame.routes.admin.legal
+package flame.forms.admin.legal
 
+import flame.SmeDto
 import flame.forms.admin.business.SmeBusinessOutput
 
 class SmeLegalOutput(
+    val src: SmeDto,
     var cipcAnnualReturns: String? = null,
     /**
      * What is the difference between this and [SmeBusinessOutput.registration]

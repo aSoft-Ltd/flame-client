@@ -1,4 +1,4 @@
-package flame.routes.admin.shareholders
+package flame.forms.admin.shareholders
 
 class SmeShareholderOutput(
     var name: String? = null,

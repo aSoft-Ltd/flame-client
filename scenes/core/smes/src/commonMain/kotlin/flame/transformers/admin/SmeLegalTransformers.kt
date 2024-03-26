@@ -2,12 +2,15 @@
 
 package flame.transformers.admin
 
+import flame.SmeDto
+import flame.admin.SmeAdminDto
 import flame.admin.SmeLegalComplianceDto
-import flame.routes.admin.legal.SmeLegalOutput
+import flame.forms.admin.legal.SmeLegalOutput
 import flame.transformers.utils.toProgress
 import kollections.listOf
 
-inline fun SmeLegalComplianceDto?.toOutput() = SmeLegalOutput(
+inline fun SmeLegalComplianceDto?.toOutput(src: SmeDto) = SmeLegalOutput(
+    src = src,
     cipcAnnualReturns = this?.cipcAnnualReturns,
     registration = this?.registration,
     vatRegistration = this?.vatRegistration,
@@ -27,7 +30,7 @@ inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
     incomeTaxNumber = incomeTaxNumber,
     workmanCompensationOption = workmanCompensationOption,
     workmanCompensationNumber = workmanCompensationNumber,
-)
+).let { src.copy(admin = (src.admin ?: SmeAdminDto()).copy(legal = it)) }
 
 fun SmeLegalComplianceDto?.toProgress() = listOf(
     this?.cipcAnnualReturns,
