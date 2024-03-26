@@ -9,7 +9,8 @@ import flame.forms.admin.legal.SmeLegalOutput
 import flame.transformers.utils.toProgress
 import kollections.listOf
 
-inline fun SmeLegalComplianceDto?.toOutput(src: SmeDto) = SmeLegalOutput(
+internal inline fun SmeDto.toLegalOutput() = admin?.legal.toOutput(this)
+internal inline fun SmeLegalComplianceDto?.toOutput(src: SmeDto) = SmeLegalOutput(
     src = src,
     cipcAnnualReturns = this?.cipcAnnualReturns,
     registration = this?.registration,
@@ -21,7 +22,7 @@ inline fun SmeLegalComplianceDto?.toOutput(src: SmeDto) = SmeLegalOutput(
     workmanCompensationNumber = this?.workmanCompensationNumber,
 )
 
-inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
+internal inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
     cipcAnnualReturns = cipcAnnualReturns,
     registration = registration,
     vatRegistration = vatRegistration,

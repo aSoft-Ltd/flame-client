@@ -11,6 +11,7 @@ import flame.forms.FormScene
 import flame.forms.admin.legal.SmeLegalFields
 import flame.forms.admin.legal.SmeLegalOutput
 import flame.route.admin.directors.OwnSmeDirectorsScene
+import flame.transformers.admin.toLegalOutput
 import flame.transformers.admin.toOutput
 import flame.transformers.admin.toParams
 import kase.Loading
@@ -29,9 +30,7 @@ class MonSmeLegalFormScene(
     fun initialize(uid: String) {
         ui.value = Loading("Loading information for business (uid = $uid)")
         options.api.load(uid).then {
-            it.admin?.legal.toOutput()
-        }.then {
-            form(it, "Enter your legal information here")
+            form(it.toLegalOutput(), "Enter your legal information here")
         }.finally {
             ui.value = it.toLazyState()
         }

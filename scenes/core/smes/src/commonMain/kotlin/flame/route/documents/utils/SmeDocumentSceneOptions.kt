@@ -1,4 +1,4 @@
-package flame.routes.documents.utils
+package flame.route.documents.utils
 
 import flame.documents.SmeDocument
 import flame.workers.SmeUploadDocumentWorker

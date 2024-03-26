@@ -1,7 +1,7 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.documents.utils
+package flame.route.documents.utils
 
 import cabinet.Attachment
 import flame.SmeSectionProgress

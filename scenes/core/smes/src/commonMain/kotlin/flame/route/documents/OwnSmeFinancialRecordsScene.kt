@@ -1,15 +1,16 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE")
 
-package flame.routes.documents
+package flame.route.documents
 
+import flame.OwnSmeScheme
 import flame.SmeApi
 import flame.SmeSceneOption
 import flame.documents.SmeDocument
 import kollections.toList
 import kotlinx.JsExport
 
-class SmeFinancialRecordsScene(options: SmeSceneOption<SmeApi>) : SmeAbstractDocumentScene(options) {
+class OwnSmeFinancialRecordsScene(options: SmeSceneOption<OwnSmeScheme>) : OwnSmeAbstractDocumentScene(options) {
 
     override val documents by lazy {
         SmeDocument.FinancialRecord.values().map { it.toScene() }.toList()
