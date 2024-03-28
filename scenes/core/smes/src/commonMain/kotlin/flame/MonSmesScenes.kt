@@ -2,7 +2,7 @@
 
 package flame
 
-import flame.route.collection.SmesScene
+import flame.routes.collection.SmesScene
 import kotlinx.JsExport
 
 class MonSmesScenes(options: SmeSceneOption<MonSmeScheme>) {

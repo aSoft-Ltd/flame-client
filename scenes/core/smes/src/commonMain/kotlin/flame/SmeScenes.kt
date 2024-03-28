@@ -1,13 +1,22 @@
 @file:JsExport
-@file:Suppress("NON_EXPORTABLE_TYPE")
 
 package flame
 
-import flame.routes.funding.SmeFundingScenes
-import flame.route.ratios.SmeFinancialRatiosScenes
+import flame.routes.admin.SmeAdminScenes
+import flame.routes.documents.SmeDocumentsScenes
+import flame.routes.financial.SmeFinancialScenes
+import flame.routes.governance.SmeGovernanceFormScene
+import flame.routes.info.SmeInfoScene
+import flame.routes.ratios.SmeFinancialRatiosScenes
+import flame.routes.swot.SmeSwotTheater
 import kotlinx.JsExport
 
-class SmeScenes(private val options: SmeSceneOption<SmeApi>) {
-
-    val funding by lazy { SmeFundingScenes(options) }
+sealed interface SmeScenes {
+    val admin: SmeAdminScenes
+    val info: SmeInfoScene
+    val documents: SmeDocumentsScenes
+    val finance: SmeFinancialScenes
+    val governance: SmeGovernanceFormScene
+    val swot: SmeSwotTheater
+    val ratios: SmeFinancialRatiosScenes
 }

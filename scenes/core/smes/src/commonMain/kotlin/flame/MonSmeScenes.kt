@@ -2,16 +2,16 @@
 
 package flame
 
-import flame.route.admin.MonSmeAdminScenes
-import flame.route.documents.MonSmeDocumentsScenes
-import flame.route.financial.MonSmeFinancialScenes
-import flame.route.governance.MonSmeGovernanceFormScene
-import flame.route.info.MonSmeInfoScene
-import flame.route.ratios.MonSmeFinancialRatiosScenes
-import flame.route.swot.MonSmeSwotTheater
+import flame.routes.admin.MonSmeAdminScenes
+import flame.routes.documents.MonSmeDocumentsScenes
+import flame.routes.financial.MonSmeFinancialScenes
+import flame.routes.governance.MonSmeGovernanceFormScene
+import flame.routes.info.MonSmeInfoScene
+import flame.routes.ratios.MonSmeFinancialRatiosScenes
+import flame.routes.swot.MonSmeSwotTheater
 import kotlinx.JsExport
 
-class MonSmeScenes(options: SmeSceneOption<MonSmeScheme>) : XSmeScenes {
+class MonSmeScenes(options: SmeSceneOption<MonSmeScheme>) : SmeScenes {
     override val info by lazy { MonSmeInfoScene(options) }
     override val admin by lazy { MonSmeAdminScenes(options) }
     override val documents by lazy { MonSmeDocumentsScenes(options) }
