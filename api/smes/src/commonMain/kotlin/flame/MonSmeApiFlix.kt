@@ -15,41 +15,44 @@ import koncurrent.later.await
 import kronecker.LoadOptions
 import sentinel.UserSession
 
-class MonSmeApiFlix(private val config: SmeApiFlixOptions) : MonSmeScheme {
+class MonSmeApiFlix(private val options: MonSmeApiFlixOptions) : MonSmeScheme {
 
-    private val logger by config.logger
+    private val logger by options.logger
+    private val message = options.message
+    private val codec = options.codec
+    private val cache = options.cache
+    private val http = options.http
+    private val routes = options.routes
 
-    override fun create(params: SmeBusinessDto): Later<SmeDto> = config.scope.later {
-        val tracer = logger.trace(config.message.create())
-        val secret = config.cache.load(config.sessionCacheKey, UserSession.serializer()).await().secret
-        config.http.post(config.routes.create()) {
-            bearerAuth(secret)
-            setBody(config.codec.encodeToString(SmeBusinessDto.serializer(),params))
-        }.getOrThrow(SmeDto.serializer(), config.codec, tracer)
+    private suspend fun secret() = cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
+
+    override fun create(params: SmeBusinessDto): Later<SmeDto> = options.scope.later {
+        val tracer = logger.trace(message.create())
+        http.post(routes.create()) {
+            bearerAuth(secret())
+            setBody(codec.encodeToString(SmeBusinessDto.serializer(),params))
+        }.getOrThrow(SmeDto.serializer(), codec, tracer)
     }
 
-    override fun list(options: LoadOptions): Later<List<SmeDto>> = config.scope.later {
-        val tracer = logger.trace(config.message.smes())
-        val secret = config.cache.load(config.sessionCacheKey, UserSession.serializer()).await().secret
-        config.http.get(config.routes.load()) {
-            bearerAuth(secret)
-        }.getOrThrow(ListSerializer(SmeDto.serializer()), config.codec, tracer)
+    override fun list(options: LoadOptions): Later<List<SmeDto>> = this.options.scope.later {
+        val tracer = logger.trace(message.list())
+        http.get(routes.list()) {
+            bearerAuth(secret())
+        }.getOrThrow(ListSerializer(SmeDto.serializer()), codec, tracer)
     }
 
-    override fun load(uid: String): Later<SmeDto> = config.scope.later{
-        val tracer = logger.trace(config.message.load())
-        val secret = config.cache.load(config.sessionCacheKey, UserSession.serializer()).await().secret
-        config.http.get(config.routes.load(uid)) {
-            bearerAuth(secret)
-        }.getOrThrow(SmeDto.serializer(), config.codec, tracer)
+    override fun load(uid: String): Later<SmeDto> = options.scope.later{
+        val tracer = logger.trace(message.load(uid))
+        http.get(routes.load(uid)) {
+            bearerAuth(secret())
+        }.getOrThrow(SmeDto.serializer(), codec, tracer)
     }
 
-    override fun update(sme: SmeDto): Later<SmeDto> = config.scope.later {
-        val tracer = logger.trace(config.message.update())
-        val secret = config.cache.load(config.sessionCacheKey, UserSession.serializer()).await().secret
-        config.http.patch(config.routes.update()) {
-            bearerAuth(secret)
-            setBody(config.codec.encodeToString(SmeDto.serializer(),sme))
-        }.getOrThrow(SmeDto.serializer(), config.codec, tracer)
+    override fun update(sme: SmeDto): Later<SmeDto> = options.scope.later {
+        val tracer = logger.trace(message.update())
+        http.patch(routes.update()) {
+            bearerAuth(secret())
+            setBody(codec.encodeToString(SmeDto.serializer(),sme))
+        }.getOrThrow(SmeDto.serializer(), codec, tracer)
     }
 }
