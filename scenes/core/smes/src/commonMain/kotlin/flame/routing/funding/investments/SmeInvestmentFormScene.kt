@@ -41,9 +41,10 @@ class SmeInvestmentFormScene(
         onSubmit { output ->
             output.toLater().then {
                 output.toParams()
-            }.andThen {
-                options.api.funding.update(it)
             }
+//                .andThen {
+//                options.api.funding.update(it)
+//            }
         }
         onSuccess {
             options.bus.dispatch(options.topic.progressMade())

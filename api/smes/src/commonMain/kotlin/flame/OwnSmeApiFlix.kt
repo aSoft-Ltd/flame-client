@@ -12,7 +12,7 @@ import koncurrent.later
 import koncurrent.later.await
 import sentinel.UserSession
 
-class OwnSmeApiFlix(private val options: SmeApiFlixOptions) : OwnSmeScheme {
+class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeScheme {
 
     private val logger by options.logger
 

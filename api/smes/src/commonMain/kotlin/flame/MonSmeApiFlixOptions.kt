@@ -11,8 +11,6 @@ class MonSmeApiFlixOptions(
     val scope: CoroutineScope,
     val cache: Cache,
     val logger: LoggerFactory,
-    val resolver: String,
-    val domain: String,
     val http: HttpClient,
     val routes: MonSmeReference,
     val sessionCacheKey: String,
