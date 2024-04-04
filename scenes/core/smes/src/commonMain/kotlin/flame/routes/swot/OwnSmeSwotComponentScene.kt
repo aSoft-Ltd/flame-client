@@ -7,6 +7,7 @@ import flame.OwnSmeScheme
 import flame.SmeSceneOption
 import flame.forms.swot.SwotComponent
 import flame.swot.SmeSwotDto
+import flame.transformers.toPresenter
 import kase.Loading
 import kase.toLazyState
 import kollections.List
@@ -25,7 +26,13 @@ class OwnSmeSwotComponentScene(
 
     fun initialize() {
         ui.value = Loading("Fetching information, please wait . . .")
-        refresh(false)
+        options.api.load().then {
+            presenter = it.toPresenter()
+        }.then {
+            getter(presenter?.swot) ?: emptyList()
+        }.finally {
+            ui.value = it.toLazyState()
+        }
     }
 
     override fun refresh(dispatch: Boolean) {
