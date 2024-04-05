@@ -22,6 +22,6 @@ class OwnSmeSwotTheater(options: SmeSceneOption<OwnSmeScheme>) : SmeSwotTheater{
     }
 
     override val threats by lazy {
-        OwnSmeSwotComponentScene(options, SwotComponent.opportunity) { it?.threats }
+        OwnSmeSwotComponentScene(options, SwotComponent.threat) { it?.threats }
     }
 }
