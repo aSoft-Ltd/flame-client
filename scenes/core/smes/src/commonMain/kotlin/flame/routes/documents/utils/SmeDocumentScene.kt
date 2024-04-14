@@ -39,7 +39,7 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
 
     val field = FileField(
         name = options.document.label,
-        onChange = { upload(it) }
+        onChange = { upload(it?.file) }
     )
 
     fun upload(file: RawFile?) {
