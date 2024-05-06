@@ -10,7 +10,7 @@ import epsilon.FileField
 import epsilon.RawFile
 import epsilon.RawFileInfo
 import flame.SmeSectionProgress
-import flame.workers.SmeUploadDocumentWorker
+import flame.workers.OwnSmeUploadDocumentWorker
 import kase.progress.ProgressState
 import kollections.get
 import kotlinx.JsExport
@@ -46,7 +46,7 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
         if (file == null) return
         val info = RawFileInfo(file)
         val swo = SubmitWorkOptions(
-            type = SmeUploadDocumentWorker.TYPE,
+            type = OwnSmeUploadDocumentWorker.TYPE,
             topic = options.topic,
             name = options.document.label,
             params = FileUploadParam(
