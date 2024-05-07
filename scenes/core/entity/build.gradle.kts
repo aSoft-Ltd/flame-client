@@ -22,9 +22,9 @@ kotlin {
                 api(libs.symphony.collections)
                 api(libs.symphony.input.dialog)
                 api(libs.cabinet.api.core)
-                api(libs.epsilon.api.file) // Because we want to upload customer documents as attachments
+                api(libs.epsilon.core) // Because we want to upload customer documents as attachments
                 api(libs.krest.core) // Because we want to write background workers for uploading attachments
-			    api(libs.sanity.core)
+                api(libs.sanity.core)
                 api(libs.snitch.api)
                 api(libs.klip.api) // Because we need to copy urls to the clipboard
                 api(libs.bringer.api)
