@@ -7,7 +7,7 @@ import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import flame.admin.SmeDirectorDto
 import flame.forms.admin.directors.SmeDirectorFields
 import flame.transformers.admin.copy
@@ -28,7 +28,7 @@ import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-abstract class SmeDirectorsScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+abstract class SmeDirectorsScene(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
 
     internal var presenter: SmePresenter? = null
 

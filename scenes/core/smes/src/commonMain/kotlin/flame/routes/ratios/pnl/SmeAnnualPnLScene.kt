@@ -6,7 +6,7 @@ import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import epsilon.RawFile
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import kase.LazyState
 import kase.Pending
 import kase.Success
@@ -15,7 +15,7 @@ import kotlinx.JsExport
 import symphony.Form
 import symphony.toForm
 
-class SmeAnnualPnLScene(private val options: SmeSceneOption<XSmeScheme>, private val label: String) : BaseScene() {
+class SmeAnnualPnLScene(private val options: SmeSceneOption<SmeScheme>, private val label: String) : BaseScene() {
 
     val form = mutableLiveOf<LazyState<Form<Any, SmeAnnualPnLOutput, SmeAnnualPnLFields>>>(Pending)
     private val logger by options.logger

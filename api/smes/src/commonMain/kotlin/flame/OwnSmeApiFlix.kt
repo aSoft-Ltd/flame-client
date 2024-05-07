@@ -55,6 +55,7 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
         val (reading, uploading) = progress.setStages("Reading", "Uploading")
         val bytes = reader.read(params.file).await { progress.updateProgress(reading(it)) }
+        val size = bytes.size
         val data = MultiPartFormDataContent(formData {
             append("file", bytes, headersOf(HttpHeaders.ContentDisposition, "filename=${params.filename.escapeIfNeeded()}"))
         })
@@ -70,11 +71,13 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             }
 
             val estimator = async {
-                estimate(bytes.size) { completed }.await { progress.updateProgress(uploading(it)) }
+                estimate(size) { completed }.await { progress.updateProgress(uploading(it)) }
             }
 
             estimator.await()
-            uploader.await().getOrThrow(Attachment.serializer(), options.codec, tracer)
+            val resp = uploader.await()
+            progress.updateProgress(uploading(size, size))
+            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
         }
     }
 }

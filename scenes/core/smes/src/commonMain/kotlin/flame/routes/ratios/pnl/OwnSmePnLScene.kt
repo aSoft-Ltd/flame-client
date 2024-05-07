@@ -3,14 +3,14 @@
 package flame.routes.ratios.pnl
 
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import flame.routes.ratios.pnl.utils.defaultTemplate
 import flame.routes.ratios.utils.SmeStatements
 import kase.toSuccess
 import kotlinx.JsExport
 import kotlin.math.floor
 
-class OwnSmePnLScene(private val options: SmeSceneOption<XSmeScheme>) : SmePnLScene() {
+class OwnSmePnLScene(private val options: SmeSceneOption<SmeScheme>) : SmePnLScene() {
 
     fun initialize() {
         template.value = defaultTemplate()

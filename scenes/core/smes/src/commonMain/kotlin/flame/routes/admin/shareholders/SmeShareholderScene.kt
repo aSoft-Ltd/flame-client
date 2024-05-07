@@ -7,7 +7,7 @@ import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import flame.admin.SmeShareholderDto
 import flame.forms.admin.shareholders.SmeShareholderFields
 import flame.transformers.admin.copy
@@ -29,7 +29,7 @@ import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-abstract class SmeShareholderScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+abstract class SmeShareholderScene(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
 
     val shareholders = mutableLiveOf<LazyState<List<SmeShareholderDto>>>(Pending)
 

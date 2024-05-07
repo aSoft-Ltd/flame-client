@@ -5,7 +5,7 @@ package flame.routes.documents
 
 import cinematic.BaseScene
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import flame.documents.SmeDocument
 import flame.routes.documents.utils.SmeDocumentScene
 import flame.routes.documents.utils.SmeDocumentSceneOptions
@@ -14,7 +14,7 @@ import kollections.forEach
 import kotlinx.JsExport
 import kotlinx.JsExportIgnore
 
-abstract class SmeAbstractDocumentScene(private val options: SmeSceneOption<XSmeScheme>) : BaseScene() {
+abstract class SmeAbstractDocumentScene(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
 
     abstract val documents : List<SmeDocumentScene>
 

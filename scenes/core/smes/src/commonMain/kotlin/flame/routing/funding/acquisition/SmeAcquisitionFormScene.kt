@@ -3,32 +3,28 @@
 
 package flame.routes.funding.acquisition
 
-import flame.SmeApi
 import flame.SmeSceneOption
 import flame.forms.FormScene
-import flame.transformers.funding.toOutput
 import flame.transformers.funding.toParams
 import kase.Loading
 import kase.Pending
-import kase.toLazyState
-import koncurrent.later.finally
 import koncurrent.later.then
 import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
 class SmeAcquisitionFormScene(
-    private val options: SmeSceneOption<SmeApi>
+    private val options: SmeSceneOption<Any>
 ) : FormScene<SmeAcquisitionFields>() {
     fun initialize() {
         ui.value = Loading("loading your information, please wait . . .")
-        options.api.load().then {
-            it.funding?.acquisition.toOutput()
-        }.then {
-            form(it)
-        }.finally {
-            ui.value = it.toLazyState()
-        }
+//        options.api.load().then {
+//            it.funding?.acquisition.toOutput()
+//        }.then {
+//            form(it)
+//        }.finally {
+//            ui.value = it.toLazyState()
+//        }
     }
 
     private fun form(output: SmeAcquisitionOutput) = SmeAcquisitionFields(output).toForm(

@@ -3,32 +3,28 @@
 
 package flame.routes.funding.breakdown
 
-import flame.SmeApi
 import flame.SmeSceneOption
 import flame.forms.FormScene
-import flame.transformers.funding.toOutput
 import flame.transformers.funding.toParams
 import kase.Loading
 import kase.Pending
-import kase.toLazyState
-import koncurrent.later.finally
 import koncurrent.later.then
 import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
 class SmeBreakdownFormScene(
-    private val options: SmeSceneOption<SmeApi>
+    private val options: SmeSceneOption<Any>
 ) : FormScene<SmeBreakdownFields>() {
     fun initialize() {
         ui.value = Loading("loading your information, please wait . . .")
-        options.api.load().then {
-            it.funding?.breakdown.toOutput()
-        }.then {
-            form(it)
-        }.finally {
-            ui.value = it.toLazyState()
-        }
+//        options.api.load().then {
+//            it.funding?.breakdown.toOutput()
+//        }.then {
+//            form(it)
+//        }.finally {
+//            ui.value = it.toLazyState()
+//        }
     }
 
     private fun form(output: SmeBreakdownOutput) = SmeBreakdownFields(output).toForm(

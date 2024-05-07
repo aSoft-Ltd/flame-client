@@ -4,7 +4,7 @@ package flame.transformers.finance
 
 import flame.SmeDto
 import flame.SmeSceneOption
-import flame.XSmeScheme
+import flame.SmeScheme
 import flame.finance.SmeFinanceDto
 import flame.finance.SmeFinancialStatusDto
 import flame.forms.financial.status.SmeFinancialStatusFields
@@ -50,7 +50,7 @@ internal inline fun SmeFinancialStatusOutput.toParams() = SmeFinancialStatusDto(
 }
 
 fun SmeDto.toFinancialStatusForm(
-    options: SmeSceneOption<XSmeScheme>,
+    options: SmeSceneOption<SmeScheme>,
     details: String
 ) = SmeFinancialStatusFields(toFinancialStatusOutput()).toForm(
     heading = "Financial Status",

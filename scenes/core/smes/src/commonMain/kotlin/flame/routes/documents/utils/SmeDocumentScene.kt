@@ -27,6 +27,7 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
     private var watcher: Watcher? = null
 
     internal var onSuccess: () -> Unit = {}
+
     internal fun initialize(attachment: Attachment?, onSuccess: () -> Unit) {
         this.onSuccess = onSuccess
         state.value = if (attachment != null) {
