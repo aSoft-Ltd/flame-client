@@ -17,6 +17,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.flameApiSmes)
+                api(libs.sentinel.api.enterprise.authentication.core)?.because("We need to get access to user session for authenticating document downloads")
                 api(libs.krono.fields)
                 api(libs.identifier.fields)
                 api(libs.geo.fields)
@@ -25,10 +26,11 @@ kotlin {
                 api(libs.symphony.input.dialog)
                 api(libs.symphony.input.sheet)
                 api(libs.cabinet.api.core)
-                api(libs.epsilon.core)?.because("We want to upload customer documents as attachments")
+//                api(libs.epsilon.core)?.because("We want to upload customer documents as attachments")
                 api(libs.epsilon.fields)?.because("We want to upload customer documents as attachments")
+                api(libs.cabinet.presenters)?.because("We need to present the uploaded attachments")
                 api(libs.krest.core)?.because("We want to write background workers for uploading attachments")
-			    api(libs.sanity.core)
+                api(libs.sanity.core)
                 api(libs.snitch.api)
                 api(libs.klip.api)?.because("We need to copy urls to the clipboard")
                 api(libs.bringer.api)

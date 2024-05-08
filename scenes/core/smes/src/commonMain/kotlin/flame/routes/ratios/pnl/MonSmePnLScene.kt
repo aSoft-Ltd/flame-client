@@ -2,7 +2,7 @@
 
 package flame.routes.ratios.pnl
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.routes.ratios.pnl.utils.defaultTemplate
 import flame.routes.ratios.utils.SmeStatements
@@ -10,7 +10,7 @@ import kase.toSuccess
 import kotlinx.JsExport
 import kotlin.math.floor
 
-class MonSmePnLScene(private val options: SmeSceneOption<SmeScheme>) : SmePnLScene() {
+class MonSmePnLScene(private val options: SmeSceneOptions<SmeScheme>) : SmePnLScene() {
 
     fun initialize(uid: String) {
         template.value = defaultTemplate()

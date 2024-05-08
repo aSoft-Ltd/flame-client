@@ -3,6 +3,7 @@
 package flame.routes.documents.utils
 
 import cabinet.Attachment
+import cabinet.AttachmentPresenter
 import cabinet.FileUploadParam
 import cinematic.Watcher
 import cinematic.mutableLiveOf
@@ -28,7 +29,7 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
 
     internal var onSuccess: () -> Unit = {}
 
-    internal fun initialize(attachment: Attachment?, onSuccess: () -> Unit) {
+    internal fun initialize(attachment: AttachmentPresenter?, onSuccess: () -> Unit) {
         this.onSuccess = onSuccess
         state.value = if (attachment != null) {
             SmeDocumentUploaded(attachment)

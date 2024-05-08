@@ -3,7 +3,7 @@
 
 package flame.routes.admin.legal
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
 import flame.forms.admin.legal.SmeLegalFields
@@ -16,7 +16,7 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeLegalFormScene(private val options: SmeSceneOption<SmeScheme>) : FormScene<SmeLegalFields>() {
+abstract class SmeLegalFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeLegalFields>() {
     protected fun form(output: SmeLegalOutput, details: String) = SmeLegalFields(output).toForm(
         heading = "Legal Compliance Form",
         details = details,

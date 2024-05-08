@@ -3,7 +3,7 @@
 
 package flame.routes.documents.utils
 
-import cabinet.Attachment
+import cabinet.AttachmentPresenter
 import flame.SmeSectionProgress
 import kotlinx.JsExport
 
@@ -24,7 +24,7 @@ data class SmeDocumentUploadingProgress(
 ) : SmeDocumentState
 
 data class SmeDocumentUploaded(
-    val attachment: Attachment
+    val attachment: AttachmentPresenter
 ) : SmeDocumentState
 
 data class SmeDocumentUploadFailed(

@@ -6,7 +6,7 @@ package flame.forms
 import flame.MonSmeScheme
 import flame.SmeDto
 import flame.SmePresenter
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import kase.Loading
 import kase.toLazyState
 import koncurrent.later.finally
@@ -16,7 +16,7 @@ import symphony.Fields
 import symphony.Form
 
 class MonSmeFormScene<out F : Fields<*>>(
-    private val options: SmeSceneOption<MonSmeScheme>,
+    private val options: SmeSceneOptions<MonSmeScheme>,
     private val initializer: (SmeDto) -> Form<SmePresenter, *, F>
 ) : XSmeFormScene<F>() {
     fun initialize(uid: String) {

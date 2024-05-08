@@ -2,7 +2,7 @@
 
 package flame.routes.governance
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
 import flame.forms.governance.SmeGovernanceFields
@@ -15,7 +15,7 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeGovernanceFormScene(private val options: SmeSceneOption<SmeScheme>) : FormScene<SmeGovernanceFields>() {
+abstract class SmeGovernanceFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeGovernanceFields>() {
     protected fun form(output: SmeGovernanceOutput, details: String) = SmeGovernanceFields(output).toForm(
         heading = "Governance Details",
         details = details,

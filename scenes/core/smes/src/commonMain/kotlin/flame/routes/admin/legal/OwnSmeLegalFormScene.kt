@@ -4,7 +4,7 @@
 package flame.routes.admin.legal
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.admin.toLegalOutput
 import kase.Loading
 import kase.toLazyState
@@ -14,7 +14,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 
 class OwnSmeLegalFormScene(
-    private val options: SmeSceneOption<OwnSmeScheme>,
+    private val options: SmeSceneOptions<OwnSmeScheme>,
 ) : SmeLegalFormScene(options) {
     fun initialize() : Later<Any> {
         ui.value = Loading("Loading business information")

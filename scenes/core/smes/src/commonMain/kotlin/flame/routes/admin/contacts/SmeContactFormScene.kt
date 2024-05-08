@@ -3,7 +3,7 @@
 
 package flame.routes.admin.contacts
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
 import flame.forms.admin.contacts.SmeContactFields
@@ -17,7 +17,7 @@ import kotlinx.JsExport
 import symphony.toForm
 
 abstract class SmeContactFormScene(
-    private val options: SmeSceneOption<SmeScheme>
+    private val options: SmeSceneOptions<SmeScheme>
 ) : FormScene<SmeContactFields>() {
     protected fun form(output: SmeContactOutput,details: String) = SmeContactFields(output).toForm(
         heading = "Contact Details",

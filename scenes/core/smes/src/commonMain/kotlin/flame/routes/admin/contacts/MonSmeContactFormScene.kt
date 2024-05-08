@@ -4,7 +4,7 @@
 package flame.routes.admin.contacts
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.admin.toContactsOutput
 import kase.Loading
 import kase.toLazyState
@@ -14,7 +14,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 
 class MonSmeContactFormScene(
-    private val options: SmeSceneOption<MonSmeScheme>,
+    private val options: SmeSceneOptions<MonSmeScheme>,
 ) : SmeContactFormScene(options) {
 
     fun initialize(uid: String): Later<Any> {

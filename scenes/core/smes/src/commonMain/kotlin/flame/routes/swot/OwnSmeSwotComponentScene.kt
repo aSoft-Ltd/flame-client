@@ -4,7 +4,7 @@
 package flame.routes.swot
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.swot.SwotComponent
 import flame.swot.SmeSwotDto
 import flame.transformers.toPresenter
@@ -15,19 +15,20 @@ import kollections.emptyList
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 
 class OwnSmeSwotComponentScene(
-    private val options: SmeSceneOption<OwnSmeScheme>,
+    private val options: SmeSceneOptions<OwnSmeScheme>,
     component: SwotComponent,
     private val getter: (SmeSwotDto?) -> List<String>?,
 ) : SmeSwotComponentScene(options, component) {
 
     fun initialize() {
         ui.value = Loading("Fetching information, please wait . . .")
-        options.api.load().then {
-            presenter = it.toPresenter()
+        options.api.load().zip(options.auth.session()) { (it, session) ->
+            presenter = it.toPresenter(options.toAttachmentOptions(session))
         }.then {
             getter(presenter?.swot) ?: emptyList()
         }.finally {

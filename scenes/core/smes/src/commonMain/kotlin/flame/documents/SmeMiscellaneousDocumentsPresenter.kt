@@ -3,11 +3,11 @@
 
 package flame.documents
 
-import cabinet.Attachment
+import cabinet.AttachmentPresenter
 import kotlinx.JsExport
 
 data class SmeMiscellaneousDocumentsPresenter(
-    val letterOfIntent: Attachment? = null,
-    val quotations: Attachment? = null,
-    val mouOrSaleOfAgreements: Attachment? = null
+    val letterOfIntent: AttachmentPresenter? = null,
+    val quotations: AttachmentPresenter? = null,
+    val mouOrSaleOfAgreements: AttachmentPresenter? = null
 )

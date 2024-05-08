@@ -3,7 +3,7 @@
 package flame.transformers.finance
 
 import flame.SmeDto
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.finance.SmeFinanceDto
 import flame.finance.SmeFinancialStatusDto
@@ -14,6 +14,7 @@ import flame.transformers.utils.toProgress
 import kollections.listOf
 import koncurrent.later.andThen
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import symphony.toForm
 
@@ -50,7 +51,7 @@ internal inline fun SmeFinancialStatusOutput.toParams() = SmeFinancialStatusDto(
 }
 
 fun SmeDto.toFinancialStatusForm(
-    options: SmeSceneOption<SmeScheme>,
+    options: SmeSceneOptions<SmeScheme>,
     details: String
 ) = SmeFinancialStatusFields(toFinancialStatusOutput()).toForm(
     heading = "Financial Status",
@@ -62,8 +63,8 @@ fun SmeDto.toFinancialStatusForm(
             output.toParams()
         }.andThen {
             options.api.update(it)
-        }.then {
-            it.toPresenter()
+        }.zip(options.auth.session()) { (it, session) ->
+            it.toPresenter(options.toAttachmentOptions(session))
         }
     }
 

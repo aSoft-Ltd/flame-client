@@ -3,7 +3,7 @@
 
 package flame.routes.funding.investments
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.FormScene
 import flame.transformers.funding.toParams
 import kase.Loading
@@ -14,7 +14,7 @@ import kotlinx.JsExport
 import symphony.toForm
 
 class SmeInvestmentFormScene(
-    private val options: SmeSceneOption<Any>
+    private val options: SmeSceneOptions<Any>
 ) : FormScene<SmeInvestmentFields>() {
     fun initialize() {
         ui.value = Loading("Loading business information")

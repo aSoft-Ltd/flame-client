@@ -3,7 +3,7 @@
 package flame.routes.ratios.pnl
 
 import cinematic.BaseScene
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.routes.ratios.utils.SmeStatements
 import kollections.forEach
@@ -15,7 +15,7 @@ import symphony.SpreadSheet
 import symphony.buildTemplate
 import kotlin.math.floor
 
-class SpreadSheets(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
+class SpreadSheets(private val options: SmeSceneOptions<SmeScheme>) : BaseScene() {
 
     private val columns = SmeStatements.get(options.clock).all.map { year ->
         val millennium = 1000 * floor(year.toDouble() / 1000).toInt()

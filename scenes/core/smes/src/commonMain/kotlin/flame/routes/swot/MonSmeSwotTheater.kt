@@ -4,11 +4,11 @@
 package flame.routes.swot
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.swot.SwotComponent
 import kotlinx.JsExport
 
-class MonSmeSwotTheater(options: SmeSceneOption<MonSmeScheme>) : SmeSwotTheater{
+class MonSmeSwotTheater(options: SmeSceneOptions<MonSmeScheme>) : SmeSwotTheater{
     override val strengths by lazy {
         MonSmeSwotComponentScene(options, SwotComponent.strenght) { it?.strengths }
     }

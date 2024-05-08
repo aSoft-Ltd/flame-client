@@ -3,7 +3,7 @@
 package flame.routes.governance
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.governance.toGovernanceOutput
 import kase.Loading
 import kase.toLazyState
@@ -13,7 +13,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 
 class MonSmeGovernanceFormScene(
-    private val options: SmeSceneOption<MonSmeScheme>,
+    private val options: SmeSceneOptions<MonSmeScheme>,
 ) : SmeGovernanceFormScene(options) {
     fun initialize(uid: String): Later<Any> {
         ui.value = Loading("Loading business information")

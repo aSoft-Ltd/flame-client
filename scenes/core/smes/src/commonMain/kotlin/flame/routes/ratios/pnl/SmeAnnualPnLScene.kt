@@ -5,7 +5,7 @@ package flame.routes.ratios.pnl
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import epsilon.RawFile
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import kase.LazyState
 import kase.Pending
@@ -15,7 +15,7 @@ import kotlinx.JsExport
 import symphony.Form
 import symphony.toForm
 
-class SmeAnnualPnLScene(private val options: SmeSceneOption<SmeScheme>, private val label: String) : BaseScene() {
+class SmeAnnualPnLScene(private val options: SmeSceneOptions<SmeScheme>, private val label: String) : BaseScene() {
 
     val form = mutableLiveOf<LazyState<Form<Any, SmeAnnualPnLOutput, SmeAnnualPnLFields>>>(Pending)
     private val logger by options.logger

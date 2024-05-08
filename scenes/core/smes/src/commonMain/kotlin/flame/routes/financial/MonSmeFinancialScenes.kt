@@ -4,13 +4,13 @@
 package flame.routes.financial
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.toFormScene
 import flame.routes.financial.office.MonSmeBackOfficeFormScene
 import flame.transformers.finance.toFinancialStatusForm
 import kotlinx.JsExport
 
-class MonSmeFinancialScenes(private val options: SmeSceneOption<MonSmeScheme>) : SmeFinancialScenes {
+class MonSmeFinancialScenes(private val options: SmeSceneOptions<MonSmeScheme>) : SmeFinancialScenes {
     override val office by lazy { MonSmeBackOfficeFormScene(options) }
 
     override val status by lazy {

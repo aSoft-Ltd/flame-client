@@ -3,14 +3,14 @@
 
 package flame.documents
 
-import cabinet.Attachment
+import cabinet.AttachmentPresenter
 import kotlinx.JsExport
 
 data class SmeFinancialRecordsPresenter(
-    val balanceSheet: Attachment? = null,
-    val incomeStatement: Attachment? = null,
-    val cashFlow: Attachment? = null,
-    val assetRegister: Attachment? = null,
-    val financialProjections: Attachment? = null,
-    val salesPipeline: Attachment? = null,
+    val balanceSheet: AttachmentPresenter? = null,
+    val incomeStatement: AttachmentPresenter? = null,
+    val cashFlow: AttachmentPresenter? = null,
+    val assetRegister: AttachmentPresenter? = null,
+    val financialProjections: AttachmentPresenter? = null,
+    val salesPipeline: AttachmentPresenter? = null,
 )

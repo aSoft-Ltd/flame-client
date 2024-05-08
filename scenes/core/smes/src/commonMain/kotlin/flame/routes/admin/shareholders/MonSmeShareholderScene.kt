@@ -4,7 +4,7 @@
 package flame.routes.admin.shareholders
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.toPresenter
 import kase.Loading
 import kase.toLazyState
@@ -13,16 +13,17 @@ import koncurrent.Later
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 
-class MonSmeShareholderScene(private val options: SmeSceneOption<MonSmeScheme>) : SmeShareholderScene(options) {
+class MonSmeShareholderScene(private val options: SmeSceneOptions<MonSmeScheme>) : SmeShareholderScene(options) {
 
     fun initialize(uid: String): Later<Any> {
         shareholders.value = Loading("Fetching shareholders, please wait . . .")
-        return options.api.load(uid).then {
-            presenter = it.toPresenter()
-            it.admin?.shareholders ?: emptyList()
+        return options.api.load(uid).zip(options.auth.session()) { (dto, session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            dto.admin?.shareholders ?: emptyList()
         }.finally {
             shareholders.value = it.toLazyState()
         }
@@ -34,9 +35,9 @@ class MonSmeShareholderScene(private val options: SmeSceneOption<MonSmeScheme>) 
             it ?: throw MissingPresenterException()
         }.andThen {
             options.api.load(it.uid)
-        }.then {
-            presenter = it.toPresenter()
-            it.admin?.shareholders ?: emptyList()
+        }.zip(options.auth.session()) { (dto, session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            dto.admin?.shareholders ?: emptyList()
         }.finally {
             shareholders.value = it.toLazyState()
         }

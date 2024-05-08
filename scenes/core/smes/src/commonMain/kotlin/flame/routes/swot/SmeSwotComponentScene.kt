@@ -5,7 +5,7 @@ package flame.routes.swot
 
 import cinematic.LazyScene
 import flame.SmePresenter
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.swot.SmeSwotFields
 import flame.forms.swot.SmeSwotOutput
@@ -33,7 +33,7 @@ import symphony.Peekaboo
 import symphony.toForm
 
 abstract class SmeSwotComponentScene(
-    private val options: SmeSceneOption<SmeScheme>,
+    private val options: SmeSceneOptions<SmeScheme>,
     private val component: SwotComponent
 ) : LazyScene<List<String>>() {
 

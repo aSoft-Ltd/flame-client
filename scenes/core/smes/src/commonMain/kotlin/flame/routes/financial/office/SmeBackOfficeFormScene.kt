@@ -3,7 +3,7 @@
 
 package flame.routes.financial.office
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
 import flame.forms.financial.office.SmeBackOfficeFields
@@ -17,7 +17,7 @@ import kotlinx.JsExport
 import symphony.toForm
 
 abstract class SmeBackOfficeFormScene(
-    private val options: SmeSceneOption<SmeScheme>
+    private val options: SmeSceneOptions<SmeScheme>
 ) : FormScene<SmeBackOfficeFields>() {
 
     protected fun form(output: SmeBackOfficeOutput,details: String) = SmeBackOfficeFields(output).toForm(

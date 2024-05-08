@@ -4,12 +4,12 @@
 package flame.routes.documents
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.documents.SmeDocument
 import kollections.toList
 import kotlinx.JsExport
 
-class OwnSmeFinancialRecordsScene(options: SmeSceneOption<OwnSmeScheme>) : OwnSmeAbstractDocumentScene(options) {
+class OwnSmeFinancialRecordsScene(options: SmeSceneOptions<OwnSmeScheme>) : OwnSmeAbstractDocumentScene(options) {
 
     override val documents by lazy {
         SmeDocument.FinancialRecord.values().map { it.toScene() }.toList()

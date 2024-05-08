@@ -5,7 +5,7 @@ package flame
 import flame.routes.collection.SmesScene
 import kotlinx.JsExport
 
-class MonSmesScenes(options: SmeSceneOption<MonSmeScheme>) {
+class MonSmesScenes(options: SmeSceneOptions<MonSmeScheme>) {
     val collection by lazy { SmesScene(options) }
     val profile by lazy { MonSmeScenes(options) }
 }

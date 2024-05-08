@@ -4,31 +4,32 @@
 package flame.routes.info
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.toProgress
 import kase.Loading
 import kase.Success
 import kase.toLazyState
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import kotlinx.JsExport
 import sanity.Subscriber
 
-class OwnSmeInfoScene(private val options: SmeSceneOption<OwnSmeScheme>) : SmeInfoScene() {
+class OwnSmeInfoScene(private val options: SmeSceneOptions<OwnSmeScheme>) : SmeInfoScene() {
 
     private var subscriber: Subscriber? = null
     fun initialize() {
         ui.value = Loading("loading your information, please wait...")
-        options.api.load().then {
-            it.toProgress()
+        options.api.load().zip(options.auth.session()) { (it, session) ->
+            it.toProgress(options.toAttachmentOptions(session))
         }.finally {
             ui.value = it.toLazyState()
         }
         subscriber = options.bus.subscribe(options.topic.progressMade()) { refresh() }
     }
 
-    fun refresh() = options.api.load().then {
-        it.toProgress()
+    fun refresh() = options.api.load().zip(options.auth.session()) { (it, session) ->
+        it.toProgress(options.toAttachmentOptions(session))
     }.then {
         ui.value = Success(it)
     }

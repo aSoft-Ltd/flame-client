@@ -2,7 +2,7 @@
 
 package flame.routes.admin.business
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
 import flame.forms.admin.business.SmeBusinessFields
@@ -15,7 +15,7 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeBusinessFormScene(private val options: SmeSceneOption<SmeScheme>) : FormScene<SmeBusinessFields>() {
+abstract class SmeBusinessFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeBusinessFields>() {
     protected fun form(output: SmeBusinessOutput, details: String) = SmeBusinessFields(output).toForm(
         heading = "Business Details",
         details = details,

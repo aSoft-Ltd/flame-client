@@ -4,7 +4,7 @@
 package flame.routes.admin.directors
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.toPresenter
 import kase.Loading
 import kase.toLazyState
@@ -12,16 +12,17 @@ import kollections.emptyList
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 
-class MonSmeDirectorsScene(private val options: SmeSceneOption<MonSmeScheme>) : SmeDirectorsScene(options) {
+class MonSmeDirectorsScene(private val options: SmeSceneOptions<MonSmeScheme>) : SmeDirectorsScene(options) {
 
     fun initialize(uid: String) {
         directors.value = Loading("Loading directors, please wait . . .")
-        options.api.load(uid).then {
-            presenter = it.toPresenter()
-            it.admin?.directors ?: emptyList()
+        options.api.load(uid).zip(options.auth.session()) { (dto, session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            dto.admin?.directors ?: emptyList()
         }.finally {
             directors.value = it.toLazyState()
         }
@@ -33,9 +34,9 @@ class MonSmeDirectorsScene(private val options: SmeSceneOption<MonSmeScheme>) : 
             it ?: throw MissingPresenterException()
         }.andThen {
             options.api.load(it.uid)
-        }.then {
-            presenter = it.toPresenter()
-            it.admin?.directors ?: emptyList()
+        }.zip(options.auth.session()) { (dto, session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            dto.admin?.directors ?: emptyList()
         }.finally {
             directors.value = it.toLazyState()
         }

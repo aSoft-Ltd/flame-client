@@ -4,7 +4,7 @@
 package flame.routes.admin.contacts
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.admin.toContactsOutput
 import kase.Loading
 import kase.toLazyState
@@ -14,7 +14,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 
 class OwnSmeContactFormScene(
-    private val options: SmeSceneOption<OwnSmeScheme>,
+    private val options: SmeSceneOptions<OwnSmeScheme>,
 ) : SmeContactFormScene(options) {
     fun initialize(): Later<Any> {
         ui.value = Loading("loading your information, please wait . . .")

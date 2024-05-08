@@ -6,7 +6,7 @@ package flame.routes.admin.shareholders
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.admin.SmeShareholderDto
 import flame.forms.admin.shareholders.SmeShareholderFields
@@ -23,13 +23,14 @@ import koncurrent.FailedLater
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-abstract class SmeShareholderScene(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
+abstract class SmeShareholderScene(private val options: SmeSceneOptions<SmeScheme>) : BaseScene() {
 
     val shareholders = mutableLiveOf<LazyState<List<SmeShareholderDto>>>(Pending)
 
@@ -53,8 +54,8 @@ abstract class SmeShareholderScene(private val options: SmeSceneOption<SmeScheme
                     }
                     val sme = presenter ?: return@andThen MissingPresenterLater()
                     options.api.update(sme.src.copy(holders + it))
-                }.then {
-                    it.toPresenter()
+                }.zip(options.auth.session()) { (dto, session) ->
+                    dto.toPresenter(options.toAttachmentOptions(session))
                 }
             }
             onSuccess {

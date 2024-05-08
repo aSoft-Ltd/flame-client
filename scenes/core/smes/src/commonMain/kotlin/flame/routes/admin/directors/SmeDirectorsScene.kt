@@ -6,7 +6,7 @@ package flame.routes.admin.directors
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.admin.SmeDirectorDto
 import flame.forms.admin.directors.SmeDirectorFields
@@ -22,13 +22,14 @@ import koncurrent.FailedLater
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.Confirm
 import symphony.Peekaboo
 import symphony.toForm
 
-abstract class SmeDirectorsScene(private val options: SmeSceneOption<SmeScheme>) : BaseScene() {
+abstract class SmeDirectorsScene(private val options: SmeSceneOptions<SmeScheme>) : BaseScene() {
 
     internal var presenter: SmePresenter? = null
 
@@ -53,8 +54,8 @@ abstract class SmeDirectorsScene(private val options: SmeSceneOption<SmeScheme>)
                     }
                     val sme = presenter ?: return@andThen MissingPresenterLater()
                     options.api.update(sme.src.copy(directors = rectors))
-                }.then {
-                    it.toPresenter()
+                }.zip(options.auth.session()) { (dto, session) ->
+                    dto.toPresenter(options.toAttachmentOptions(session))
                 }
             }
             onSuccess {

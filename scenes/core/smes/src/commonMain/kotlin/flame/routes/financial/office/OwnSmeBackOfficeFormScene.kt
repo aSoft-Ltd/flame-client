@@ -4,7 +4,7 @@
 package flame.routes.financial.office
 
 import flame.OwnSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.transformers.finance.toFinanceOfficeOutput
 import kase.Loading
 import kase.toLazyState
@@ -13,7 +13,7 @@ import koncurrent.later.then
 import kotlinx.JsExport
 
 class OwnSmeBackOfficeFormScene(
-    private val options: SmeSceneOption<OwnSmeScheme>,
+    private val options: SmeSceneOptions<OwnSmeScheme>,
 ) : SmeBackOfficeFormScene(options) {
     fun initialize() {
         ui.value = Loading("Loading business information")

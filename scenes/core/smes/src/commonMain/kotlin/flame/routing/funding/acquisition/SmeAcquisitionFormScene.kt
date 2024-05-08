@@ -3,7 +3,7 @@
 
 package flame.routes.funding.acquisition
 
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.FormScene
 import flame.transformers.funding.toParams
 import kase.Loading
@@ -14,7 +14,7 @@ import kotlinx.JsExport
 import symphony.toForm
 
 class SmeAcquisitionFormScene(
-    private val options: SmeSceneOption<Any>
+    private val options: SmeSceneOptions<Any>
 ) : FormScene<SmeAcquisitionFields>() {
     fun initialize() {
         ui.value = Loading("loading your information, please wait . . .")

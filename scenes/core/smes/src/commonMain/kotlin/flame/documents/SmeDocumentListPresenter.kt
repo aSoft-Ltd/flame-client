@@ -3,16 +3,16 @@
 
 package flame.documents
 
-import cabinet.Attachment
+import cabinet.AttachmentPresenter
 import kotlinx.JsExport
 
 data class SmeDocumentListPresenter(
-    val companyProfile: Attachment? = null,
-    val businessPlan: Attachment? = null,
-    val companyRegistrationDocument: Attachment? = null,
-    val shareholderRegister: Attachment? = null,
-    val taxPin: Attachment? = null,
-    val fundingApplicationRequest: Attachment? = null,
-    val beeAffidavit: Attachment? = null,
-    val pithDeck: Attachment? = null,
+    val companyProfile: AttachmentPresenter? = null,
+    val businessPlan: AttachmentPresenter? = null,
+    val companyRegistrationDocument: AttachmentPresenter? = null,
+    val shareholderRegister: AttachmentPresenter? = null,
+    val taxPin: AttachmentPresenter? = null,
+    val fundingApplicationRequest: AttachmentPresenter? = null,
+    val beeAffidavit: AttachmentPresenter? = null,
+    val pithDeck: AttachmentPresenter? = null,
 )

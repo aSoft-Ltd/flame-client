@@ -4,7 +4,7 @@
 package flame.routes.swot
 
 import flame.MonSmeScheme
-import flame.SmeSceneOption
+import flame.SmeSceneOptions
 import flame.forms.swot.SwotComponent
 import flame.swot.SmeSwotDto
 import flame.transformers.toPresenter
@@ -15,20 +15,21 @@ import kollections.emptyList
 import koncurrent.later.andThen
 import koncurrent.later.finally
 import koncurrent.later.then
+import koncurrent.later.zip
 import koncurrent.toLater
 import kotlinx.JsExport
 
 class MonSmeSwotComponentScene(
-    private val options: SmeSceneOption<MonSmeScheme>,
+    private val options: SmeSceneOptions<MonSmeScheme>,
     component: SwotComponent,
     private val getter: (SmeSwotDto?) -> List<String>?,
 ) : SmeSwotComponentScene(options, component) {
 
     fun initialize(uid: String) {
         ui.value = Loading("Fetching information, please wait . . .")
-        options.api.load(uid).then {
-            presenter = it.toPresenter()
-            getter(it.swot) ?: emptyList()
+        options.api.load(uid).zip(options.auth.session()) { (dto,session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            getter(dto.swot) ?: emptyList()
         }.finally {
             ui.value = it.toLazyState()
         }
@@ -40,9 +41,9 @@ class MonSmeSwotComponentScene(
             it ?: throw IllegalStateException("Initialize the scene please")
         }.andThen {
             options.api.load(it.uid)
-        }.then {
-            presenter = it.toPresenter()
-            getter(it.swot) ?: emptyList()
+        }.zip(options.auth.session()) { (dto,session) ->
+            presenter = dto.toPresenter(options.toAttachmentOptions(session))
+            getter(dto.swot) ?: emptyList()
         }.finally {
             ui.value = it.toLazyState()
         }
