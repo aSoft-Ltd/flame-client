@@ -35,5 +35,5 @@ class SmeSceneOptions<out A>(
     fun toAttachmentOptions(session: UserSession) = AttachmentPresenterOptions(headers = buildMap {
         put("Authorization", "Bearer ${session.secret}")
         resolver?.let { put(it.key, it.value ?: "") }
-    }, scope, http, clipboard, files)
+    }, clipboard, files)
 }
