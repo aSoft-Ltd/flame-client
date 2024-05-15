@@ -2,6 +2,7 @@ package flame
 
 import cabinet.Attachment
 import cabinet.FileUploadParam
+import epsilon.MemorySize
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
@@ -14,6 +15,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.escapeIfNeeded
 import io.ktor.http.headersOf
 import kase.progress.ProgressBus
+import kase.progress.Progression
+import kase.progress.SimpleProgression
 import kase.response.getOrThrow
 import keep.load
 import kollections.component1
@@ -50,9 +53,10 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         }.getOrThrow(SmeDto.serializer(), options.codec, tracer)
     }
 
-    override fun upload(params: FileUploadParam, progress: ProgressBus): Later<Attachment> = options.scope.later(progress) {
+    override fun upload(params: FileUploadParam, onProgress: ((SimpleProgression<MemorySize>) -> Unit)?): Later<Attachment> = options.scope.later {
         val tracer = logger.trace(options.message.upload(params.filename))
         val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
+        val (reading, uploading) = Progression<MemorySize>("Reading", "Uploading")
         val (reading, uploading) = progress.setStages("Reading", "Uploading")
         val bytes = reader.read(params.file).await { progress.updateProgress(reading(it)) }
         val size = bytes.size
