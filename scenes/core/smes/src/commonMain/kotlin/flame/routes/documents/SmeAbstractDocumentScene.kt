@@ -21,5 +21,5 @@ abstract class SmeAbstractDocumentScene(private val options: SmeSceneOptions<Sme
     fun deInitialize() = documents.forEach { it.deInitialize() }
 
     @JsExportIgnore
-    protected fun SmeDocument.toScene() = SmeDocumentScene(SmeDocumentSceneOptions(this, options.wm))
+    protected fun SmeDocument.toScene() = SmeDocumentScene(SmeDocumentSceneOptions(this, options.tasks,options.wm))
 }

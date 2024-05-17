@@ -2,7 +2,6 @@
 
 package flame.routes.documents.utils
 
-import cabinet.Attachment
 import cabinet.AttachmentPresenter
 import cabinet.FileUploadParam
 import cinematic.Watcher
@@ -10,20 +9,22 @@ import cinematic.mutableLiveOf
 import epsilon.FileField
 import epsilon.RawFile
 import epsilon.RawFileInfo
-import flame.SmeSectionProgress
-import flame.workers.OwnSmeUploadDocumentWorker
-import kase.progress.ProgressState
-import kollections.get
+import flame.tasks.OwnSmeUploadDocumentTask
 import kotlinx.JsExport
-import krest.params.SubmitWorkOptions
+import krest.named
+import krest.toSubmitOptions
 
 class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
 
     val label by lazy {
-        options.document.label.replace("-"," ").replaceFirstChar { it.uppercaseChar() }
+        options.document.label.replace("-", " ").replaceFirstChar { it.uppercaseChar() }
     }
 
     val state = mutableLiveOf<SmeDocumentState>(SmeDocumentUninitialized)
+
+    private val runner by lazy { options.runner }
+
+    private val task by lazy { OwnSmeUploadDocumentTask::class.named(options.document.label) }
 
     private var watcher: Watcher? = null
 
@@ -36,7 +37,7 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
         } else {
             SmeDocumentNotUploaded
         }
-        startWorkerWatcher()
+        startTaskWatcher()
     }
 
     val field = FileField(
@@ -45,38 +46,37 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
     )
 
     fun upload(file: RawFile?) {
-        if (file == null) return
+        if (file == null || runner.isRunning(task)) return
+
         val info = RawFileInfo(file)
-        val swo = SubmitWorkOptions(
-            type = OwnSmeUploadDocumentWorker.TYPE,
-            topic = options.topic,
-            name = options.document.label,
-            params = FileUploadParam(
-                path = options.path,
-                filename = "${options.document.label}.${info.extension}",
-                file = file
-            )
+        val params = FileUploadParam(
+            path = options.path,
+            filename = "${options.document.label}.${info.extension}",
+            file = file
         )
-        options.wm.submit(swo)
-        stopWorkerWatcher()
-        startWorkerWatcher()
+        val tso = task.toSubmitOptions(params)
+        runner.submit(tso)
+        stopTaskWatcher()
+        startTaskWatcher()
     }
 
-    private fun startWorkerWatcher() {
-        if (!options.wm.hasWorkScheduled(options.type, options.topic)) return
-        watcher = options.wm.liveWorkProgress(options.type, options.topic).watchEagerly {
-            val p = it[options.document.label] ?: ProgressState.initial()
-            state.value = SmeDocumentUploadingProgress(SmeSectionProgress(p.donePercentage.toInt(), 100))
+    private fun startTaskWatcher() {
+        if (runner.isRunning(task)) runner.watch(task) {
+            state.value = SmeDocumentUploadingProgress(it)
+            if(it.overall.percentage.done>99.5) {
+                stopTaskWatcher()
+                onSuccess()
+            }
         }
     }
 
-    private fun stopWorkerWatcher() {
+    private fun stopTaskWatcher() {
         watcher?.stop()
         watcher = null
     }
 
     internal fun deInitialize() {
-        stopWorkerWatcher()
+        stopTaskWatcher()
         state.value = SmeDocumentUninitialized
     }
 }

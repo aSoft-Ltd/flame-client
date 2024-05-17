@@ -7,6 +7,7 @@ import keep.Cache
 import keep.Cacheable
 import klip.Clipboard
 import kotlinx.coroutines.CoroutineScope
+import krest.TaskManager
 import krest.WorkManager
 import krono.Clock
 import lexi.LoggerFactory
@@ -25,12 +26,13 @@ class SmeSceneOptions<out A>(
     val clock: Clock,
     val scope: CoroutineScope,
     val files: FileManager,
+    val tasks: TaskManager,
     val http: HttpClient,
     val clipboard: Clipboard,
     val resolver: Resolver?,
     override val cache: Cache
 ) : Cacheable {
-    fun <R> map(transform: (A) -> R) = SmeSceneOptions(auth, transform(api), logger, wm, topic, bus, clock, scope, files, http, clipboard, resolver, cache)
+    fun <R> map(transform: (A) -> R) = SmeSceneOptions(auth, transform(api), logger, wm, topic, bus, clock, scope, files, tasks, http, clipboard, resolver, cache)
 
     fun toAttachmentOptions(session: UserSession) = AttachmentPresenterOptions(headers = buildMap {
         put("Authorization", "Bearer ${session.secret}")

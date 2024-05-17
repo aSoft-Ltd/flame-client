@@ -11,7 +11,7 @@ import flame.routes.ratios.OwnSmeFinancialRatios
 import flame.routes.swot.OwnSmeSwotTheater
 import kotlinx.JsExport
 
-class OwnSmeScenes(options: SmeSceneOptions<OwnSmeScheme>) : SmeScenes {
+class OwnSmeScenes(options: SmeSceneOptions<OwnSmeApi>) : SmeScenes {
     override val info by lazy { OwnSmeInfoScene(options) }
     override val admin by lazy { OwnSmeAdminScenes(options) }
     override val documents by lazy { OwnSmeDocumentsScenes(options) }

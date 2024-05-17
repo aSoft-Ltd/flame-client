@@ -4,8 +4,10 @@
 package flame.routes.documents.utils
 
 import cabinet.AttachmentPresenter
+import epsilon.MemorySize
 import flame.SmeSectionProgress
 import kotlinx.JsExport
+import status.StagedProgressReport
 
 sealed interface SmeDocumentState {
     val asUninitialized get() = this as? SmeDocumentUninitialized
@@ -17,10 +19,10 @@ sealed interface SmeDocumentState {
 
 data object SmeDocumentUninitialized : SmeDocumentState
 
-data object SmeDocumentNotUploaded: SmeDocumentState
+data object SmeDocumentNotUploaded : SmeDocumentState
 
 data class SmeDocumentUploadingProgress(
-    val progress: SmeSectionProgress
+    val progress: StagedProgressReport<MemorySize>
 ) : SmeDocumentState
 
 data class SmeDocumentUploaded(
@@ -29,4 +31,4 @@ data class SmeDocumentUploaded(
 
 data class SmeDocumentUploadFailed(
     val cause: Throwable
-): SmeDocumentState
+) : SmeDocumentState
