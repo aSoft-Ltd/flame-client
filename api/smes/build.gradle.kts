@@ -18,6 +18,7 @@ kotlin {
                 api(libs.keep.api)
                 api(libs.koncurrent.later.coroutines)
                 api(libs.sentinel.schemes.enterprise.authentication.core)?.because("We need access to UserSession")
+                api(libs.status.core)
                 api(libs.kase.response.ktor.client)
                 api(libs.krono.api)
                 api(libs.kronecker.core)

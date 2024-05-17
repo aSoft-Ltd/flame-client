@@ -14,7 +14,6 @@ import io.ktor.client.request.setBody
 import io.ktor.http.HttpHeaders
 import io.ktor.http.escapeIfNeeded
 import io.ktor.http.headersOf
-import kase.progress.ProgressBus
 import kase.progress.Progression
 import kase.progress.SimpleProgression
 import kase.response.getOrThrow
@@ -28,6 +27,11 @@ import koncurrent.later.estimate
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import sentinel.UserSession
+import status.Progress
+import epsilon.Progress
+import epsilon.bytes
+import status.ProgressStagePublisher
+import status.StagedProgressPublisher
 
 class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
 
@@ -53,13 +57,15 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         }.getOrThrow(SmeDto.serializer(), options.codec, tracer)
     }
 
-    override fun upload(params: FileUploadParam, onProgress: ((SimpleProgression<MemorySize>) -> Unit)?): Later<Attachment> = options.scope.later {
+    override fun upload(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
         val tracer = logger.trace(options.message.upload(params.filename))
         val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
-        val (reading, uploading) = Progression<MemorySize>("Reading", "Uploading")
-        val (reading, uploading) = progress.setStages("Reading", "Uploading")
-        val bytes = reader.read(params.file).await { progress.updateProgress(reading(it)) }
+        val (reading, uploading) = progress.stages("Reading", "Uploading")
+        val bytes = reader.read(params.file) { reading(it) }.await()
         val size = bytes.size
+        val total = size.bytes
+        val complete = Progress(total,total)
+        reading(complete)
         val data = MultiPartFormDataContent(formData {
             append("file", bytes, headersOf(HttpHeaders.ContentDisposition, "filename=${params.filename.escapeIfNeeded()}"))
         })
@@ -75,12 +81,16 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             }
 
             val estimator = async {
-                estimate(size) { completed }.await { progress.updateProgress(uploading(it)) }
+                estimate(
+                    bytes = size.toDouble(),
+                    until = { completed },
+                    onProgress = { uploading(Progress(it.bytes, total)) }
+                ).await()
             }
 
             estimator.await()
             val resp = uploader.await()
-            progress.updateProgress(uploading(size, size))
+            uploading(complete)
             resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
         }
     }

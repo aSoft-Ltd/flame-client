@@ -5,12 +5,11 @@ package flame
 import cabinet.Attachment
 import cabinet.FileUploadParam
 import epsilon.MemorySize
-import kase.progress.ProgressBus
-import kase.progress.SimpleProgression
-import kase.progress.VoidProgressBus
 import koncurrent.Later
 import kotlinx.JsExport
+import status.SilentStagedProgressPublisher
+import status.StagedProgressPublisher
 
 interface OwnSmeApi : OwnSmeScheme {
-    fun upload(params: FileUploadParam, onProgress: ((SimpleProgression<MemorySize>) -> Unit)? = null): Later<Attachment>
+    fun upload(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize> = SilentStagedProgressPublisher()): Later<Attachment>
 }

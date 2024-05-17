@@ -22,7 +22,7 @@ listOf(
     "hormone", "identifier-api", "identifier-client",
     "kommerce", "kollections", "koncurrent", "kommander", "cabinet-api",
     "bringer", "klip", "snitch", "krest", "sanity", "epsilon-client",
-    "flame-core", "flame-client", "sentinel-core", "sentinel-client"
+    "flame-core", "flame-client", "sentinel-core", "sentinel-client", "status"
 ).forEach { includeBuild("../$it") }
 
 rootProject.name = "flame-client"

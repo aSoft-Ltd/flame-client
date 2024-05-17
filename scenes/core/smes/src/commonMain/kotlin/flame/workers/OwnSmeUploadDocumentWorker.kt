@@ -8,7 +8,7 @@ import koncurrent.Later
 import krest.Worker
 
 class OwnSmeUploadDocumentWorker(private val options: OwnSmeUploadDocumentWorkerOptions) : Worker<FileUploadParam, Attachment> {
-    override fun doWork(params: FileUploadParam, progress: ProgressBus): Later<Attachment> = options.api.upload(params, progress)
+    override fun doWork(params: FileUploadParam, progress: ProgressBus): Later<Attachment> = options.api.upload(params)
 
     companion object {
         const val TYPE = "upload.sme.document"
