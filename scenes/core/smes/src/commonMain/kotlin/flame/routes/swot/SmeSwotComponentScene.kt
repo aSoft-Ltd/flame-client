@@ -11,7 +11,7 @@ import flame.forms.swot.SmeSwotFields
 import flame.forms.swot.SmeSwotOutput
 import flame.forms.swot.SwotComponent
 import flame.forms.swot.SwotComponent.opportunity
-import flame.forms.swot.SwotComponent.strenght
+import flame.forms.swot.SwotComponent.strength
 import flame.forms.swot.SwotComponent.threat
 import flame.forms.swot.SwotComponent.weakness
 import flame.swot.SmeSwotDto
@@ -63,7 +63,7 @@ abstract class SmeSwotComponentScene(
                     val swot = sme.swot ?: SmeSwotDto()
                     val expected = sme.copy(
                         swot = when(component){
-                            strenght -> swot.copy(strengths = payload)
+                            strength -> swot.copy(strengths = payload)
                             weakness -> swot.copy(weaknesses = payload)
                             threat -> swot.copy(threats = payload)
                             opportunity -> swot.copy(opportunities = payload)
@@ -86,7 +86,7 @@ abstract class SmeSwotComponentScene(
             val dto = sme.swot ?: SmeSwotDto()
             val expected = sme.copy(
                 swot = when(component){
-                    strenght -> dto.copy(strengths = payload)
+                    strength -> dto.copy(strengths = payload)
                     weakness -> dto.copy(weaknesses = payload)
                     threat -> dto.copy(threats = payload)
                     opportunity -> dto.copy(opportunities = payload)

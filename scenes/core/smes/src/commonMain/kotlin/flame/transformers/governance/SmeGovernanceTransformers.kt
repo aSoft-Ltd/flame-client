@@ -33,9 +33,7 @@ internal inline fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
     organogram = organogram,
     disputes = disputes,
     specialist = specialist,
-).let {
-    src.copy(governance = it)
-}
+).let { src.copy(governance = it) }
 
 internal fun SmeGovernanceDto?.toProgress() = listOf(
     this?.insuranceScheme,

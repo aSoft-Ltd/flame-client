@@ -10,7 +10,7 @@ import kotlinx.JsExport
 
 class OwnSmeSwotTheater(options: SmeSceneOptions<OwnSmeScheme>) : SmeSwotTheater{
     override val strengths by lazy {
-        OwnSmeSwotComponentScene(options, SwotComponent.strenght) { it?.strengths }
+        OwnSmeSwotComponentScene(options, SwotComponent.strength) { it?.strengths }
     }
 
     override val weaknesses by lazy {
