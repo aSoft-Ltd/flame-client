@@ -15,10 +15,11 @@ abstract class OwnSmeAbstractDocumentScene(
     private val options: SmeSceneOptions<OwnSmeScheme>,
 ) : SmeAbstractDocumentScene(options) {
 
-    fun initialize(): Later<Any> = options.api.load().zip(options.auth.session()) { (sme,session) ->
+    // candidate of the bug
+    fun initialize(): Later<Any> = options.api.load().zip(options.auth.session()) { (sme, session) ->
         documents.forEach {
             it.initialize(
-                attachment = it.options.document.toAttachment(sme,options.toAttachmentOptions(session)),
+                attachment = it.options.document.toAttachment(sme, options.toAttachmentOptions(session)),
                 onSuccess = {
                     options.bus.dispatch(options.topic.progressMade())
                     deInitialize()

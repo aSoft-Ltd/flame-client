@@ -26,7 +26,8 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
 
     private val task by lazy { OwnSmeUploadDocumentTask::class.named(options.document.label) }
 
-    private var watcher: Watcher? = null
+    private var progressWatcher: Watcher? = null
+    private var completionWatcher: Watcher? = null
 
     internal var onSuccess: () -> Unit = {}
 
@@ -61,18 +62,20 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
     }
 
     private fun startTaskWatcher() {
-        if (runner.isRunning(task)) runner.watch(task) {
+        progressWatcher = runner.watch(task) {
             state.value = SmeDocumentUploadingProgress(it)
-            if(it.overall.percentage.done>99.5) {
-                stopTaskWatcher()
-                onSuccess()
-            }
+        }
+        completionWatcher = runner.onCompleted(task) {
+            stopTaskWatcher()
+            onSuccess()
         }
     }
 
     private fun stopTaskWatcher() {
-        watcher?.stop()
-        watcher = null
+        progressWatcher?.stop()
+        completionWatcher?.stop()
+        progressWatcher = null
+        completionWatcher = null
     }
 
     internal fun deInitialize() {
