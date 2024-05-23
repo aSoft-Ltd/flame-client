@@ -18,7 +18,7 @@ class MonSmeScenes(options: SmeSceneOptions<MonSmeScheme>) : SmeScenes {
     override val documents by lazy { MonSmeDocumentsScenes(options) }
     override val finance by lazy { MonSmeFinancialScenes(options) }
     override val governance by lazy { MonSmeGovernanceFormScene(options) }
-    override val business by lazy { MonSmeBusinessPlanTheater(options) }
+    override val plan by lazy { MonSmeBusinessPlanTheater(options) }
     override val swot by lazy { MonSmeSwotTheater(options) }
     override val ratios by lazy { MonSmeFinancialRatiosScenes(options) }
 }

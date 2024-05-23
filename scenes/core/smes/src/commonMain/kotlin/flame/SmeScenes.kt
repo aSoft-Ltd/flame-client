@@ -18,7 +18,7 @@ sealed interface SmeScenes {
     val documents: SmeDocumentsScenes
     val finance: SmeFinancialScenes
     val governance: SmeGovernanceFormScene
-    val business: SmeBusinessPlanTheater
+    val plan: SmeBusinessPlanTheater
     val swot: SmeSwotTheater
     val ratios: SmeFinancialRatiosScenes
 }

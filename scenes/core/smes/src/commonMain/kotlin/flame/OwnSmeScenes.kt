@@ -19,7 +19,7 @@ class OwnSmeScenes(options: SmeSceneOptions<OwnSmeApi>) : SmeScenes {
     override val documents by lazy { OwnSmeDocumentsScenes(options) }
     override val finance by lazy { OwnSmeFinancialScenes(options) }
     override val governance by lazy { OwnSmeGovernanceFormScene(options) }
-    override val business by lazy { OwnSmeBusinessPlanTheater(options) }
+    override val plan by lazy { OwnSmeBusinessPlanTheater(options) }
     override val swot by lazy { OwnSmeSwotTheater(options) }
     override val ratios by lazy { OwnSmeFinancialRatios(options) }
 }
