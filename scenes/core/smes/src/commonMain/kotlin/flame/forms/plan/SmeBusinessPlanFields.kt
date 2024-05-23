@@ -1,8 +1,8 @@
 package flame.forms.plan
 
-import flame.plan.SmeBusinessPlanDto
+import flame.plan.SmePlanDto
 import symphony.Fields
 
-class SmeBusinessPlanFields(output: SmeBusinessPlanDto) : Fields<SmeBusinessPlanDto>(output) {
+class SmeBusinessPlanFields(output: SmePlanDto) : Fields<SmePlanDto>(output) {
 
 }
