@@ -7,6 +7,7 @@ import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinancialScenes
 import flame.routes.governance.SmeGovernanceFormScene
 import flame.routes.info.SmeInfoScene
+import flame.routes.plan.SmeBusinessPlanTheater
 import flame.routes.ratios.SmeFinancialRatiosScenes
 import flame.routes.swot.SmeSwotTheater
 import kotlinx.JsExport
@@ -17,6 +18,7 @@ sealed interface SmeScenes {
     val documents: SmeDocumentsScenes
     val finance: SmeFinancialScenes
     val governance: SmeGovernanceFormScene
+    val business: SmeBusinessPlanTheater
     val swot: SmeSwotTheater
     val ratios: SmeFinancialRatiosScenes
 }
