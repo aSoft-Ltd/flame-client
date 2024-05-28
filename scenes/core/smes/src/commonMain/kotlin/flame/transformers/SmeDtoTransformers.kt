@@ -27,6 +27,8 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     funding = funding,
     finance = finance,
     documents = documents.toPresenter(options),
+    governance = governance,
+    plan = business,
     swot = swot,
 )
 
