@@ -3,6 +3,7 @@
 
 package flame.admin
 
+import flame.governance.SmeDirectorDto
 import kollections.List
 import kollections.emptyList
 import kotlinx.JsExport

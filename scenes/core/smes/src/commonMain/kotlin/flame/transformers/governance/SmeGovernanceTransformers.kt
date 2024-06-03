@@ -3,14 +3,17 @@
 package flame.transformers.governance
 
 import flame.SmeDto
-import flame.forms.governance.SmeGovernanceOutput
+import flame.forms.governance.SmeManPowerOutput
 import flame.governance.SmeGovernanceDto
+import flame.governance.SmeManPowerDto
 import flame.transformers.utils.toProgress
 import kollections.listOf
+import koncurrent.toLater
 
 
-internal inline fun SmeDto.toGovernanceOutput() = governance.toOutput(this)
-internal inline fun SmeGovernanceDto?.toOutput(src: SmeDto) = SmeGovernanceOutput(
+internal inline fun SmeDto.toManPowerOutput() = governance?.manpower.toOutput(this)
+
+internal inline fun SmeManPowerDto?.toOutput(src: SmeDto) = SmeManPowerOutput(
     src = src,
     insuranceScheme = this?.insuranceScheme,
     noOfJobs = this?.noOfJobs,
@@ -23,7 +26,7 @@ internal inline fun SmeGovernanceDto?.toOutput(src: SmeDto) = SmeGovernanceOutpu
     specialist = this?.specialist,
 )
 
-internal inline fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
+internal inline fun SmeManPowerOutput.toParams() = SmeManPowerDto(
     insuranceScheme = insuranceScheme,
     noOfJobs = noOfJobs,
     skillShortfall = skillShortfall,
@@ -33,9 +36,12 @@ internal inline fun SmeGovernanceOutput.toParams() = SmeGovernanceDto(
     organogram = organogram,
     disputes = disputes,
     specialist = specialist,
-).let { src.copy(governance = it) }
+).let {
+    val governance = src.governance ?: SmeGovernanceDto()
+    src.copy(governance = governance.copy(manpower = it))
+}
 
-internal fun SmeGovernanceDto?.toProgress() = listOf(
+internal fun SmeManPowerDto?.toProgress() = listOf(
     this?.insuranceScheme,
     this?.noOfJobs,
     this?.skillShortfall,

@@ -1,6 +1,6 @@
 @file:JsExport
 
-package flame.routes.governance
+package flame.routes.governance.manpower
 
 import flame.SmeSceneOptions
 import flame.SmeScheme
@@ -15,9 +15,9 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeGovernanceFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeGovernanceFields>() {
+abstract class SmeManPowerFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeGovernanceFields>() {
     protected fun form(output: SmeManPowerOutput, details: String) = SmeGovernanceFields(output).toForm(
-        heading = "Governance Details",
+        heading = "Manpower Details",
         details = details,
         logger = options.logger,
     ) {

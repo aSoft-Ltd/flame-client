@@ -1,14 +1,14 @@
 @file:JsExport
 @file:Suppress("NON_EXPORTABLE_TYPE", "NOTHING_TO_INLINE")
 
-package flame.routes.admin.directors
+package flame.routes.governance.directors
 
 import cinematic.BaseScene
 import cinematic.mutableLiveOf
 import flame.SmePresenter
 import flame.SmeSceneOptions
 import flame.SmeScheme
-import flame.admin.SmeDirectorDto
+import flame.governance.SmeDirectorDto
 import flame.forms.admin.directors.SmeDirectorFields
 import flame.transformers.admin.copy
 import flame.transformers.admin.toOutput

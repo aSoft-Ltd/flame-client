@@ -1,6 +1,6 @@
 @file:JsExport
 
-package flame.routes.governance
+package flame.routes.governance.manpower
 
 import flame.OwnSmeScheme
 import flame.SmeSceneOptions
@@ -12,13 +12,13 @@ import koncurrent.later.finally
 import koncurrent.later.then
 import kotlinx.JsExport
 
-class OwnSmeGovernanceFormScene(
+class OwnSmeManPowerFormScene(
     private val options: SmeSceneOptions<OwnSmeScheme>,
-) : SmeGovernanceFormScene(options) {
+) : SmeManPowerFormScene(options) {
     fun initialize(): Later<Any> {
         ui.value = Loading("Loading business information")
         return options.api.load().then {
-            form(it.toManPowerOutput(), "Enter your governance details here")
+            form(it.toManPowerOutput(), "Enter your manpower details here")
         }.finally {
             ui.value = it.toLazyState()
         }

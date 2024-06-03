@@ -5,13 +5,14 @@ package flame.transformers.admin
 import flame.SmeDto
 import flame.admin.SmeAdminDto
 import kollections.List
-import flame.admin.SmeDirectorDto
+import flame.governance.SmeDirectorDto
 import flame.forms.admin.directors.SmeDirectorOutput
 import symphony.PhoneOutput
 
 internal inline fun SmeDto.copy(directors: List<SmeDirectorDto>) = copy(
-    admin = (admin ?: SmeAdminDto()).copy(directors = directors)
+//    admin = (admin ?: SmeAdminDto()).copy(directors = directors)
 )
+
 
 internal inline fun SmeDirectorDto?.toOutput() = SmeDirectorOutput(
     name = this?.name,
