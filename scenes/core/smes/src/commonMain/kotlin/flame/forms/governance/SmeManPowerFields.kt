@@ -8,7 +8,7 @@ import kotlinx.JsExport
 import symphony.Fields
 import symphony.integer
 
-class SmeGovernanceFields(output: SmeManPowerOutput) : Fields<SmeManPowerOutput>(output) {
+class SmeManPowerFields(output: SmeManPowerOutput) : Fields<SmeManPowerOutput>(output) {
 
     val insuranceScheme = selectYesOrNo(
         name = output::insuranceScheme,

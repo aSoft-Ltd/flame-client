@@ -5,7 +5,7 @@ package flame.routes.governance
 import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.forms.FormScene
-import flame.forms.governance.SmeGovernanceFields
+import flame.forms.governance.SmeManPowerFields
 import flame.forms.governance.SmeManPowerOutput
 import flame.transformers.governance.toParams
 import kase.Pending
@@ -15,8 +15,8 @@ import koncurrent.toLater
 import kotlinx.JsExport
 import symphony.toForm
 
-abstract class SmeGovernanceFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeGovernanceFields>() {
-    protected fun form(output: SmeManPowerOutput, details: String) = SmeGovernanceFields(output).toForm(
+abstract class SmeManPowerFormScene(private val options: SmeSceneOptions<SmeScheme>) : FormScene<SmeManPowerFields>() {
+    protected fun form(output: SmeManPowerOutput, details: String) = SmeManPowerFields(output).toForm(
         heading = "Governance Details",
         details = details,
         logger = options.logger,

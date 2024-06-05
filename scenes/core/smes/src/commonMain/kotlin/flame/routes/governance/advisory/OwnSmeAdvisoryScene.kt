@@ -1,6 +1,6 @@
 @file:JsExport
 
-package flame.routes.governance.directors
+package flame.routes.governance.advisory
 
 import flame.OwnSmeApi
 import flame.SmeSceneOptions
@@ -11,14 +11,14 @@ import koncurrent.later.then
 import koncurrent.later.zip
 import kotlinx.JsExport
 
-class OwnSmeDirectorsScene(private val options: SmeSceneOptions<OwnSmeApi>) : SmeDirectorsScene(options) {
+class OwnSmeAdvisoryScene(private val options: SmeSceneOptions<OwnSmeApi>) : SmeAdvisoryScene(options) {
     private val api get() = options.api
     fun initialize() = paginator.initialize {
         api.load().zip(options.auth.session()) { (sme, session) ->
             sme.toPresenter(options.toAttachmentOptions(session))
         }.then {
             presenter = it
-            it.toDirectors()
+            it.toAdvisors()
         }
     }
 }

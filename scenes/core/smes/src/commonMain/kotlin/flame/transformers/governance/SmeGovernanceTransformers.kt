@@ -2,9 +2,12 @@
 
 package flame.transformers.governance
 
+import epsilon.FileOutput
 import flame.SmeDto
+import flame.forms.governance.SmeGoverningPersonnelOutput
 import flame.forms.governance.SmeManPowerOutput
 import flame.governance.SmeGovernanceDto
+import flame.governance.SmeGoverningPersonnelDto
 import flame.governance.SmeManPowerDto
 import flame.transformers.utils.toProgress
 import kollections.listOf
@@ -24,6 +27,19 @@ internal inline fun SmeManPowerDto?.toOutput(src: SmeDto) = SmeManPowerOutput(
     organogram = this?.organogram,
     disputes = this?.disputes,
     specialist = this?.specialist,
+)
+
+internal inline fun SmeGoverningPersonnelDto?.toOutput() = SmeGoverningPersonnelOutput(
+    src = this,
+    name = this?.name,
+    role = this?.role,
+    qualification = this?.qualification,
+    experience = this?.experience,
+    resume = FileOutput(url = this?.resume?.url)
+)
+
+internal inline fun SmeGoverningPersonnelOutput.toParams() = SmeGoverningPersonnelDto(
+    name, role, qualification, experience, src?.resume
 )
 
 internal inline fun SmeManPowerOutput.toParams() = SmeManPowerDto(
