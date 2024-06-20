@@ -25,6 +25,7 @@ kotlin {
                 api(libs.symphony.collections)
                 api(libs.symphony.input.dialog)
                 api(libs.symphony.input.sheet)
+                api(libs.symphony.input.finance)
                 api(libs.cabinet.api.core)
 //                api(libs.epsilon.core)?.because("We want to upload customer documents as attachments")
                 api(libs.epsilon.fields)?.because("We want to upload customer documents as attachments")
