@@ -4,6 +4,6 @@ package flame.routes.financial.analysis
 
 import kotlinx.JsExport
 
-class FinancialAnalysisScene {
+class FinancialAnalysisScenes {
     val sheet by lazy { BalanceSheetScene() }
 }

@@ -5,6 +5,7 @@ package flame
 import flame.routes.admin.MonSmeAdminScenes
 import flame.routes.documents.MonSmeDocumentsScenes
 import flame.routes.financial.MonSmeFinancialScenes
+import flame.routes.financial.analysis.FinancialAnalysisScenes
 import flame.routes.governance.MonSmeGovernanceTheater
 import flame.routes.info.MonSmeInfoScene
 import flame.routes.plan.MonSmeBusinessPlanTheater
@@ -21,4 +22,5 @@ class MonSmeScenes(options: SmeSceneOptions<MonSmeScheme>) : SmeScenes {
     override val plan by lazy { MonSmeBusinessPlanTheater(options) }
     override val swot by lazy { MonSmeSwotTheater(options) }
     override val ratios by lazy { MonSmeFinancialRatiosScenes(options) }
+    override val analysis by lazy { FinancialAnalysisScenes() }
 }

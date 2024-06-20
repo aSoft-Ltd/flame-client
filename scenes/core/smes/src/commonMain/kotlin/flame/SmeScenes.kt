@@ -5,6 +5,7 @@ package flame
 import flame.routes.admin.SmeAdminScenes
 import flame.routes.documents.SmeDocumentsScenes
 import flame.routes.financial.SmeFinancialScenes
+import flame.routes.financial.analysis.FinancialAnalysisScenes
 import flame.routes.governance.SmeGovernanceTheater
 import flame.routes.governance.SmeManPowerFormScene
 import flame.routes.info.SmeInfoScene
@@ -22,4 +23,5 @@ sealed interface SmeScenes {
     val plan: SmeBusinessPlanTheater
     val swot: SmeSwotTheater
     val ratios: SmeFinancialRatiosScenes
+    val analysis: FinancialAnalysisScenes
 }
