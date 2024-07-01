@@ -12,6 +12,7 @@ import flame.transformers.finance.toProgress
 import flame.transformers.funding.toProgress
 import flame.transformers.governance.toProgress
 import flame.transformers.swot.toProgress
+import kollections.toList
 
 fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     src = this,
@@ -24,6 +25,7 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     governance = governance,
     plan = business,
     swot = swot,
+    reports = reports.toList()
 )
 
 fun SmeDto.toProgress(options: AttachmentPresenterOptions) = SmeProgress(
