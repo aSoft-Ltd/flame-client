@@ -30,6 +30,7 @@ import sentinel.UserSession
 import status.Progress
 import epsilon.Progress
 import epsilon.bytes
+import flame.sheet.SmeSheet
 import status.ProgressStagePublisher
 import status.StagedProgressPublisher
 
@@ -93,5 +94,14 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             uploading(complete)
             resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
         }
+    }
+
+    override fun sheet(): Later<SmeSheet> = options.scope.later {
+        val tracer = logger.trace(options.message.load())
+        val res = options.http.get(options.routes.load()) {
+            header(options.resolver, options.domain)
+            bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
+        }
+        res.getOrThrow<SmeDto>(options.codec, tracer)
     }
 }

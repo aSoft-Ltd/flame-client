@@ -25,7 +25,8 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     governance = governance,
     plan = business,
     swot = swot,
-    reports = reports.toList()
+    reports = reports.toList(),
+    sheet = sheet
 )
 
 fun SmeDto.toProgress(options: AttachmentPresenterOptions) = SmeProgress(

@@ -11,6 +11,7 @@ import flame.finance.SmeFinanceDto
 import flame.funding.SmeFundingDto
 import flame.governance.SmeGovernanceDto
 import flame.plan.SmePlanDto
+import flame.sheet.SmeSheet
 import flame.swot.SmeSwotDto
 import kollections.List
 import kotlinx.JsExport
@@ -26,5 +27,6 @@ data class SmePresenter(
     val governance: SmeGovernanceDto?,
     val plan: SmePlanDto,
     val swot: SmeSwotDto?,
-    val reports: List<FinancialReportsDto>
+    val reports: List<FinancialReportsDto>,
+    val sheet: SmeSheet?
 )
