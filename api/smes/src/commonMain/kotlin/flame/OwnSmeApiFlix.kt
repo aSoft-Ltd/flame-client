@@ -96,12 +96,41 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         }
     }
 
-    override fun sheet(): Later<SmeSheet> = options.scope.later {
-        val tracer = logger.trace(options.message.load())
-        val res = options.http.get(options.routes.load()) {
-            header(options.resolver, options.domain)
-            bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
+    override fun xlsx(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
+        val tracer = logger.trace(options.message.xlsx(params.filename))
+        val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
+        val (reading, uploading) = progress.stages("Reading", "Uploading")
+        val bytes = reader.read(params.file) { reading(it) }.await()
+        val size = bytes.size
+        val total = size.bytes
+        val complete = Progress(total,total)
+        reading(complete)
+        val data = MultiPartFormDataContent(formData {
+            append("file", bytes, headersOf(HttpHeaders.ContentDisposition, "filename=${params.filename.escapeIfNeeded()}"))
+        })
+        coroutineScope {
+            var completed = false
+
+            val uploader = async {
+                options.http.post(options.routes.xlsx(params.filename)) {
+                    header(options.resolver, options.domain)
+                    bearerAuth(secret)
+                    setBody(data)
+                }.also { completed = true }
+            }
+
+            val estimator = async {
+                estimate(
+                    bytes = size.toDouble(),
+                    until = { completed },
+                    onProgress = { uploading(Progress(it.bytes, total)) }
+                ).await()
+            }
+
+            estimator.await()
+            val resp = uploader.await()
+            uploading(complete)
+            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
         }
-        res.getOrThrow<SmeDto>(options.codec, tracer)
     }
 }

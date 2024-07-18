@@ -41,9 +41,10 @@ private fun ReportRowDto?.merged(that: ReportRowDto): ReportRowDto {
     val right = that.rows.toMutableList().filter { !existing.contains(it.label) }
     val rows = left + right
 
-    return ReportRowDto(label, amount, rows.merged())
+//    return ReportRowDto(label, amount, rows.merged())
+    return ReportRowDto(label, amount, rows)
 }
 
 private fun List<ReportRowDto>.merged() : List<ReportRowDto> {
-
+    throw Exception("Not using FinancialReportRows")
 }
