@@ -96,7 +96,7 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         }
     }
 
-    override fun xlsx(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
+    override fun xlsx(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Any> = options.scope.later {
         val tracer = logger.trace(options.message.xlsx(params.filename))
         val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
         val (reading, uploading) = progress.stages("Reading", "Uploading")
@@ -130,7 +130,8 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             estimator.await()
             val resp = uploader.await()
             uploading(complete)
-            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
+//            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
+            0
         }
     }
 }

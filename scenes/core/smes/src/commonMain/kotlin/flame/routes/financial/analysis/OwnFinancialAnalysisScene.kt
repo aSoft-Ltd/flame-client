@@ -24,6 +24,7 @@ class OwnFinancialAnalysisScene(
 ) : FinancialAnalysisScene(options) {
     override val api = options.api
     val uploader = SpreadsheetUploader(options) {
+        println("Upload done. Reloading sme...")
         loadSme()
     }
 

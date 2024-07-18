@@ -26,7 +26,7 @@ class SpreadsheetUploader(
     private val onUpload: () -> Unit
 ) {
     private val api = options.api
-    private val state:MutableLive<State> = mutableLiveOf(State.Blank())
+    val state:MutableLive<State> = mutableLiveOf(State.Blank())
 
     fun upload(file: RawFile?) {
         file?.let { file->
@@ -42,7 +42,7 @@ class SpreadsheetUploader(
                 state.value = State.Uploaded()
                 onUpload()
             }.catch {
-                state.value = State.Error("Error uploading")
+                state.value = State.Error(it.message ?: "Unknown error uploading!")
             }
         }?: run {
             state.value = State.Error("No file selected")
