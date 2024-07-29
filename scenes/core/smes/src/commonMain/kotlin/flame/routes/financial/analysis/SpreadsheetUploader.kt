@@ -26,7 +26,7 @@ class SpreadsheetUploader(
     private val onUpload: () -> Unit
 ) {
     private val api = options.api
-    val state:MutableLive<State> = mutableLiveOf(State.Blank())
+    val state:MutableLive<State> = mutableLiveOf(State.Blank)
 
     fun upload(file: RawFile?) {
         file?.let { file->
@@ -37,9 +37,9 @@ class SpreadsheetUploader(
                 filename = "${document.label}.${info.extension}",
                 file = file
             )
-            state.value = State.Uploading()
+            state.value = State.Uploading
             api.xlsx(params).then {
-                state.value = State.Uploaded()
+                state.value = State.Uploaded
                 onUpload()
             }.catch {
                 state.value = State.Error(it.message ?: "Unknown error uploading!")
@@ -50,9 +50,9 @@ class SpreadsheetUploader(
     }
 
     sealed class State {
-        class Blank:State()
-        class Uploading:State()
-        class Uploaded:State()
+        object Blank:State()
+        object Uploading:State()
+        object Uploaded:State()
         class Error(val message:String):State()
 
         val blank get() = this as? Blank

@@ -2,20 +2,21 @@
 
 package flame.routes.financial.analysis
 
+import bringer.Downloader
+import cabinet.AttachmentPresenter
 import cabinet.FileUploadParam
+import cinematic.MutableLive
+import cinematic.mutableLiveOf
 import epsilon.RawFile
 import epsilon.RawFileInfo
 import flame.OwnSmeApi
 import flame.OwnSmeScheme
 import flame.SmeSceneOptions
 import flame.documents.SmeDocument
+import flame.transformers.spreadsheetTemplate
 import flame.transformers.toPresenter
-import kase.Loading
-import kase.toLazyState
-import koncurrent.later.catch
-import koncurrent.later.finally
-import koncurrent.later.then
-import koncurrent.later.zip
+import kase.*
+import koncurrent.later.*
 import kotlinx.JsExport
 import krest.toSubmitOptions
 
@@ -28,6 +29,8 @@ class OwnFinancialAnalysisScene(
         loadSme()
     }
 
+    val xlsx:MutableLive<AttachmentPresenter?> = mutableLiveOf(null)
+
     fun initialize() {
         loadSme()
     }
@@ -36,6 +39,9 @@ class OwnFinancialAnalysisScene(
         ui.value = Loading("Fetching Financial Reports")
         options.auth.session().zip(api.load()) { (session, sme) ->
             sme.toPresenter(options.toAttachmentOptions(session))
+        }.then {
+            this.xlsx.value = it.xlsx
+            it
         }.finally {
             ui.value = it.toLazyState()
         }

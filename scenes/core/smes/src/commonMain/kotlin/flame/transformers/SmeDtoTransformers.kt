@@ -1,6 +1,11 @@
 package flame.transformers
 
+import cabinet.AttachmentDto
+import cabinet.AttachmentPresenter
 import cabinet.AttachmentPresenterOptions
+import cabinet.toPresenter
+import epsilon.MemorySize
+import epsilon.memorySize
 import flame.SmeDto
 import flame.SmePresenter
 import flame.SmeProgress
@@ -19,6 +24,15 @@ import flame.transformers.swot.toProgress
 import kollections.isEmpty
 import kollections.toList
 
+fun spreadsheetTemplate()  = AttachmentDto(
+    uid = "0",
+    name = "Investor_Readiness_Assessment_vs3.xlsx",
+    type = "Investor_Readiness_Assessment",
+    description = "Investor Readiness Assessment",
+    size = memorySize("76000B"),
+    url = "https://capital-downloads.picortex.co/Investor_Readiness_Assessment_vs3.xlsx"
+)
+
 fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     src = this,
     uid = uid,
@@ -27,6 +41,11 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     funding = funding,
     finance = finance,
     documents = documents.toPresenter(options),
+    xlsx = xlsx?.toPresenter(options),
+//    xlsx = xlsx?.toPresenter(options) ?: AttachmentPresenter(
+//        src = spreadsheetTemplate(),
+//        options = options
+//    ),
     governance = governance,
     plan = business,
     swot = swot,

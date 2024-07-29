@@ -3,6 +3,8 @@
 
 package flame
 
+import cabinet.AttachmentDto
+import cabinet.AttachmentPresenter
 import flame.admin.SmeAdminPresenter
 import flame.admin.SmeBusinessDto
 import flame.analysis.FinancialReportsDto
@@ -24,6 +26,7 @@ data class SmePresenter(
     val funding: SmeFundingDto?,
     val finance: SmeFinanceDto?,
     val documents: SmeDocumentsPresenter?,
+    val xlsx: AttachmentPresenter? = null,
     val governance: SmeGovernanceDto?,
     val plan: SmePlanDto,
     val swot: SmeSwotDto?,
