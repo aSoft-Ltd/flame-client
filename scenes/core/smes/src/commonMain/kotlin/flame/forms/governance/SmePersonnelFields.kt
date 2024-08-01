@@ -20,9 +20,11 @@ class SmePersonnelFields(output: SmeGoverningPersonnelOutput) : Fields<SmeGovern
 
     val qualification = selectSingle(
         name = output::qualification,
-        items = listOf("Certificate", "Diploma", "Advanced Diploma", "Bachelors Degree", "Masters Degree", "PhD"),
+        items = listOf("Certificate", "Diploma", "Advanced Diploma", "Bachelors Degree", "Honors Degree", "Masters Degree", "PhD"),
         mapper = { Option(it, it) }
     )
+
+    val fieldOfStudy = text(output::fieldOfStudy)
 
     val experience = double(output::experience)
 

@@ -12,6 +12,7 @@ data class SmeGoverningPersonnelOutput(
     var name: String?,
     var role: String?,
     var qualification: String?,
+    var fieldOfStudy: String?,
     var experience: Double?,
     var resume: FileOutput?
 )

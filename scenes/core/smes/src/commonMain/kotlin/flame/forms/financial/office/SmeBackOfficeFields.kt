@@ -7,11 +7,7 @@ import flame.forms.selectSourcing
 import flame.forms.selectYesOrNo
 import kollections.listOf
 import kotlinx.JsExport
-import symphony.Fields
-import symphony.Option
-import symphony.integer
-import symphony.selectSingle
-import symphony.text
+import symphony.*
 
 class SmeBackOfficeFields(output: SmeBackOfficeOutput) : Fields<SmeBackOfficeOutput>(output) {
 
@@ -82,7 +78,7 @@ class SmeBackOfficeFields(output: SmeBackOfficeOutput) : Fields<SmeBackOfficeOut
             | Compensation and Benefits and Administration, Payroll & HR Systems)""".trimMargin()
     )
 
-    val policyExistence = text(
+    val policyExistence = selectYesOrNo(
         name = output::policyExistence,
         label = "Does the entity have policies and procedures in place (i.e. finance, HR, operations, etc)"
     )

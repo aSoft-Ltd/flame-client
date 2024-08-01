@@ -34,12 +34,13 @@ internal inline fun SmeGoverningPersonnelDto?.toOutput() = SmeGoverningPersonnel
     name = this?.name,
     role = this?.role,
     qualification = this?.qualification,
+    fieldOfStudy = this?.fieldOfStudy,
     experience = this?.experience,
     resume = FileOutput(url = this?.resume?.url)
 )
 
 internal inline fun SmeGoverningPersonnelOutput.toParams() = SmeGoverningPersonnelDto(
-    name, role, qualification, experience, src?.resume
+    name, role, qualification, fieldOfStudy, experience, src?.resume
 )
 
 internal inline fun SmeManPowerOutput.toParams() = SmeManPowerDto(

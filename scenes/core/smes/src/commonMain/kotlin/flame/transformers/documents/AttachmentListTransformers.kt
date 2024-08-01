@@ -29,9 +29,12 @@ private fun Collection<AttachmentDto>.toDocumentListPresenter(
 )
 
 private fun Collection<AttachmentDto>.toFinancialRecordsPresenter(options: AttachmentPresenterOptions) = SmeFinancialRecordsPresenter(
-    balanceSheet = toAttachment(SmeDocument.FinancialRecord.BalanceSheet, options),
-    incomeStatement = toAttachment(SmeDocument.FinancialRecord.IncomeStatement, options),
-    cashFlow = toAttachment(SmeDocument.FinancialRecord.CashFlow, options),
+//    balanceSheet = toAttachment(SmeDocument.FinancialRecord.BalanceSheet, options),
+//    incomeStatement = toAttachment(SmeDocument.FinancialRecord.IncomeStatement, options),
+//    cashFlow = toAttachment(SmeDocument.FinancialRecord.CashFlow, options),
+    currentYearFinancials = toAttachment(SmeDocument.FinancialRecord.CurrentYearFinancials, options),
+    priorYearFinancialStatementYear1 = toAttachment(SmeDocument.FinancialRecord.PriorYearFinancialStatementYear1, options),
+    priorYearFinancialStatementYear2 = toAttachment(SmeDocument.FinancialRecord.PriorYearFinancialStatementYear2, options),
     assetRegister = toAttachment(SmeDocument.FinancialRecord.AssetRegister, options),
     financialProjections = toAttachment(SmeDocument.FinancialRecord.FinancialProjections, options),
     salesPipeline = toAttachment(SmeDocument.FinancialRecord.SalesPipeline, options),
