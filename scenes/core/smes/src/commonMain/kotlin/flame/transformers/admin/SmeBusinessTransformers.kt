@@ -52,7 +52,7 @@ fun SmeBusinessDto?.toProgress() = listOf(
     this?.phone,
     this?.yearsInOperation,
     this?.address,
-    this?.numberOfJobs,
+//    this?.numberOfJobs,
     this?.industry,
     this?.businessStage,
     this?.bbbee,

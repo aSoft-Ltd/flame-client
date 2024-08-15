@@ -13,7 +13,7 @@ import flame.documents.SmeMiscellaneousDocumentsPresenter
 internal fun Collection<AttachmentDto>.toAttachment(
     document: SmeDocument,
     options: AttachmentPresenterOptions
-) = firstOrNull { it.name.contains(document.label, ignoreCase = true) }?.toPresenter(options)
+) = firstOrNull { it.uid.contains(document.name, ignoreCase = true) }?.toPresenter(options)
 
 private fun Collection<AttachmentDto>.toDocumentListPresenter(
     options: AttachmentPresenterOptions

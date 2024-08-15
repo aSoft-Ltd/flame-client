@@ -3,14 +3,8 @@ package flame
 import cabinet.Attachment
 import cabinet.FileUploadParam
 import epsilon.MemorySize
-import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.patch
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
 import io.ktor.http.HttpHeaders
 import io.ktor.http.escapeIfNeeded
 import io.ktor.http.headersOf
@@ -30,7 +24,10 @@ import sentinel.UserSession
 import status.Progress
 import epsilon.Progress
 import epsilon.bytes
+import flame.documents.SMEDocumentUploadParam
+import flame.documents.SmeDocument
 import flame.sheet.SmeSheet
+import io.ktor.client.request.*
 import status.ProgressStagePublisher
 import status.StagedProgressPublisher
 
@@ -58,8 +55,19 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
         }.getOrThrow(SmeDto.serializer(), options.codec, tracer)
     }
 
-    override fun upload(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
-        val tracer = logger.trace(options.message.upload(params.filename))
+    override fun deleteDocument(document: SmeDocument): Later<SmeDto> = options.scope.later {
+        val tracer = logger.trace(options.message.documents.upload(document.name))
+        val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
+
+        val res = options.http.delete(options.routes.documents.delete(document.name)) {
+            header(options.resolver, options.domain)
+            bearerAuth(options.cache.load<UserSession>(options.sessionCacheKey).await().secret)
+        }
+        res.getOrThrow<SmeDto>(options.codec, tracer)
+    }
+
+    override fun upload(params: SMEDocumentUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
+        val tracer = logger.trace(options.message.documents.upload(params.filename))
         val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
         val (reading, uploading) = progress.stages("Reading", "Uploading")
         val bytes = reader.read(params.file) { reading(it) }.await()
@@ -74,8 +82,9 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             var completed = false
 
             val uploader = async {
-                options.http.post(options.routes.upload(params.filename)) {
+                options.http.post(options.routes.documents.upload(params.document.name)) {
                     header(options.resolver, options.domain)
+                    header("filename", params.filename)
                     bearerAuth(secret)
                     setBody(data)
                 }.also { completed = true }
@@ -112,8 +121,9 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             var completed = false
 
             val uploader = async {
-                options.http.post(options.routes.xlsx(params.filename)) {
+                options.http.post(options.routes.xlsx("financial-spreadsheet")) {
                     header(options.resolver, options.domain)
+                    header("filename", params.filename)
                     bearerAuth(secret)
                     setBody(data)
                 }.also { completed = true }
@@ -132,6 +142,45 @@ class OwnSmeApiFlix(private val options: OwnSmeApiFlixOptions) : OwnSmeApi {
             uploading(complete)
 //            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
             0
+        }
+    }
+
+    override fun uploadResume(params: FileUploadParam, progress: StagedProgressPublisher<MemorySize>): Later<Attachment> = options.scope.later {
+        val tracer = logger.trace(options.message.uploadResume(params.filename))
+        val secret = options.cache.load(options.sessionCacheKey, UserSession.serializer()).await().secret
+        val (reading, uploading) = progress.stages("Reading", "Uploading")
+        val bytes = reader.read(params.file) { reading(it) }.await()
+        val size = bytes.size
+        val total = size.bytes
+        val complete = Progress(total,total)
+        reading(complete)
+        val data = MultiPartFormDataContent(formData {
+            append("file", bytes, headersOf(HttpHeaders.ContentDisposition, "filename=${params.filename.escapeIfNeeded()}"))
+        })
+        coroutineScope {
+            var completed = false
+
+            val uploader = async {
+                options.http.post(options.routes.uploadResume("resume")) {
+                    header(options.resolver, options.domain)
+                    header("filename", params.filename)
+                    bearerAuth(secret)
+                    setBody(data)
+                }.also { completed = true }
+            }
+
+            val estimator = async {
+                estimate(
+                    bytes = size.toDouble(),
+                    until = { completed },
+                    onProgress = { uploading(Progress(it.bytes, total)) }
+                ).await()
+            }
+
+            estimator.await()
+            val resp = uploader.await()
+            uploading(complete)
+            resp.getOrThrow(Attachment.serializer(), options.codec, tracer)
         }
     }
 }

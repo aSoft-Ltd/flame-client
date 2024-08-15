@@ -10,9 +10,11 @@ data class SmeProgress(
     val admin: SmeSectionProgress,
     val documents: SmeSectionProgress,
     val finance: SmeSectionProgress,
+    val analysis: SmeSectionProgress,
     val funding: SmeSectionProgress,
     val governance: SmeSectionProgress,
-    val swot: SmeSectionProgress
+    val swot: SmeSectionProgress,
+    val business: SmeSectionProgress
 ) {
     val overall by lazy { admin + documents + finance + funding + governance }
 }

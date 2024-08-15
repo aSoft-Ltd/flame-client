@@ -72,15 +72,15 @@ fun SmeDto.toFinancialStatusForm(
 }
 
 fun SmeFinancialStatusDto?.toProgress() = listOf(
-    this?.latestFinancialStatements,
-    this?.managementAccounts,
+//    this?.latestFinancialStatements,
+//    this?.managementAccounts,
     this?.financialsAuditedOrReviewed,
     this?.budgetForReview,
-    this?.debtorsAging,
-    this?.creditAging,
+//    this?.debtorsAging,
+//    this?.creditAging,
     this?.longTermContracts,
     this?.offBalanceSheetFunding,
     this?.assetRegister,
     this?.permissionsFromLender,
-    this?.guarantees,
+//    this?.guarantees,
 ).toProgress()

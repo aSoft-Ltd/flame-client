@@ -9,6 +9,7 @@ import epsilon.memorySize
 import flame.SmeDto
 import flame.SmePresenter
 import flame.SmeProgress
+import flame.SmeSectionProgress
 import flame.sheet.SmeSheet
 import flame.sheet.SmeSheetCell
 import flame.sheet.SmeSheetCellAlign
@@ -42,10 +43,6 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     finance = finance,
     documents = documents.toPresenter(options),
     xlsx = xlsx?.toPresenter(options),
-//    xlsx = xlsx?.toPresenter(options) ?: AttachmentPresenter(
-//        src = spreadsheetTemplate(),
-//        options = options
-//    ),
     governance = governance,
     plan = business,
     swot = swot,
@@ -53,75 +50,17 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
     sheet = sheet
 )
 
-//private fun SmeSheet?.orTest():SmeSheet {
-//    return this?.let {
-//        if (this.rows.isEmpty()) {
-//            testSheet()
-//        } else {
-//            this
-//        }
-//    }?: testSheet()
-//}
-
-//private fun testSheet() = SmeSheet(
-//    rows = kollections.listOf(
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell(""),
-//            SmeSheetCell("2023", bold = true),
-//            SmeSheetCell("2024", bold = true),
-//            SmeSheetCell("2025", bold = true),
-//            SmeSheetCell("2026", bold = true),
-//            SmeSheetCell("2027", bold = true),
-//        )),
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell("Revenue", bold = true),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//        )),
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell("Other", indent = true),
-//            SmeSheetCell("0", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("0", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("0", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("0", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("0", align = SmeSheetCellAlign.center),
-//        )),
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell("Another", indent = true),
-//            SmeSheetCell("12,000", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("200", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("1,600", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("200", align = SmeSheetCellAlign.center),
-//            SmeSheetCell("10", align = SmeSheetCellAlign.center),
-//        )),
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell("Total Revenue", bold = true),
-//            SmeSheetCell("", bold = true),
-//            SmeSheetCell("", bold = true),
-//            SmeSheetCell("", bold = true),
-//            SmeSheetCell("", bold = true),
-//            SmeSheetCell("", bold = true),
-//        )),
-//        SmeSheetRow(cells = kollections.listOf(
-//            SmeSheetCell("Cost of Goods Sold", bold = true),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//            SmeSheetCell(""),
-//        )),
-//    )
-//)
 
 fun SmeDto.toProgress(options: AttachmentPresenterOptions) = SmeProgress(
     sme = toPresenter(options),
     admin = admin.toProgress(),
     documents = documents.toProgress(),
     finance = finance.toProgress(),
+    analysis = SmeSectionProgress(xlsx?.let {
+        1
+    }?:0, 1),
     funding = funding.toProgress(),
-    governance = governance?.manpower.toProgress(),
-    swot = swot.toProgress()
+    governance = governance.toProgress(),
+    swot = swot.toProgress(),
+    business = business.toProgress()
 )

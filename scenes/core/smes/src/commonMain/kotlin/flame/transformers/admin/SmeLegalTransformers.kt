@@ -35,7 +35,7 @@ internal inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
 
 fun SmeLegalComplianceDto?.toProgress() = listOf(
     this?.cipcAnnualReturns,
-    this?.registration,
+//    this?.registration,
     this?.vatRegistration,
     this?.vatNumber,
     this?.taxComplianceStatus,

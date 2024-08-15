@@ -38,5 +38,5 @@ fun SmeContactsDto?.toProgress() = listOf(
     this?.email,
     this?.phone,
     this?.role,
-    this?.dob,
+//    this?.dob,
 ).toProgress()

@@ -9,12 +9,16 @@ import cinematic.mutableLiveOf
 import epsilon.FileField
 import epsilon.RawFile
 import epsilon.RawFileInfo
+import flame.OwnSmeApi
+import flame.OwnSmeScheme
+import flame.documents.SMEDocumentUploadParam
 import flame.tasks.OwnSmeUploadDocumentTask
+import koncurrent.later.then
 import kotlinx.JsExport
 import krest.named
 import krest.toSubmitOptions
 
-class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
+class SmeDocumentScene(internal val options: SmeDocumentSceneOptions, val api: OwnSmeApi) {
 
     val label by lazy {
         options.document.label.replace("-", " ").replaceFirstChar { it.uppercaseChar() }
@@ -50,15 +54,23 @@ class SmeDocumentScene(internal val options: SmeDocumentSceneOptions) {
         if (file == null || runner.isRunning(task)) return
 
         val info = RawFileInfo(file)
-        val params = FileUploadParam(
+        val params = SMEDocumentUploadParam(
             path = options.path,
-            filename = "${options.document.label}.${info.extension}",
-            file = file
+//            filename = "${options.document.label}.${info.extension}",
+            filename = "${info.nameWithExtension}",
+            file = file,
+            document = options.document
         )
         val tso = task.toSubmitOptions(params)
         runner.submit(tso)
         stopTaskWatcher()
         startTaskWatcher()
+    }
+
+    fun delete() {
+        api.deleteDocument(options.document).then {
+            onSuccess()
+        }
     }
 
     private fun startTaskWatcher() {

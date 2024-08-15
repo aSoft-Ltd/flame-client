@@ -34,7 +34,8 @@ class SpreadsheetUploader(
             val info = RawFileInfo(file)
             val params = FileUploadParam(
                 path = "xlsx",
-                filename = "${document.label}.${info.extension}",
+//                filename = "${document.label}.${info.extension}",
+                filename = "${info.nameWithExtension}",
                 file = file
             )
             state.value = State.Uploading

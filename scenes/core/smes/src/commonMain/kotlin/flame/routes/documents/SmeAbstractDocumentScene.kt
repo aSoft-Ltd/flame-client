@@ -4,6 +4,7 @@
 package flame.routes.documents
 
 import cinematic.BaseScene
+import flame.OwnSmeApi
 import flame.SmeSceneOptions
 import flame.SmeScheme
 import flame.documents.SmeDocument
@@ -21,5 +22,5 @@ abstract class SmeAbstractDocumentScene(private val options: SmeSceneOptions<Sme
     fun deInitialize() = documents.forEach { it.deInitialize() }
 
     @JsExportIgnore
-    protected fun SmeDocument.toScene() = SmeDocumentScene(SmeDocumentSceneOptions(this, options.tasks,options.wm))
+    protected fun SmeDocument.toScene() = SmeDocumentScene(SmeDocumentSceneOptions(this, options.tasks,options.wm), (options.api as OwnSmeApi))
 }

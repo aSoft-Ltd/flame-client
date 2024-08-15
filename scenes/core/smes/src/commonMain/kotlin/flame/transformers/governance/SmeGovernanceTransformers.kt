@@ -4,11 +4,14 @@ package flame.transformers.governance
 
 import epsilon.FileOutput
 import flame.SmeDto
+import flame.SmeSectionProgress
 import flame.forms.governance.SmeGoverningPersonnelOutput
 import flame.forms.governance.SmeManPowerOutput
 import flame.governance.SmeGovernanceDto
 import flame.governance.SmeGoverningPersonnelDto
 import flame.governance.SmeManPowerDto
+import flame.governance.SmeManagementDto
+import flame.transformers.utils.toCompletedIfNotEmpty
 import flame.transformers.utils.toProgress
 import kollections.listOf
 import koncurrent.toLater
@@ -59,8 +62,8 @@ internal inline fun SmeManPowerOutput.toParams() = SmeManPowerDto(
 }
 
 internal fun SmeManPowerDto?.toProgress() = listOf(
-    this?.insuranceScheme,
-    this?.noOfJobs,
+//    this?.insuranceScheme,
+//    this?.noOfJobs,
     this?.skillShortfall,
     this?.labour,
     this?.unionised,
@@ -68,4 +71,15 @@ internal fun SmeManPowerDto?.toProgress() = listOf(
     this?.organogram,
     this?.disputes,
     this?.specialist,
+).toProgress()
+
+internal fun SmeGovernanceDto?.toProgress() = listOf(
+    this?.management?.toProgress(),
+    this?.directors?.toProgress(),
+    this?.manpower.toProgress()
+).toProgress()
+
+internal fun SmeManagementDto.toProgress() = listOf(
+    this.team.toCompletedIfNotEmpty(),
+    this.committee.toCompletedIfNotEmpty()
 ).toProgress()
