@@ -2,11 +2,13 @@
 
 package flame
 
+import kollections.List
 import kotlinx.JsExport
 
 class SmeSectionProgress(
     val completed: Int,
-    val total: Int
+    val total: Int,
+    val src: List<SmeSectionProgress>? = null
 ) {
     val uncompleted by lazy { total - completed }
 
@@ -19,4 +21,6 @@ class SmeSectionProgress(
     }
 
     operator fun plus(other: SmeSectionProgress) = SmeSectionProgress(completed + other.completed, total + other.total)
+
+    val info get() = "Total: ${total}, Completed: ${completed}, Percent: ${percent}%"
 }
