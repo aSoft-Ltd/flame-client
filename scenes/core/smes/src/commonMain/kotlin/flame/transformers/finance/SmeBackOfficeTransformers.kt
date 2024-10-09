@@ -6,7 +6,7 @@ import flame.SmeDto
 import flame.finance.SmeBackOfficeDto
 import flame.finance.SmeFinanceDto
 import flame.forms.financial.office.SmeBackOfficeOutput
-import flame.transformers.utils.toProgress
+//import flame.transformers.utils.toProgress
 import kollections.listOf
 
 internal inline fun SmeDto.toFinanceOfficeOutput() = finance?.office.toOutput(this)
@@ -41,16 +41,16 @@ internal inline fun SmeBackOfficeOutput.toParams() = SmeBackOfficeDto(
     src.copy(finance = (src.finance ?: SmeFinanceDto()).copy(office = it))
 }
 
-internal fun SmeBackOfficeDto?.toProgress() = listOf(
-    this?.accounting,
-    this?.payroll,
-    this?.accountingConsultation,
-    this?.noOfEmployeesInTheFinanceDepartment,
-    this?.financialHead,
-    this?.totalStaffCompliment,
-    this?.hrConsultation,
-    this?.policyExistence,
-    this?.policyReviewFrequency,
-    this?.assetsAssurance,
-    this?.criticalSystems,
-).toProgress()
+//internal fun SmeBackOfficeDto?.toProgress() = listOf(
+//    this?.accounting,
+//    this?.payroll,
+//    this?.accountingConsultation,
+//    this?.noOfEmployeesInTheFinanceDepartment,
+//    this?.financialHead,
+//    this?.totalStaffCompliment,
+//    this?.hrConsultation,
+//    this?.policyExistence,
+//    this?.policyReviewFrequency,
+//    this?.assetsAssurance,
+//    this?.criticalSystems,
+//).toProgress()

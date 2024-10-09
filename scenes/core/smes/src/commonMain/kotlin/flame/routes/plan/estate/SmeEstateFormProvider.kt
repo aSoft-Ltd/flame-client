@@ -20,7 +20,7 @@ internal class SmeEstateFormProvider(private val options: SmeSceneOptions<SmeSch
         logger = options.logger
     ) {
         onSubmit { output ->
-            api.update(sme.copy(business = sme.business.copy(legal = output)))
+            api.update(sme.copy(business = sme.business.copy(realEstate = output)))
         }
 
         onSuccess {

@@ -45,7 +45,7 @@ class SmeLegalFields(output: SmeLegalOutput) : Fields<SmeLegalOutput>(output) {
         hint = "Select TAX Compliance Status",
     )
 
-    val incomeTaxNumber = integer(
+    val incomeTaxNumber = text(
         name = output::incomeTaxNumber,
         label = "Income TAX Number",
         hint = "Enter Income Tax Number"

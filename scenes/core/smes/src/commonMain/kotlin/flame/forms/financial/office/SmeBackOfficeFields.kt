@@ -19,7 +19,7 @@ class SmeBackOfficeFields(output: SmeBackOfficeOutput) : Fields<SmeBackOfficeOut
             "Sage Pastel",
             "Sage Evolution",
             "Sage 50",
-            "Zero",
+            "Xero",
             "Quickbooks",
             "Zoho",
             "FreshBooks",

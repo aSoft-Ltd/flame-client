@@ -11,9 +11,9 @@ import flame.governance.SmeGovernanceDto
 import flame.governance.SmeGoverningPersonnelDto
 import flame.governance.SmeManPowerDto
 import flame.governance.SmeManagementDto
-import flame.transformers.utils.aggregate
-import flame.transformers.utils.toCompletedIfNotEmpty
-import flame.transformers.utils.toProgress
+//import flame.transformers.utils.aggregate
+//import flame.transformers.utils.toCompletedIfNotEmpty
+//import flame.transformers.utils.toProgress
 import kollections.listOf
 import kollections.size
 import koncurrent.toLater
@@ -63,44 +63,44 @@ internal inline fun SmeManPowerOutput.toParams() = SmeManPowerDto(
     src.copy(governance = governance.copy(manpower = it))
 }
 
-internal fun SmeManPowerDto?.toProgress() = listOf(
-//    this?.insuranceScheme,
-//    this?.noOfJobs,
-    this?.skillShortfall,
-    this?.labour,
-    this?.unionised,
-    this?.successPlan,
-    this?.organogram,
-    this?.disputes,
-    this?.specialist,
-).toProgress()
-
-internal fun SmeGovernanceDto?.toProgress():SmeSectionProgress {
-    val managementProgress = this?.management?.toProgress()
-    val directorsProgress = this?.directors?.toProgress()
-    val manPowerProgress = this?.manpower.toProgress()
-
-    println("Directors Progress: ${directorsProgress?.info}")
-    println("ManPower Progress: ${manPowerProgress?.info}")
-    return listOf(
-        this?.management?.toProgress() ?: SmeSectionProgress(0, 1),
-        this?.directors?.toProgress() ?: SmeSectionProgress(0, 1),
-        this?.manpower.toProgress()
-    ).aggregate()
-}
-
-internal fun SmeManagementDto.toProgress():SmeSectionProgress {
-    println("Management Progress:")
-    println("Team: ${this.team.size}")
-    println("Committee: ${this.committee.size}")
-    val teamProgress = this.team.toCompletedIfNotEmpty()
-    val commiteeProgress = this.committee.toCompletedIfNotEmpty()
-
-    println("TeamProgress: ${teamProgress.info}")
-    println("CommitteeProgress: ${commiteeProgress.info}")
-
-    return listOf(
-        this.team.toCompletedIfNotEmpty(),
-        this.committee.toCompletedIfNotEmpty()
-    ).aggregate()
-}
+//internal fun SmeManPowerDto?.toProgress() = listOf(
+////    this?.insuranceScheme,
+////    this?.noOfJobs,
+//    this?.skillShortfall,
+//    this?.labour,
+//    this?.unionised,
+//    this?.successPlan,
+//    this?.organogram,
+//    this?.disputes,
+//    this?.specialist,
+//).toProgress()
+//
+//internal fun SmeGovernanceDto?.toProgress():SmeSectionProgress {
+//    val managementProgress = this?.management?.toProgress()
+//    val directorsProgress = this?.directors?.toProgress()
+//    val manPowerProgress = this?.manpower.toProgress()
+//
+//    println("Directors Progress: ${directorsProgress?.info}")
+//    println("ManPower Progress: ${manPowerProgress?.info}")
+//    return listOf(
+//        this?.management?.toProgress() ?: SmeSectionProgress(0, 1),
+//        this?.directors?.toProgress() ?: SmeSectionProgress(0, 1),
+//        this?.manpower.toProgress()
+//    ).aggregate()
+//}
+//
+//internal fun SmeManagementDto.toProgress():SmeSectionProgress {
+//    println("Management Progress:")
+//    println("Team: ${this.team.size}")
+//    println("Committee: ${this.committee.size}")
+//    val teamProgress = this.team.toCompletedIfNotEmpty()
+//    val commiteeProgress = this.committee.toCompletedIfNotEmpty()
+//
+//    println("TeamProgress: ${teamProgress.info}")
+//    println("CommitteeProgress: ${commiteeProgress.info}")
+//
+//    return listOf(
+//        this.team.toCompletedIfNotEmpty(),
+//        this.committee.toCompletedIfNotEmpty()
+//    ).aggregate()
+//}

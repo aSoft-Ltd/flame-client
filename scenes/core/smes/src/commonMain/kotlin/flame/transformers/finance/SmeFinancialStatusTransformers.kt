@@ -10,7 +10,7 @@ import flame.finance.SmeFinancialStatusDto
 import flame.forms.financial.status.SmeFinancialStatusFields
 import flame.forms.financial.status.SmeFinancialStatusOutput
 import flame.transformers.toPresenter
-import flame.transformers.utils.toProgress
+//import flame.transformers.utils.toProgress
 import kollections.listOf
 import koncurrent.later.andThen
 import koncurrent.later.then
@@ -71,16 +71,16 @@ fun SmeDto.toFinancialStatusForm(
     onSuccess { options.bus.dispatch(options.topic.progressMade()) }
 }
 
-fun SmeFinancialStatusDto?.toProgress() = listOf(
-//    this?.latestFinancialStatements,
-//    this?.managementAccounts,
-    this?.financialsAuditedOrReviewed,
-    this?.budgetForReview,
-//    this?.debtorsAging,
-//    this?.creditAging,
-    this?.longTermContracts,
-    this?.offBalanceSheetFunding,
-    this?.assetRegister,
-    this?.permissionsFromLender,
-//    this?.guarantees,
-).toProgress()
+//fun SmeFinancialStatusDto?.toProgress() = listOf(
+////    this?.latestFinancialStatements,
+////    this?.managementAccounts,
+//    this?.financialsAuditedOrReviewed,
+//    this?.budgetForReview,
+////    this?.debtorsAging,
+////    this?.creditAging,
+//    this?.longTermContracts,
+//    this?.offBalanceSheetFunding,
+//    this?.assetRegister,
+//    this?.permissionsFromLender,
+////    this?.guarantees,
+//).toProgress()

@@ -6,7 +6,7 @@ import flame.SmeDto
 import flame.admin.SmeAdminDto
 import flame.admin.SmeLegalComplianceDto
 import flame.forms.admin.legal.SmeLegalOutput
-import flame.transformers.utils.toProgress
+//import flame.transformers.utils.toProgress
 import kollections.listOf
 
 internal inline fun SmeDto.toLegalOutput() = admin?.legal.toOutput(this)
@@ -33,13 +33,13 @@ internal inline fun SmeLegalOutput.toParams() = SmeLegalComplianceDto(
     workmanCompensationNumber = workmanCompensationNumber,
 ).let { src.copy(admin = (src.admin ?: SmeAdminDto()).copy(legal = it)) }
 
-fun SmeLegalComplianceDto?.toProgress() = listOf(
-    this?.cipcAnnualReturns,
-//    this?.registration,
-    this?.vatRegistration,
-    this?.vatNumber,
-    this?.taxComplianceStatus,
-    this?.incomeTaxNumber,
-    this?.workmanCompensationOption,
-    this?.workmanCompensationNumber,
-).toProgress()
+//fun SmeLegalComplianceDto?.toProgress() = listOf(
+//    this?.cipcAnnualReturns,
+////    this?.registration,
+//    this?.vatRegistration,
+//    this?.vatNumber,
+//    this?.taxComplianceStatus,
+//    this?.incomeTaxNumber,
+//    this?.workmanCompensationOption,
+//    this?.workmanCompensationNumber,
+//).toProgress()

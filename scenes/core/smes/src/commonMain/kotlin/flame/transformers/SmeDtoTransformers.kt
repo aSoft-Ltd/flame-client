@@ -17,11 +17,11 @@ import flame.sheet.SmeSheetRow
 import flame.transformers.admin.toPresenter
 import flame.transformers.admin.toProgress
 import flame.transformers.documents.toPresenter
-import flame.transformers.documents.toProgress
-import flame.transformers.finance.toProgress
-import flame.transformers.funding.toProgress
-import flame.transformers.governance.toProgress
-import flame.transformers.swot.toProgress
+//import flame.transformers.documents.toProgress
+//import flame.transformers.finance.toProgress
+//import flame.transformers.funding.toProgress
+//import flame.transformers.governance.toProgress
+//import flame.transformers.swot.toProgress
 import kollections.isEmpty
 import kollections.toList
 
@@ -51,16 +51,3 @@ fun SmeDto.toPresenter(options: AttachmentPresenterOptions) = SmePresenter(
 )
 
 
-fun SmeDto.toProgress(options: AttachmentPresenterOptions) = SmeProgress(
-    sme = toPresenter(options),
-    admin = admin.toProgress(),
-    documents = documents.toProgress(),
-    finance = finance.toProgress(),
-    analysis = SmeSectionProgress(xlsx?.let {
-        1
-    }?:0, 1),
-    funding = funding.toProgress(),
-    governance = governance.toProgress(),
-    swot = swot.toProgress(),
-    business = business.toProgress()
-)

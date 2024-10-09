@@ -6,7 +6,7 @@ import flame.SmeDto
 import flame.admin.SmeAdminDto
 import flame.admin.SmeContactsDto
 import flame.forms.admin.contacts.SmeContactOutput
-import flame.transformers.utils.toProgress
+//import flame.transformers.utils.toProgress
 import symphony.PhoneOutput
 import kollections.listOf
 
@@ -32,11 +32,11 @@ inline fun SmeContactOutput.toParams() = SmeContactsDto(
     src.copy(admin = (src.admin ?: SmeAdminDto()).copy(contacts = it))
 }
 
-fun SmeContactsDto?.toProgress() = listOf(
-    this?.firstName,
-    this?.lastName,
-    this?.email,
-    this?.phone,
-    this?.role,
-//    this?.dob,
-).toProgress()
+//fun SmeContactsDto?.toProgress() = listOf(
+//    this?.firstName,
+//    this?.lastName,
+//    this?.email,
+//    this?.phone,
+//    this?.role,
+////    this?.dob,
+//).toProgress()

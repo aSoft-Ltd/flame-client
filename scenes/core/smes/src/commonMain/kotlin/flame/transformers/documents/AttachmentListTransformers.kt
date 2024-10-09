@@ -56,7 +56,7 @@ internal fun Collection<AttachmentDto>.toPresenter(
     additional = toMiscellaneousPresenter(options)
 )
 
-internal fun Collection<AttachmentDto>.toProgress(): SmeSectionProgress {
-    val total = SmeDocument.List.entries + SmeDocument.FinancialRecord.entries + SmeDocument.Additional.entries
-    return SmeSectionProgress(size, total.size)
-}
+//internal fun Collection<AttachmentDto>.toProgress(): SmeSectionProgress {
+//    val total = SmeDocument.List.entries + SmeDocument.FinancialRecord.entries + SmeDocument.Additional.entries
+//    return SmeSectionProgress(size, total.size)
+//}

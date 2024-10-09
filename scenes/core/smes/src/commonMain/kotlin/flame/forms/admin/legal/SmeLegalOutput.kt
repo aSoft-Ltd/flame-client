@@ -13,7 +13,7 @@ class SmeLegalOutput(
     var vatRegistration: String? = null,
     var vatNumber: String? = null,
     var taxComplianceStatus: String? = null,
-    var incomeTaxNumber: Int? = null,
+    var incomeTaxNumber: String? = null,
     var workmanCompensationOption: String? = null,
     var workmanCompensationNumber: Int? = null
 )

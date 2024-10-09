@@ -4,8 +4,10 @@
 package flame.routes.info
 
 import flame.OwnSmeScheme
+import flame.SmeInfoPresenter
 import flame.SmeSceneOptions
-import flame.transformers.toProgress
+import flame.toProgress
+import flame.transformers.toPresenter
 import kase.Loading
 import kase.Success
 import kase.toLazyState
@@ -21,7 +23,8 @@ class OwnSmeInfoScene(private val options: SmeSceneOptions<OwnSmeScheme>) : SmeI
     fun initialize() {
         ui.value = Loading("loading your information, please wait...")
         options.api.load().zip(options.auth.session()) { (it, session) ->
-            it.toProgress(options.toAttachmentOptions(session))
+            info.value = Success(SmeInfoPresenter(it.toPresenter(options.toAttachmentOptions(session)), it.toProgress()))
+            it.toProgress()
         }.finally {
             ui.value = it.toLazyState()
         }
@@ -29,7 +32,8 @@ class OwnSmeInfoScene(private val options: SmeSceneOptions<OwnSmeScheme>) : SmeI
     }
 
     fun refresh() = options.api.load().zip(options.auth.session()) { (it, session) ->
-        it.toProgress(options.toAttachmentOptions(session))
+        info.value = Success(SmeInfoPresenter(it.toPresenter(options.toAttachmentOptions(session)), it.toProgress()))
+        it.toProgress()
     }.then {
         ui.value = Success(it)
     }
