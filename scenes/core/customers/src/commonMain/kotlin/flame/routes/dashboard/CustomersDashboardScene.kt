@@ -17,6 +17,7 @@ import koncurrent.later.andZip
 import koncurrent.later.zip
 import koncurrent.later.catch
 import kotlinx.JsExport
+import kronecker.LoadSource
 
 class CustomersDashboardScene(
     val config: IdentifierScenesConfig<CustomersApi>
@@ -35,7 +36,7 @@ class CustomersDashboardScene(
 
     fun loadDashboard(): Later<Unit> {
         ui.value = LOADING_STATE
-        return api.load().then {
+        return api.load(source = LoadSource.REMOTE).then {
             ui.value = Success(DashboardData(it))
         }.catch {
             ui.value = Failure(it)

@@ -19,6 +19,7 @@ import kronecker.LoadOptions
 import symphony.CollectionScene
 import symphony.actionsOf
 import kotlinx.JsExport
+import kronecker.LoadSource
 import symphony.PaginationManager
 import symphony.linearPaginatorOf
 
@@ -31,9 +32,9 @@ abstract class EntityPickingMode(val config: EntityScenesConfig<EntitiesApi>) : 
 
     fun initialize(callback: ((LegalEntityPresenter) -> Unit)?) {
         handler.value = callback
-        paginator.initialize { params ->
+        paginator.initialize { params,source ->
             Later(LoadOptions(params.page, params.limit, params.key)).andThen {
-                api.load(it)
+                api.load(it, LoadSource.valueOf(source.name))
             }.then {
                 it.toPresenters()
             }

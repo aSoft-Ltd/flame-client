@@ -18,7 +18,7 @@ class SupplierMessagesScene(private val config: SupplierScenesConfig<*>) : Messa
     }
 
     fun initialize(uid: String) {
-        paginator.initialize { params ->
+        paginator.initialize { params,source ->
             fakeMessages().paged(params)
         }
     }

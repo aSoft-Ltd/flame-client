@@ -5,24 +5,27 @@ package flame.routes.add
 
 import flame.EntitiesApiProvider
 import flame.EntityScenesConfig
+import identifier.FieldInfo
 import flame.forms.EntityFormScene
-import flame.utils.dispatchInvalidateCache
+import flame.transformers.toFields
 import geo.Country
 import identifier.CorporatePresenter
 import identifier.IndividualPresenter
 import identifier.fields.CorporateFields
+import identifier.fields.CorporateOutput
 import identifier.fields.IndividualFields
+import identifier.fields.IndividualOutput
+import identifier.transformers.toOutput
 import identifier.transformers.toParams
 import identifier.transformers.toPresenter
-import kase.Failure
-import kase.Success
-import koncurrent.later.finally
+import kollections.List
 import koncurrent.toLater
 import koncurrent.later.then
 import koncurrent.later.andThen
 import symphony.toForm
 import symphony.toSubmitConfig
 import kotlinx.JsExport
+import symphony.Form
 
 abstract class EntityAddScene(
     private val config: EntityScenesConfig<EntitiesApiProvider>
@@ -31,45 +34,53 @@ abstract class EntityAddScene(
 
     override fun corporateForm(
         country: Country,
-        entity: CorporatePresenter?
-    ) = CorporateFields(entity, country).toForm(
-        heading = "Corporate ${this.entity} Form",
-        details = "Add Corporate ${this.entity}",
-        config = config.toSubmitConfig()
-    ) {
-        onCancel { deInitialize() }
-        onSubmit { output ->
-            output.toLater().then {
-                it.toParams().getOrThrow()
-            }.andThen {
-                api.create(it)
-            }.then {
-                it.toPresenter()
+        entity: CorporatePresenter?,
+        additional: List<FieldInfo>,
+    ):Form<CorporatePresenter, CorporateOutput, CorporateFields> {
+        val output = entity.toOutput()
+        return CorporateFields(entity, output, country, additional.toFields(output.additionalInfo)).toForm(
+            heading = "Corporate ${this.entity} Form",
+            details = "Add Corporate ${this.entity}",
+            config = config.toSubmitConfig()
+        ) {
+            onCancel { deInitialize() }
+            onSubmit { output ->
+                output.toLater().then {
+                    it.toParams().getOrThrow()
+                }.andThen {
+                    api.create(it)
+                }.then {
+                    it.toPresenter()
+                }
             }
+            onSuccess { it: CorporatePresenter -> dispatchSuccess(it.name, "create") }
+            onFailure { dispatchFailure(it, "create") }
         }
-        onSuccess { it: CorporatePresenter -> dispatchSuccess(it.name, "create") }
-        onFailure { dispatchFailure(it, "create") }
     }
 
     override fun individualForm(
         country: Country,
-        entity: IndividualPresenter?
-    ) = IndividualFields(entity, country).toForm(
-        heading = "Individual ${this.entity} Form",
-        details = "Add Individual ${this.entity}",
-        config = config.toSubmitConfig()
-    ) {
-        onCancel { deInitialize() }
-        onSubmit { output ->
-            output.toLater().then {
-                it.toParams().getOrThrow()
-            }.andThen {
-                api.create(it)
-            }.then {
-                it.toPresenter()
+        entity: IndividualPresenter?,
+        additional: List<FieldInfo>
+    ):Form<IndividualPresenter, IndividualOutput, IndividualFields> {
+        val output = entity.toOutput()
+        return IndividualFields(entity, output, country, additional.toFields(output.additionalInfo)).toForm(
+            heading = "Individual ${this.entity} Form",
+            details = "Add Individual ${this.entity}",
+            config = config.toSubmitConfig()
+        ) {
+            onCancel { deInitialize() }
+            onSubmit { output ->
+                output.toLater().then {
+                    it.toParams().getOrThrow()
+                }.andThen {
+                    api.create(it)
+                }.then {
+                    it.toPresenter()
+                }
             }
+            onSuccess { it: IndividualPresenter -> dispatchSuccess(it.name, scene = "create") }
+            onFailure { dispatchFailure(it, scene = "create") }
         }
-        onSuccess { it: IndividualPresenter -> dispatchSuccess(it.name, scene = "create") }
-        onFailure { dispatchFailure(it, scene = "create") }
     }
 }

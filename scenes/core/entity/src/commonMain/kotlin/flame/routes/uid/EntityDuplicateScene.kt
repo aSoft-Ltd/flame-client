@@ -5,15 +5,17 @@ package flame.routes.uid
 
 import flame.EntitiesApiProvider
 import flame.EntityScenesConfig
+import identifier.FieldInfo
 import flame.forms.EntityFormScene
-import flame.utils.dispatchInvalidateCache
 import geo.Country
 import identifier.CorporatePresenter
 import identifier.IndividualPresenter
 import identifier.fields.CorporateFields
 import identifier.fields.IndividualFields
+import identifier.transformers.toOutput
 import identifier.transformers.toParams
 import identifier.transformers.toPresenter
+import kollections.List
 import koncurrent.toLater
 import koncurrent.later.then
 import koncurrent.later.andThen
@@ -29,8 +31,9 @@ abstract class EntityDuplicateScene(
 
     override fun corporateForm(
         country: Country,
-        entity: CorporatePresenter?
-    ) = CorporateFields(entity, country).toForm(
+        entity: CorporatePresenter?,
+        additional: List<FieldInfo>
+    ) = CorporateFields(entity, entity.toOutput(), country).toForm(
         heading = "Corporate ${this.entity} Form",
         details = "Duplicate ${entity?.name}'s info",
         config.toSubmitConfig()
@@ -51,8 +54,9 @@ abstract class EntityDuplicateScene(
 
     override fun individualForm(
         country: Country,
-        entity: IndividualPresenter?
-    ) = IndividualFields(entity, country).toForm(
+        entity: IndividualPresenter?,
+        additional: List<FieldInfo>
+    ) = IndividualFields(entity, entity.toOutput(), country).toForm(
         heading = "Individual ${this.entity} Form",
         details = "Duplicate ${entity?.name}'s info",
         config.toSubmitConfig()

@@ -6,25 +6,21 @@ package flame.routes.uid
 import flame.EntitiesApi
 import flame.EntitiesApiProvider
 import flame.EntityScenesConfig
+import identifier.FieldInfo
 import flame.forms.EntityFormScene
-import flame.utils.dispatchInvalidateCache
 import geo.Country
 import hormone.Identified
 import identifier.CorporatePresenter
 import identifier.IndividualPresenter
 import identifier.fields.CorporateFields
 import identifier.fields.IndividualFields
+import identifier.transformers.toOutput
 import identifier.transformers.toParams
 import identifier.transformers.toPresenter
-import koncurrent.Later
+import kollections.List
 import koncurrent.later.then
 import koncurrent.later.andThen
-import koncurrent.later.andZip
-import koncurrent.later.zip
-import koncurrent.later.catch
 import koncurrent.toLater
-import koncurrent.later.then
-import koncurrent.later.andThen
 import symphony.toForm
 import symphony.toSubmitConfig
 import kotlinx.JsExport
@@ -39,8 +35,9 @@ abstract class EntityEditScene(
 
     override fun individualForm(
         country: Country,
-        entity: IndividualPresenter?
-    ) = IndividualFields(entity, country).toForm(
+        entity: IndividualPresenter?,
+        additional: List<FieldInfo>
+    ) = IndividualFields(entity, entity.toOutput(), country).toForm(
         heading = "Individual ${this.entity} Form",
         details = "Edit ${entity?.name}'s Info",
         config.toSubmitConfig()
@@ -61,8 +58,9 @@ abstract class EntityEditScene(
 
     override fun corporateForm(
         country: Country,
-        entity: CorporatePresenter?
-    ) = CorporateFields(entity, country).toForm(
+        entity: CorporatePresenter?,
+        additional: List<FieldInfo>
+    ) = CorporateFields(entity, entity.toOutput(), country).toForm(
         heading = "Corporate ${this.entity} Form",
         details = "Edit ${entity?.name}'s Info",
         config.toSubmitConfig()

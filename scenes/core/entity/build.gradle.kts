@@ -21,6 +21,7 @@ kotlin {
                 api(libs.captain.navigator.api)
                 api(libs.symphony.collections)
                 api(libs.symphony.input.dialog)
+                api(libs.symphony.input.choice)
                 api(libs.cabinet.api.core)
                 api(libs.epsilon.core) // Because we want to upload customer documents as attachments
                 api(libs.krest.core) // Because we want to write background workers for uploading attachments

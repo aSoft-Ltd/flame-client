@@ -12,7 +12,7 @@ import kotlinx.JsExport
 
 class OwnSmeManagementTeamScene(private val options: SmeSceneOptions<OwnSmeApi>) : SmeManagementTeamScene(options) {
     private val api get() = options.api
-    fun initialize() = paginator.initialize {
+    fun initialize() = paginator.initialize { p,source->
         api.load().zip(options.auth.session()) { (sme, session) ->
             sme.toPresenter(options.toAttachmentOptions(session))
         }.then {

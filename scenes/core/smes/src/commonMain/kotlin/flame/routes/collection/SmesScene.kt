@@ -23,7 +23,7 @@ class SmesScene(private val options: SmeSceneOptions<MonSmeScheme>) : LinearColl
     fun initialize(): Later<LinearPage<SmePresenter>> {
         return columns.initialize().andThen {
             switchToLatestSelectedView()
-            paginator.initialize { params ->
+            paginator.initialize { params,source ->
                 options.api.list(LoadOptions(params.page, params.limit))
                     .zip(options.auth.session()) { (smes, session) ->
                         smes.map { it.toPresenter(options.toAttachmentOptions(session)) }

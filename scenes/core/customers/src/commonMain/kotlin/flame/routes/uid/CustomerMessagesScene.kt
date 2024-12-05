@@ -17,7 +17,7 @@ class CustomerMessagesScene(config: CustomerScenesConfig<*>) : MessagesScene(con
     }
 
     fun initialize(uid: String) {
-        paginator.initialize { params ->
+        paginator.initialize { params,source ->
             fakeMessages().paged(params)
         }
     }

@@ -30,6 +30,7 @@ import symphony.Confirmable
 import symphony.actionsOf
 import symphony.linearPaginatorOf
 import kotlinx.JsExport
+import kronecker.LoadSource
 import symphony.LinearCollectionScene
 import kotlin.js.JsName
 
@@ -45,9 +46,9 @@ abstract class EntitiesScene(
     override val paginator by lazy { linearPaginatorOf<LegalEntityPresenter>() }
     fun initialize(navigate: NavigateFunction) {
         switchToLatestSelectedView()
-        paginator.initialize { params ->
+        paginator.initialize { params,source ->
             Later(LoadOptions(params.page, params.limit, params.key)).andThen {
-                api.load(it)
+                api.load(it, LoadSource.valueOf(source.name))
             }.then { it.toPresenters() }
         }
         navigateTo = navigate

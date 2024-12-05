@@ -4,6 +4,7 @@
 package flame
 
 import cabinet.Directory
+import identifier.FieldInfo
 import flame.params.GenerateStatementParams
 import flame.params.SendEmailParams
 import flame.params.SendSMSParams
@@ -14,11 +15,6 @@ import identifier.LegalEntityApi
 import identifier.params.CorporateParams
 import identifier.params.IndividualParams
 import koncurrent.Later
-import koncurrent.later.then
-import koncurrent.later.andThen
-import koncurrent.later.andZip
-import koncurrent.later.zip
-import koncurrent.later.catch
 import kotlinx.JsExport
 import kotlin.js.JsName
 
@@ -31,6 +27,8 @@ interface EntitiesApi : LegalEntityApi, Directory {
     fun create(params: IndividualParams): Later<IndividualDto>
 
     fun generateStatementURL(params: GenerateStatementParams): Later<String>
+
+    fun additionalFields():Later<List<FieldInfo>>
 
     fun editIndividual(params: Identified<String, IndividualParams>): Later<IndividualDto>
 

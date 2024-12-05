@@ -7,13 +7,12 @@ import cinematic.LazyScene
 import flame.EntitiesApi
 import flame.EntitiesApiProvider
 import flame.EntityScenesConfig
+import identifier.FieldInfo
 import flame.utils.dispatchInvalidateCache
 import geo.Country
-import hormone.Loader
 import identifier.CorporatePresenter
 import identifier.IdentifierSettings
 import identifier.IndividualPresenter
-import identifier.LegalEntityDto
 import identifier.LegalEntityPresenter
 import identifier.fields.CorporateFields
 import identifier.fields.IndividualFields
@@ -26,12 +25,11 @@ import identifier.utils.loading
 import kase.Pending
 import kase.Success
 import kase.toLazyState
+import kollections.List
+import kollections.toList
 import koncurrent.Later
 import koncurrent.later.then
 import koncurrent.later.andThen
-import koncurrent.later.andZip
-import koncurrent.later.zip
-import koncurrent.later.catch
 import koncurrent.later.finally
 import symphony.FormField
 import kotlinx.JsExport
@@ -51,11 +49,13 @@ abstract class EntityFormScene(
     }.andThen {
         ui.value = loading(uid, "settings")
         config.api.settings(it?.toPresenter())
-    }.then {
-        original = it
-        when (val entity = it.data) {
-            is CorporatePresenter -> corporateForm(it.country, entity)
-            else -> individualForm(it.country, entity as? IndividualPresenter)
+    }.andThen {
+        api.additionalFields().then { fields->
+            original = it
+            when (val entity = it.data) {
+                is CorporatePresenter -> corporateForm(it.country, entity)
+                else -> individualForm(it.country, entity as? IndividualPresenter, fields.toList())
+            }
         }
     }.finally {
         ui.value = it.toLazyState()
@@ -63,12 +63,16 @@ abstract class EntityFormScene(
 
     fun switchToCorporateForm() {
         val og = original ?: return
-        ui.value = Success(corporateForm(og.country, og.data?.toCorporate()))
+        api.additionalFields().then { fields->
+            ui.value = Success(corporateForm(og.country, og.data?.toCorporate()))
+        }
     }
 
     fun switchToIndividualForm() {
         val og = original ?: return
-        ui.value = Success(individualForm(og.country, og.data?.toIndividual()))
+        api.additionalFields().then { fields->
+            ui.value = Success(individualForm(og.country, og.data?.toIndividual()))
+        }
     }
 
     override fun deInitialize() {
@@ -78,12 +82,14 @@ abstract class EntityFormScene(
 
     protected abstract fun individualForm(
         country: Country,
-        entity: IndividualPresenter?
+        entity: IndividualPresenter?,
+        additional: List<FieldInfo> = kollections.emptyList()
     ): FormField<LegalEntityPresenter, IndividualFields>
 
     protected abstract fun corporateForm(
         country: Country,
-        entity: CorporatePresenter?
+        entity: CorporatePresenter?,
+        additional: List<FieldInfo> = kollections.emptyList()
     ): FormField<LegalEntityPresenter, CorporateFields>
 
     protected fun dispatchSuccess(name: String, scene: String) {
