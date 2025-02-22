@@ -19,6 +19,7 @@ import identifier.transformers.toOutput
 import identifier.transformers.toParams
 import identifier.transformers.toPresenter
 import kollections.List
+import kollections.size
 import koncurrent.toLater
 import koncurrent.later.then
 import koncurrent.later.andThen
@@ -64,7 +65,8 @@ abstract class EntityAddScene(
         additional: List<FieldInfo>
     ):Form<IndividualPresenter, IndividualOutput, IndividualFields> {
         val output = entity.toOutput()
-        return IndividualFields(entity, output, country, additional.toFields(output.additionalInfo)).toForm(
+        val additionalFields = additional.toFields(output.additionalInfo)
+        return IndividualFields(entity, output, country, additionalFields).toForm(
             heading = "Individual ${this.entity} Form",
             details = "Add Individual ${this.entity}",
             config = config.toSubmitConfig()

@@ -16,7 +16,9 @@ import identifier.LegalEntityApi
 import identifier.LegalEntityPresenter
 import identifier.transformers.toPresenter
 import identifier.utils.loadCacheableLegalEntity
+import kase.Failure
 import kase.Pending
+import kase.Success
 import kase.toLazyState
 import koncurrent.Later
 import koncurrent.later.then
@@ -29,6 +31,7 @@ import symphony.Confirmable
 import symphony.actionsOf
 import symphony.removeSelectedItem
 import kotlinx.JsExport
+import kronecker.LoadSource
 
 abstract class EntityScene(
     val config: EntityScenesConfig<LegalEntityApi>
@@ -40,13 +43,28 @@ abstract class EntityScene(
 
     private val api = config.api
 
-    fun initialize(navigate: NavigateFunction, uid: String): Later<LegalEntityPresenter> {
-        busSubscriber.value = bus.subscribeInvalidateCache {
-            config.cache.removeSelectedItem()
-            loadCustomer(uid)
+    fun initialize(navigate: NavigateFunction, uid: String): Later<*> {
+        ui.value = loadingCustomer(uid, "info")
+        return api.load(uid, LoadSource.LOCAL).then {
+            ui.value = Success(it.toPresenter())
+        }.catch {
+            //failed to load from local cache
+        }.finally {
+            api.load(uid, LoadSource.REMOTE).then {
+                ui.value = Success(it.toPresenter())
+            }.catch {
+                ui.value = Failure(it)
+                throw it
+            }
         }
+
+
+//        busSubscriber.value = bus.subscribeInvalidateCache {
+//            config.cache.removeSelectedItem()
+//            loadCustomer(uid)
+//        }
         navigateTo = navigate
-        return loadCustomer(uid)
+//        return loadCustomer(uid)
     }
 
     fun loadCustomer(uid: String) = config.loadCacheableLegalEntity(uid) {

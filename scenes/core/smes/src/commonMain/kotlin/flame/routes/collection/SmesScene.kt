@@ -20,7 +20,7 @@ class SmesScene(private val options: SmeSceneOptions<MonSmeScheme>) : LinearColl
 
     override val paginator by lazy { linearPaginatorOf<SmePresenter>() }
 
-    fun initialize(): Later<LinearPage<SmePresenter>> {
+    fun initialize(): Later<Any?> {
         return columns.initialize().andThen {
             switchToLatestSelectedView()
             paginator.initialize { params,source ->

@@ -21,6 +21,7 @@ import symphony.actionsOf
 import kotlinx.JsExport
 import kronecker.LoadSource
 import symphony.PaginationManager
+import symphony.linearOfflineFirstPaginatorOf
 import symphony.linearPaginatorOf
 
 abstract class EntityPickingMode(val config: EntityScenesConfig<EntitiesApi>) : CollectionScene<LegalEntityPresenter>(config), EntityFieldMode {
@@ -28,7 +29,7 @@ abstract class EntityPickingMode(val config: EntityScenesConfig<EntitiesApi>) : 
 
     private val api = config.api
 
-    override val paginator by lazy { linearPaginatorOf<LegalEntityPresenter>() }
+    override val paginator by lazy { linearOfflineFirstPaginatorOf<LegalEntityPresenter>() }
 
     fun initialize(callback: ((LegalEntityPresenter) -> Unit)?) {
         handler.value = callback

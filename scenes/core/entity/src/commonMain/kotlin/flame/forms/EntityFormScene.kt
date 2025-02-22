@@ -53,7 +53,7 @@ abstract class EntityFormScene(
         api.additionalFields().then { fields->
             original = it
             when (val entity = it.data) {
-                is CorporatePresenter -> corporateForm(it.country, entity)
+                is CorporatePresenter -> corporateForm(it.country, entity, fields.toList())
                 else -> individualForm(it.country, entity as? IndividualPresenter, fields.toList())
             }
         }

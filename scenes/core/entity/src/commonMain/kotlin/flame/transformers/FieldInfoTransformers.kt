@@ -20,7 +20,7 @@ fun FieldInfo.toField(output:AdditionalInfoOutput):Field<*, *> = when (this.cate
     FieldInfo.Category.DATE -> LocalDateField(name, label=label, onChange=onChange(output))
     FieldInfo.Category.TIME -> TODO("Time inputs not supported yet")
     FieldInfo.Category.NUMBER -> DoubleField(name, label=label, onChange=onChange(output))
-    FieldInfo.Category.CHOICE -> SingleChoiceField(
+    FieldInfo.Category.CHOICE -> SingleChoiceField<FieldInfo.Option>(
         name=name,
         items = options?.toList() ?: kollections.emptyList(),
         mapper = {
