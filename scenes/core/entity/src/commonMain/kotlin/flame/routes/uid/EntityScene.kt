@@ -45,6 +45,7 @@ abstract class EntityScene(
 
     fun initialize(navigate: NavigateFunction, uid: String): Later<*> {
         ui.value = loadingCustomer(uid, "info")
+        navigateTo = navigate
         return api.load(uid, LoadSource.LOCAL).then {
             ui.value = Success(it.toPresenter())
         }.catch {
@@ -57,13 +58,11 @@ abstract class EntityScene(
                 throw it
             }
         }
-
-
 //        busSubscriber.value = bus.subscribeInvalidateCache {
 //            config.cache.removeSelectedItem()
 //            loadCustomer(uid)
 //        }
-        navigateTo = navigate
+
 //        return loadCustomer(uid)
     }
 

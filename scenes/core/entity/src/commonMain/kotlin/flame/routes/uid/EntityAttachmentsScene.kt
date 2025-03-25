@@ -4,6 +4,7 @@
 package flame.routes.uid
 
 import cabinet.Attachment
+import cinematic.MutableLive
 import cinematic.mutableLiveOf
 import epsilon.FileBlob
 import epsilon.RawFile
@@ -17,6 +18,10 @@ import identifier.LegalEntityDto
 import identifier.utils.loadCacheableLegalEntity
 import kase.LazyState
 import kase.Pending
+import kase.UploaderState
+import kase.UploaderUninitialized
+import kase.UploaderUploadFailed
+import kase.UploaderUploaded
 import kase.toLazyState
 import koncurrent.FailedLater
 import koncurrent.Later
@@ -45,6 +50,8 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
     private val workManager: WorkManager = config.workManager
 
     val confirm = mutableLiveOf<ConfirmationBox?>(null)
+
+    val state:MutableLive<UploaderState> = mutableLiveOf(UploaderUninitialized)
 
     override val paginator by lazy { linearPaginatorOf<Attachment>() }
     fun initializeWith(uid: String): Later<LegalEntityDto> {
@@ -76,7 +83,7 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
 
     fun uploadAttachment(file: RawFile) {
         val info = RawFileInfo(file)
-        workManager.submit(
+        val res = workManager.submit(
             options = SubmitWorkOptions(
                 type = Type,
                 topic = customer.value.data?.uid,
@@ -88,6 +95,14 @@ abstract class EntityAttachmentsScene(val config: EntityScenesConfig<EntitiesApi
                 )
             )
         )
+        res.onFailure {
+            state.value = UploaderUploadFailed(it)
+        }
+        res.onSuccess {
+            state.value = UploaderUploaded
+            paginator.clearPages()
+            paginator.loadFirstPage()
+        }
     }
 
     private fun uploadAttachments(files: Iterable<RawFile>) = files.forEach { uploadAttachment(it) }
